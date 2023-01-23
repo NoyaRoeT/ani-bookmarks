@@ -13,6 +13,7 @@ import LocalStrategy from "passport-local";
 import MongoStore from "connect-mongo";
 
 import authRouter from "./routes/auth.js";
+import userRouter from "./routes/users.js";
 
 import User from "./models/user.js";
 
@@ -54,6 +55,13 @@ app.use(passport.session());
 
 /* ROUTES */
 app.use("/auth", authRouter);
+app.use("/users", userRouter);
+app.use((err, req, res, next) => {
+	res.status(err.status).json({
+		error: { message: err.message },
+		status: err.status,
+	});
+});
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
