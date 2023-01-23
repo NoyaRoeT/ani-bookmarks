@@ -5,10 +5,16 @@ if (process.env.NODE_ENV !== "production") {
 
 import express from "express";
 import mongoose from "mongoose";
+import session from "express-session";
 import helmet from "helmet";
 import morgan from "morgan";
+import passport from "passport";
+import LocalStrategy from "passport-local";
+import MongoStore from "connect-mongo";
 
 import authRouter from "./routes/auth.js";
+
+import User from "./models/user.js";
 
 /* CONFIGURATIONS */
 const app = express();
@@ -21,12 +27,36 @@ app.use(
 );
 app.use(morgan("common"));
 
+/* SESSION SETUP */
+mongoose.set("strictQuery", false);
+const sessionStore = MongoStore.create({ mongoUrl: process.env.MONGO_URL });
+app.use(
+	session({
+		secret: process.env.SECRET || "test",
+		resave: false,
+		saveUninitialized: true,
+		store: sessionStore,
+		cookie: {
+			httpOnly: true,
+			maxAge: 1000 * 60 * 60 * 24,
+		},
+	})
+);
+
+/* PASSPORT */
+passport.use(
+	new LocalStrategy({ usernameField: "email" }, User.authenticate())
+);
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+app.use(passport.initialize());
+app.use(passport.session());
+
 /* ROUTES */
 app.use("/auth", authRouter);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
-mongoose.set("strictQuery", false);
 mongoose
 	.connect(process.env.MONGO_URL)
 	.then(() => {
