@@ -7,8 +7,7 @@ router.post("/register", registerUser);
 
 router.post("/login", authenticateLocal, (req, res) => {
 	res.status(200).json({
-		message: `logged in as ${req.user}`,
-		session: req.session,
+		message: `logged in as ${req.user.username}`,
 	});
 });
 
@@ -18,7 +17,18 @@ router.get("/protected-route", (req, res) => {
 		return;
 	}
 
-	res.status(200).json({ message: `Welcome ${req.user.username}` });
+	res.status(200).json({
+		message: `Welcome ${req.user.username}`,
+	});
+});
+
+router.post("/logout", (req, res) => {
+	req.logout(function (err) {
+		if (err) {
+			return res.status(500).json({ message: err.message });
+		}
+		return res.status(200).json({ message: "Successfully logged out" });
+	});
 });
 
 export default router;

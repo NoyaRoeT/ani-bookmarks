@@ -11,7 +11,7 @@ export const getUser = async (req, res, next) => {
 				.json({ message: "This user does not exist." });
 		}
 
-		return res.status(200).json({ data: user, status: 200 });
+		return res.status(200).json({ data: user });
 	} catch (err) {
 		next(new ExpressError("Something went wrong!", 500));
 	}

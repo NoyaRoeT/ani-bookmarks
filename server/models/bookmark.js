@@ -11,10 +11,6 @@ const bookmarkSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		synopsis: {
-			type: String,
-			required: true,
-		},
 		genres: {
 			type: [String],
 			required: true,
@@ -24,12 +20,11 @@ const bookmarkSchema = new mongoose.Schema(
 			required: true,
 			enum: [ANIME, MANGA, MANHWA, MANHUA],
 		},
-		progress: Number,
-		imageUrl: String,
-		infoUrl: String,
-		userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-		whereToRead: String,
-		comment: String,
+		userId: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User",
+			required: true,
+		},
 	},
 	{ timestamps: true }
 );

@@ -14,6 +14,7 @@ import MongoStore from "connect-mongo";
 
 import authRouter from "./routes/auth.js";
 import userRouter from "./routes/users.js";
+import bookmarkRouter from "./routes/bookmarks.js";
 
 import User from "./models/user.js";
 
@@ -56,10 +57,10 @@ app.use(passport.session());
 /* ROUTES */
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
+app.use("/bookmarks", bookmarkRouter);
 app.use((err, req, res, next) => {
-	res.status(err.status).json({
+	res.status(500).json({
 		error: { message: err.message },
-		status: err.status,
 	});
 });
 

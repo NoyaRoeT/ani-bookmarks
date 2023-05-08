@@ -1,7 +1,7 @@
 import ExpressError from "../utils/ExpressError.js";
 
 export const isUser = (req, res, next) => {
-	if (!req.isAuthenticated) {
+	if (!req.isAuthenticated()) {
 		return next(
 			new ExpressError(
 				"Need to be logged in to retrieve this information",
