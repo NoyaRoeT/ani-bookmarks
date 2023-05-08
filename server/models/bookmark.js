@@ -10,9 +10,11 @@ const bookmarkSchema = new mongoose.Schema(
 		title: {
 			type: String,
 			required: true,
+			minLength: 1,
+			maxLength: 200,
 		},
 		genres: {
-			type: [String],
+			type: [{ type: String, minLength: 1, maxLength: 50 }],
 			required: true,
 		},
 		type: {
