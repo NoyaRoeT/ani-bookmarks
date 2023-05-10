@@ -1,4 +1,4 @@
-import ExpressError from "../utils/ExpressError.js";
+import ExpressError, { errorTypes } from "../utils/ExpressError.js";
 
 export const isUser = (req, res, next) => {
 	if (!req.isAuthenticated()) {
@@ -22,11 +22,25 @@ export const isUser = (req, res, next) => {
 	return next();
 };
 
+export const isAuthenticated = (req, res, next) => {
+	if (!req.isAuthenticated()) {
+		return next(
+			new ExpressError("Not logged in", errorTypes.UNAUTHORIZED, 401)
+		);
+	}
+	next();
+};
 export const validateBody = (schema) => {
 	return (req, res, next) => {
 		const { error } = schema.validate(req.body);
 		if (error) {
-			return res.status(400).json({ message: error.details[0].message });
+			return next(
+				new ExpressError(
+					error.details[0].message,
+					errorTypes.GENERAL,
+					400
+				)
+			);
 		}
 		next();
 	};

@@ -1,5 +1,14 @@
 import Bookmark from "../models/bookmark.js";
-import ExpressError from "../utils/ExpressError.js";
+import ExpressError, { errorTypes } from "../utils/ExpressError.js";
+
+export const getBookmarks = async (req, res, next) => {
+	try {
+		const bookmarks = await Bookmark.find({ userId: req.user._id });
+		return res.status(200).json({ data: bookmarks });
+	} catch (err) {
+		return next(new ExpressError(err.message, errorTypes.GENERAL));
+	}
+};
 
 export const getBookmark = async (req, res, next) => {
 	const reqBookmarkId = req.params.bookmarkId;
@@ -24,12 +33,6 @@ export const getBookmark = async (req, res, next) => {
 };
 
 export const createBookmark = async (req, res, next) => {
-	if (!req.isAuthenticated()) {
-		return res
-			.status(401)
-			.json({ message: "Need to be logged in to create a bookmark." });
-	}
-
 	const user = req.user;
 	const { title, genres, type } = req.body;
 
@@ -38,8 +41,6 @@ export const createBookmark = async (req, res, next) => {
 			.status(400)
 			.json({ message: "Missing required parameter(s)" });
 	}
-	// Genres is supposed to be an array. But an empty array is not falsy in js
-	// pending fix
 
 	const bookmark = new Bookmark({
 		title,
@@ -116,10 +117,6 @@ export const deleteBookmark = async (req, res, next) => {
 };
 
 export const isBookmarkOwner = async (req, res, next) => {
-	if (!req.isAuthenticated()) {
-		return res.status(401).json({ message: "Need to be logged in" });
-	}
-
 	if (!req.params.bookmarkId) {
 		return res
 			.status(400)

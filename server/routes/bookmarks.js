@@ -3,26 +3,30 @@ import {
 	createBookmark,
 	deleteBookmark,
 	getBookmark,
+	getBookmarks,
 	isBookmarkOwner,
 	updateBookmark,
 } from "../controllers/bookmarks.js";
 
-import { validateBody } from "../controllers/middleware.js";
+import { isAuthenticated, validateBody } from "../controllers/middleware.js";
 import bookmarkSchema from "../schemas/bookmark.js";
 
 const router = express.Router();
 
-router.get("/:bookmarkId", getBookmark);
+router.get("/", isAuthenticated, getBookmarks);
 
-router.post("/", validateBody(bookmarkSchema), createBookmark);
+router.get("/:bookmarkId", isAuthenticated, isBookmarkOwner, getBookmark);
+
+router.post("/", isAuthenticated, validateBody(bookmarkSchema), createBookmark);
 
 router.put(
 	"/:bookmarkId",
+	isAuthenticated,
 	isBookmarkOwner,
 	validateBody(bookmarkSchema),
 	updateBookmark
 );
 
-router.delete("/:bookmarkId", isBookmarkOwner, deleteBookmark);
+router.delete("/:bookmarkId", isAuthenticated, isBookmarkOwner, deleteBookmark);
 
 export default router;

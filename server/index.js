@@ -59,8 +59,8 @@ app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/bookmarks", bookmarkRouter);
 app.use((err, req, res, next) => {
-	res.status(500).json({
-		error: { message: err.message },
+	res.status(err.status).json({
+		error: { message: err.message, type: err.type },
 	});
 });
 
