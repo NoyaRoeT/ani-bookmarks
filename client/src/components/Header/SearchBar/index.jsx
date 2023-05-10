@@ -7,7 +7,7 @@ const SearchBar = () => {
 				placeholder="Search bookmarks..."
 			/>
 			<button className="cursor-pointer" type="button">
-				<i class="fa fa-search fa-lg"></i>
+				<i className="fa fa-search fa-lg"></i>
 			</button>
 		</div>
 	);
