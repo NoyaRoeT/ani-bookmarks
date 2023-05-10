@@ -7,6 +7,7 @@ function App() {
 	const [bookmarks, setBookmarks] = useState([]);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [isFetching, setIsFetching] = useState(false);
+	const [shouldUpdate, setShouldUpdate] = useState(false);
 
 	const emailRef = useRef();
 	const passwordRef = useRef();
@@ -65,11 +66,15 @@ function App() {
 			}
 		}
 		fetchBookmarks();
-	}, [isLoggedIn]);
+	}, [isLoggedIn, shouldUpdate]);
+
+	function updateBookmarksHandler() {
+		setShouldUpdate((prev) => !prev);
+	}
 
 	return (
 		<>
-			{isLoggedIn && <Header />}
+			{isLoggedIn && <Header onAddBookmark={updateBookmarksHandler} />}
 			{isFetching && <h1>Fetching</h1>}
 			{!isFetching && !isLoggedIn && (
 				<Login

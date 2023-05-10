@@ -1,9 +1,9 @@
 import SearchBar from "./SearchBar";
 
-const Header = () => {
+const Header = ({ onAddBookmark }) => {
 	return (
 		<div className="w-full flex justify-center items-center">
-			<SearchBar />
+			<SearchBar onAddBookmark={onAddBookmark} />
 		</div>
 	);
 };
