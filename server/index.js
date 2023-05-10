@@ -6,7 +6,7 @@ if (process.env.NODE_ENV !== "production") {
 import express from "express";
 import mongoose from "mongoose";
 import session from "express-session";
-import helmet from "helmet";
+import cors from "cors";
 import morgan from "morgan";
 import passport from "passport";
 import LocalStrategy from "passport-local";
@@ -22,12 +22,10 @@ import User from "./models/user.js";
 const app = express();
 app.use(express.json({ limit: "30mb" }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
-app.use(
-	helmet({
-		crossOriginResourcePolicy: { policy: "cross-origin" },
-	})
-);
 app.use(morgan("common"));
+
+/* CORS */
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 /* SESSION SETUP */
 mongoose.set("strictQuery", false);
@@ -40,7 +38,7 @@ app.use(
 		store: sessionStore,
 		cookie: {
 			httpOnly: true,
-			maxAge: 1000 * 60 * 60 * 24,
+			maxAge: 1000 * 60,
 		},
 	})
 );
