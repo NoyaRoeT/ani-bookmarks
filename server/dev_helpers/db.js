@@ -2,6 +2,8 @@ import Bookmark from "../models/bookmark.js";
 import mongoose from "mongoose";
 
 import dotenv from "dotenv";
+import Genre from "../models/genre.js";
+
 if (process.env.NODE_ENV !== "production") {
 	dotenv.config();
 }
@@ -24,4 +26,13 @@ async function deleteBookmarks() {
 	}
 }
 
-await deleteBookmarks();
+async function seedGenreCollection() {
+	const genreNames = ["Action", "Fantasy", "Sci-Fi"];
+	const genreObjs = genreNames.map((name) => {
+		return { name };
+	});
+	await Genre.deleteMany({});
+	await Genre.insertMany(genreObjs);
+}
+
+await seedGenreCollection();
