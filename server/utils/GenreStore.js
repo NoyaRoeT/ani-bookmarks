@@ -1,11 +1,10 @@
-import mongoose from "mongoose";
 import Genre from "../models/genre.js";
 
 const GenreStore = (() => {
 	const genreMap = {};
 
 	return {
-		init: async () => {
+		init: () => {
 			console.log("Initialising GenreStore");
 			Genre.find({}).then((genres) => {
 				GenreStore.addAll(...genres);

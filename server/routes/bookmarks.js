@@ -9,24 +9,38 @@ import {
 } from "../controllers/bookmarks.js";
 
 import { isAuthenticated, validateBody } from "../controllers/middleware.js";
-import bookmarkSchema from "../schemas/bookmark.js";
+import SchemaStore from "../utils/SchemaStore.js";
 
-const router = express.Router();
+function initRouter() {
+	const router = express.Router();
 
-router.get("/", isAuthenticated, getBookmarks);
+	router.get("/", isAuthenticated, getBookmarks);
 
-router.get("/:bookmarkId", isAuthenticated, isBookmarkOwner, getBookmark);
+	router.get("/:bookmarkId", isAuthenticated, isBookmarkOwner, getBookmark);
 
-router.post("/", isAuthenticated, createBookmark);
+	router.post(
+		"/",
+		isAuthenticated,
+		validateBody(SchemaStore.get("bookmark")),
+		createBookmark
+	);
 
-router.put(
-	"/:bookmarkId",
-	isAuthenticated,
-	isBookmarkOwner,
-	validateBody(bookmarkSchema),
-	updateBookmark
-);
+	router.put(
+		"/:bookmarkId",
+		isAuthenticated,
+		isBookmarkOwner,
+		validateBody(SchemaStore.get("bookmark")),
+		updateBookmark
+	);
 
-router.delete("/:bookmarkId", isAuthenticated, isBookmarkOwner, deleteBookmark);
+	router.delete(
+		"/:bookmarkId",
+		isAuthenticated,
+		isBookmarkOwner,
+		deleteBookmark
+	);
 
-export default router;
+	return router;
+}
+
+export default initRouter;
