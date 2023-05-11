@@ -3,6 +3,7 @@ const SchemaStore = (() => {
 
 	return {
 		addSchema: (key, schemaGetter) => {
+			console.log(`Adding ${key} schema`);
 			schemas[key] = schemaGetter();
 		},
 		get: (key) => {

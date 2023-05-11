@@ -37,16 +37,16 @@ export const createBookmark = async (req, res, next) => {
 	const user = req.user;
 	const { title, genres, type } = req.body;
 
-	const isValidGenres = genres.reduce(
-		(acc, curr) => acc && GenreStore.getMap()[curr],
-		true
-	);
+	// const isValidGenres = genres.reduce(
+	// 	(acc, curr) => acc && GenreStore.getMap()[curr],
+	// 	true
+	// );
 
-	if (!isValidGenres) {
-		return next(
-			new ExpressError("Invalid genres", errorTypes.GENERAL, 400)
-		);
-	}
+	// if (!isValidGenres) {
+	// 	return next(
+	// 		new ExpressError("Invalid genres", errorTypes.GENERAL, 400)
+	// 	);
+	// }
 
 	const bookmark = new Bookmark({
 		title,

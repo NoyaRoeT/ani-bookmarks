@@ -4,11 +4,14 @@ const GenreStore = (() => {
 	const genreMap = {};
 
 	return {
-		init: () => {
+		init: async () => {
 			console.log("Initialising GenreStore");
-			Genre.find({}).then((genres) => {
+			try {
+				const genres = await Genre.find({});
 				GenreStore.addAll(...genres);
-			});
+			} catch (err) {
+				console.log(err.message);
+			}
 		},
 		getMap: () => genreMap,
 		add: (genre) => {

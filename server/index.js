@@ -22,6 +22,7 @@ import SchemaStore from "./utils/SchemaStore.js";
 import bookmarkSchema from "./schemas/bookmark.js";
 
 const PORT = process.env.PORT || 6001;
+mongoose.set("strictQuery", false);
 mongoose
 	.connect(process.env.MONGO_URL)
 	.then(() => {
@@ -29,8 +30,8 @@ mongoose
 	})
 	.catch((err) => console.log(err));
 
-function startUp() {
-	GenreStore.init();
+async function startUp() {
+	await GenreStore.init();
 	SchemaStore.addSchema("bookmark", bookmarkSchema);
 
 	/* CONFIGURATIONS */
@@ -43,7 +44,6 @@ function startUp() {
 	app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 	/* SESSION SETUP */
-	mongoose.set("strictQuery", false);
 	const sessionStore = MongoStore.create({ mongoUrl: process.env.MONGO_URL });
 	app.use(
 		session({
@@ -69,7 +69,7 @@ function startUp() {
 
 	/* ROUTES */
 	app.use("/auth", authRouter());
-	app.use("/users", userRouter);
+	app.use("/users", userRouter());
 	app.use("/bookmarks", bookmarkRouter());
 	app.use((err, req, res, next) => {
 		res.status(err.status).json({

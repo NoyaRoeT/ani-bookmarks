@@ -32,7 +32,6 @@ export const isAuthenticated = (req, res, next) => {
 };
 export const validateBody = (schema) => {
 	return (req, res, next) => {
-		console.log(schema);
 		const { error } = schema.validate(req.body);
 		if (error) {
 			return next(
