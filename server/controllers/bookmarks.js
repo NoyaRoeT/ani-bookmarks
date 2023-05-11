@@ -1,5 +1,6 @@
 import Bookmark from "../models/bookmark.js";
 import ExpressError, { errorTypes } from "../utils/ExpressError.js";
+import GenreStore from "../utils/GenreStore.js";
 
 export const getBookmarks = async (req, res, next) => {
 	try {
@@ -36,15 +37,20 @@ export const createBookmark = async (req, res, next) => {
 	const user = req.user;
 	const { title, genres, type } = req.body;
 
-	if (!title || !genres || !type) {
-		return res
-			.status(400)
-			.json({ message: "Missing required parameter(s)" });
+	const isValidGenres = genres.reduce(
+		(acc, curr) => acc && GenreStore.getMap()[curr],
+		true
+	);
+
+	if (!isValidGenres) {
+		return next(
+			new ExpressError("Invalid genres", errorTypes.GENERAL, 400)
+		);
 	}
 
 	const bookmark = new Bookmark({
 		title,
-		genres,
+		genres: genres.map((name) => GenreStore.getMap()[name]),
 		type,
 		userId: user._id,
 	});
@@ -77,8 +83,19 @@ export const updateBookmark = async (req, res, next) => {
 
 		const { title, genres, type } = req.body;
 
+		const isValidGenres = genres.reduce(
+			(acc, curr) => acc && GenreStore.getMap()[curr],
+			true
+		);
+
+		if (!isValidGenres) {
+			return next(
+				new ExpressError("Invalid genres", errorTypes.GENERAL, 400)
+			);
+		}
+
 		bookmark.title = title;
-		bookmark.genres = genres;
+		bookmark.genres = genres.map((name) => GenreStore.getMap()[name]);
 		bookmark.type = type;
 
 		await bookmark.save();

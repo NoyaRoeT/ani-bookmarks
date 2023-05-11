@@ -17,6 +17,7 @@ import userRouter from "./routes/users.js";
 import bookmarkRouter from "./routes/bookmarks.js";
 
 import User from "./models/user.js";
+import GenreStore from "./utils/GenreStore.js";
 
 /* CONFIGURATIONS */
 const app = express();
@@ -38,7 +39,7 @@ app.use(
 		store: sessionStore,
 		cookie: {
 			httpOnly: true,
-			maxAge: 1000 * 60,
+			maxAge: 1000 * 60 * 60,
 		},
 	})
 );
@@ -67,8 +68,10 @@ const PORT = process.env.PORT || 6001;
 mongoose
 	.connect(process.env.MONGO_URL)
 	.then(() => {
-		app.listen(PORT, () =>
-			console.log(`Server listening on port: ${PORT}`)
-		);
+		GenreStore.init().then(() => {
+			app.listen(PORT, () =>
+				console.log(`Server listening on port: ${PORT}`)
+			);
+		});
 	})
 	.catch((err) => console.log(err));

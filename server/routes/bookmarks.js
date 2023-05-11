@@ -17,7 +17,7 @@ router.get("/", isAuthenticated, getBookmarks);
 
 router.get("/:bookmarkId", isAuthenticated, isBookmarkOwner, getBookmark);
 
-router.post("/", isAuthenticated, validateBody(bookmarkSchema), createBookmark);
+router.post("/", isAuthenticated, createBookmark);
 
 router.put(
 	"/:bookmarkId",

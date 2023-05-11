@@ -14,7 +14,7 @@ const bookmarkSchema = new mongoose.Schema(
 			maxLength: 200,
 		},
 		genres: {
-			type: [{ type: String, minLength: 1, maxLength: 50 }],
+			type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Genre" }],
 			required: true,
 		},
 		type: {
@@ -30,6 +30,8 @@ const bookmarkSchema = new mongoose.Schema(
 	},
 	{ timestamps: true }
 );
+
+bookmarkSchema.path("genres").validate((val) => val.length >= 1);
 
 const Bookmark = mongoose.model("Bookmark", bookmarkSchema);
 export default Bookmark;
