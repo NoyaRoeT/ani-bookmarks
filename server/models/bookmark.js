@@ -16,6 +16,7 @@ const bookmarkSchema = new mongoose.Schema(
 		genres: {
 			type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Genre" }],
 			required: true,
+			unique: true,
 		},
 		type: {
 			type: Number,
@@ -31,7 +32,10 @@ const bookmarkSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-bookmarkSchema.path("genres").validate((val) => val.length >= 1);
+bookmarkSchema.path("genres").validate((val) => {
+	const uniqueGenreIds = new Set(val.map((id) => id.toString()));
+	return val.length >= 1 && uniqueGenreIds.size == val.length;
+});
 
 const Bookmark = mongoose.model("Bookmark", bookmarkSchema);
 export default Bookmark;

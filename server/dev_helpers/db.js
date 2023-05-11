@@ -34,3 +34,5 @@ async function seedGenreCollection() {
 	await Genre.deleteMany({});
 	await Genre.insertMany(genreObjs);
 }
+
+await deleteBookmarks();
