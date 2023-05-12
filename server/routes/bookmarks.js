@@ -8,7 +8,12 @@ import {
 	updateBookmark,
 } from "../controllers/bookmarks.js";
 
-import { isAuthenticated, validateBody } from "../controllers/middleware.js";
+import {
+	isAuthenticated,
+	parseGenreStringToArray,
+	uploadImageToDisk,
+	validateBody,
+} from "../controllers/middleware.js";
 import SchemaStore from "../utils/SchemaStore.js";
 
 function initRouter() {
@@ -21,6 +26,8 @@ function initRouter() {
 	router.post(
 		"/",
 		isAuthenticated,
+		uploadImageToDisk,
+		parseGenreStringToArray,
 		validateBody(SchemaStore.get("bookmark")),
 		createBookmark
 	);

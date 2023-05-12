@@ -4,20 +4,19 @@ const AddBookmark = ({ onClose, modal, onAddBookmark }) => {
 	const titleRef = useRef();
 	const genreRef = useRef();
 	const typeRef = useRef();
+	const imageRef = useRef();
 
 	async function addBookmarkHandler(event) {
 		event.preventDefault();
+		const formData = new FormData();
+		formData.append("title", titleRef.current.value);
+		formData.append("genres", [genreRef.current.value]);
+		formData.append("type", typeRef.current.value);
+		formData.append("image", imageRef.current.files[0]);
 		try {
 			const response = await fetch("http://localhost:6001/bookmarks/", {
 				method: "POST",
-				body: JSON.stringify({
-					title: titleRef.current.value,
-					genres: [genreRef.current.value],
-					type: typeRef.current.value,
-				}),
-				headers: {
-					"Content-Type": "application/json",
-				},
+				body: formData,
 				credentials: "include",
 				withCredentials: true,
 			});
@@ -42,6 +41,7 @@ const AddBookmark = ({ onClose, modal, onAddBookmark }) => {
 			<form
 				className="flex flex-col space-y-4 w-full py-2 px-4"
 				onSubmit={addBookmarkHandler}
+				encType="multipart/form-data"
 			>
 				<div className="flex flex-col space-y-2">
 					<label className="text-xl" htmlFor="title">
@@ -56,19 +56,19 @@ const AddBookmark = ({ onClose, modal, onAddBookmark }) => {
 					/>
 				</div>
 				<div className="flex flex-col space-y-2">
-					<label className="text-xl" htmlFor="title">
+					<label className="text-xl" htmlFor="genre">
 						Genre
 					</label>
 					<input
 						className="text-xl p-2"
 						type="text"
-						id="title"
+						id="genre"
 						placeholder="Genre"
 						ref={genreRef}
 					/>
 				</div>
 				<div className="flex flex-col space-y-2">
-					<label className="text-xl" htmlFor="title">
+					<label className="text-xl" htmlFor="type">
 						Type
 					</label>
 					<input
@@ -76,10 +76,21 @@ const AddBookmark = ({ onClose, modal, onAddBookmark }) => {
 						type="number"
 						min={0}
 						max={3}
-						id="title"
+						id="type"
 						placeholder="Type"
 						value={0}
 						ref={typeRef}
+					/>
+				</div>
+				<div className="flex flex-col space-y-2">
+					<label className="text-xl" htmlFor="image">
+						Image
+					</label>
+					<input
+						className="text-xl p-2"
+						type="file"
+						id="image"
+						ref={imageRef}
 					/>
 				</div>
 				<div className="flex justify-end space-x-5">

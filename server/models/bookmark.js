@@ -30,6 +30,9 @@ const bookmarkSchema = new mongoose.Schema(
 			ref: "User",
 			required: true,
 		},
+		imagePath: {
+			type: String,
+		},
 	},
 	{ timestamps: true }
 );

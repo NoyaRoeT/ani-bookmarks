@@ -1,4 +1,5 @@
 import ExpressError, { errorTypes } from "../utils/ExpressError.js";
+import uploadLocal from "../utils/imageUpload/uploadLocal.js";
 
 export const isUser = (req, res, next) => {
 	if (!req.isAuthenticated()) {
@@ -44,4 +45,25 @@ export const validateBody = (schema) => {
 		}
 		next();
 	};
+};
+
+export const parseGenreStringToArray = (req, res, next) => {
+	if (req.body.genres) {
+		req.body.genres = req.body.genres.split(",");
+		return next();
+	}
+	return next(
+		new ExpressError("Missing genres array", errorTypes.GENERAL, 400)
+	);
+};
+
+export const uploadImageToDisk = (req, res, next) => {
+	const upload = uploadLocal.single("image");
+
+	upload(req, res, function (err) {
+		if (err) {
+			return next(new ExpressError(err.message, errorTypes.GENERAL));
+		}
+		return next();
+	});
 };
