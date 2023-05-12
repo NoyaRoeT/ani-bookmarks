@@ -16,7 +16,9 @@ const bookmarkSchema = new mongoose.Schema(
 		genres: {
 			type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Genre" }],
 			required: true,
-			unique: true,
+		},
+		tags: {
+			type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
 		},
 		type: {
 			type: Number,
@@ -37,6 +39,14 @@ bookmarkSchema.path("genres").validate((val) => {
 	return (
 		val.length >= 1 && val.length <= 5 && uniqueGenreIds.size == val.length
 	);
+});
+
+bookmarkSchema.path("tags").validate((val) => {
+	if (val.length === 0) {
+		return true;
+	}
+	const uniqueTagIds = new Set(val.map((id) => id.toString()));
+	return val.length <= 20 && uniqueTagIds.size == val.length;
 });
 
 const Bookmark = mongoose.model("Bookmark", bookmarkSchema);

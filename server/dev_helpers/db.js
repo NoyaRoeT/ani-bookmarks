@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 
 import dotenv from "dotenv";
 import Genre from "../models/genre.js";
+import Tag from "../models/tag.js";
 
 if (process.env.NODE_ENV !== "production") {
 	dotenv.config();
@@ -35,4 +36,11 @@ async function seedGenreCollection() {
 	await Genre.insertMany(genreObjs);
 }
 
-await deleteBookmarks();
+async function seedTagCollection() {
+	const tagNames = ["Isekai", "Regression", "Magic"];
+	const tagObjs = tagNames.map((name) => {
+		return { name };
+	});
+	await Tag.deleteMany({});
+	await Tag.insertMany(tagObjs);
+}

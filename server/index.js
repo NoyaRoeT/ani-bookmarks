@@ -18,6 +18,7 @@ import bookmarkRouter from "./routes/bookmarks.js";
 
 import User from "./models/user.js";
 import GenreStore from "./utils/GenreStore.js";
+import TagStore from "./utils/TagStore.js";
 import SchemaStore from "./utils/SchemaStore.js";
 import bookmarkSchema from "./schemas/bookmark.js";
 
@@ -32,6 +33,7 @@ mongoose
 
 async function startUp() {
 	await GenreStore.init();
+	await TagStore.init();
 	SchemaStore.addSchema("bookmark", bookmarkSchema);
 
 	/* CONFIGURATIONS */

@@ -1,6 +1,7 @@
 import Bookmark from "../models/bookmark.js";
 import ExpressError, { errorTypes } from "../utils/ExpressError.js";
 import GenreStore from "../utils/GenreStore.js";
+import TagStore from "../utils/TagStore.js";
 
 export const getBookmarks = async (req, res, next) => {
 	try {
@@ -35,12 +36,12 @@ export const getBookmark = async (req, res, next) => {
 
 export const createBookmark = async (req, res, next) => {
 	const user = req.user;
-	const { title, genres, type } = req.body;
-
+	const { title, genres, type, tags = [] } = req.body;
 	const bookmark = new Bookmark({
 		title,
 		genres: genres.map((name) => GenreStore.getMap()[name]),
 		type,
+		tags: tags.map((name) => TagStore.getMap()[name]),
 		userId: user._id,
 	});
 
@@ -70,11 +71,12 @@ export const updateBookmark = async (req, res, next) => {
 				.json({ message: "This bookmark does not exist" });
 		}
 
-		const { title, genres, type } = req.body;
+		const { title, genres, type, tags = [] } = req.body;
 
 		bookmark.title = title;
 		bookmark.genres = genres.map((name) => GenreStore.getMap()[name]);
 		bookmark.type = type;
+		bookmark.tags = tags.map((name) => TagStore.getMap()[name]);
 
 		await bookmark.save();
 		return res.status(200).json({
