@@ -7,7 +7,7 @@ function bookmarkSchema() {
 		genres: Joi.array()
 			.items(Joi.string().valid(...Object.keys(GenreStore.getMap())))
 			.min(1)
-			.max(10)
+			.max(5)
 			.unique()
 			.required(),
 		type: Joi.number().integer().min(0).max(3),

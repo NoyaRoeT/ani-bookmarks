@@ -34,7 +34,9 @@ const bookmarkSchema = new mongoose.Schema(
 
 bookmarkSchema.path("genres").validate((val) => {
 	const uniqueGenreIds = new Set(val.map((id) => id.toString()));
-	return val.length >= 1 && uniqueGenreIds.size == val.length;
+	return (
+		val.length >= 1 && val.length <= 5 && uniqueGenreIds.size == val.length
+	);
 });
 
 const Bookmark = mongoose.model("Bookmark", bookmarkSchema);
