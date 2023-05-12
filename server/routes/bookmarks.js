@@ -10,6 +10,7 @@ import {
 
 import {
 	isAuthenticated,
+	moveImageToCloud,
 	parseGenreStringToArray,
 	uploadImageToDisk,
 	validateBody,
@@ -29,6 +30,7 @@ function initRouter() {
 		uploadImageToDisk,
 		parseGenreStringToArray,
 		validateBody(SchemaStore.get("bookmark")),
+		moveImageToCloud,
 		createBookmark
 	);
 
@@ -36,6 +38,8 @@ function initRouter() {
 		"/:bookmarkId",
 		isAuthenticated,
 		isBookmarkOwner,
+		uploadImageToDisk,
+		parseGenreStringToArray,
 		validateBody(SchemaStore.get("bookmark")),
 		updateBookmark
 	);

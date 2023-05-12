@@ -44,3 +44,5 @@ async function seedTagCollection() {
 	await Tag.deleteMany({});
 	await Tag.insertMany(tagObjs);
 }
+
+await deleteBookmarks();

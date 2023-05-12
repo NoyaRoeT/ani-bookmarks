@@ -1,10 +1,11 @@
 import multer, { diskStorage } from "multer";
 import path from "path";
 import ExpressError, { errorTypes } from "../ExpressError.js";
+import imagesDirPath from "./imagesDirPath.js";
 
 const storage = diskStorage({
 	destination: (req, file, cb) => {
-		cb(null, "images");
+		cb(null, imagesDirPath);
 	},
 	filename: (req, file, cb) => {
 		cb(null, Date.now() + path.extname(file.originalname));

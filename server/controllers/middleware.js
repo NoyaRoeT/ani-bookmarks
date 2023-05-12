@@ -1,5 +1,9 @@
 import ExpressError, { errorTypes } from "../utils/ExpressError.js";
+import cloudinaryUpload from "../utils/imageUpload/cloudinary.js";
+import imagesDirPath from "../utils/imageUpload/imagesDirPath.js";
 import uploadLocal from "../utils/imageUpload/uploadLocal.js";
+import fs from "fs";
+import path from "path";
 
 export const isUser = (req, res, next) => {
 	if (!req.isAuthenticated()) {
@@ -66,4 +70,15 @@ export const uploadImageToDisk = (req, res, next) => {
 		}
 		return next();
 	});
+};
+
+export const moveImageToCloud = async (req, res, next) => {
+	try {
+		await cloudinaryUpload(req.file.filename);
+		fs.unlinkSync(path.join(imagesDirPath, req.file.filename));
+		return next();
+	} catch (err) {
+		fs.unlinkSync(path.join(imagesDirPath, req.file.filename));
+		return next(new ExpressError(err.message, errorTypes.GENERAL));
+	}
 };
