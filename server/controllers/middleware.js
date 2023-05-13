@@ -1,8 +1,10 @@
 import ExpressError, { errorTypes } from "../utils/ExpressError.js";
-import cloudinaryUpload from "../utils/imageUpload/cloudinary.js";
+import cloudinaryUpload, {
+	cloudinaryDestroy,
+} from "../utils/imageUpload/cloudinary.js";
 import imagesDirPath from "../utils/imageUpload/imagesDirPath.js";
 import uploadLocal from "../utils/imageUpload/uploadLocal.js";
-import fs from "fs";
+import fs from "node:fs/promises";
 import path from "path";
 
 export const isUser = (req, res, next) => {
@@ -74,11 +76,27 @@ export const uploadImageToDisk = (req, res, next) => {
 
 export const moveImageToCloud = async (req, res, next) => {
 	try {
-		await cloudinaryUpload(req.file.filename);
-		fs.unlinkSync(path.join(imagesDirPath, req.file.filename));
+		if (req.file) {
+			const res = await cloudinaryUpload(req.file.filename);
+			await fs.unlink(path.join(imagesDirPath, req.file.filename));
+			req.image = res;
+		}
 		return next();
 	} catch (err) {
-		fs.unlinkSync(path.join(imagesDirPath, req.file.filename));
 		return next(new ExpressError(err.message, errorTypes.GENERAL));
+	}
+};
+
+export const deleteImageIfError = async (err, req, res, next) => {
+	try {
+		if (req.image) {
+			await cloudinaryDestroy(req.image.public_id);
+		} else if (req.file) {
+			await fs.unlink(path.join(imagesDirPath, req.file.filename));
+		}
+		return next(err);
+	} catch (error) {
+		console.log(`In deleteImageIfError::ERROR: ${error.message}`);
+		return next(err);
 	}
 };

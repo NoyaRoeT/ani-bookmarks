@@ -1,6 +1,5 @@
 import * as Cloudinary from "cloudinary";
 import path from "path";
-import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import imagesDirPath from "./imagesDirPath.js";
 
@@ -23,6 +22,10 @@ const cloudinaryUpload = async (filename) => {
 		folder: "ani-bookmarks",
 	});
 	return res;
+};
+
+export const cloudinaryDestroy = async (publicId) => {
+	await cloudinary.uploader.destroy(publicId);
 };
 
 export default cloudinaryUpload;

@@ -13,9 +13,10 @@ function bookmarkSchema() {
 			.required(),
 		tags: Joi.array()
 			.items(Joi.string().valid(...Object.keys(TagStore.getMap())))
-			.max(20),
-		//.unique(),
+			.max(20)
+			.unique(),
 		type: Joi.number().integer().min(0).max(3),
+		image: Joi.any(),
 	});
 }
 

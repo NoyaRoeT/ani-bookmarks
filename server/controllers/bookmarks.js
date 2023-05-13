@@ -45,6 +45,11 @@ export const createBookmark = async (req, res, next) => {
 		userId: user._id,
 	});
 
+	if (req.image) {
+		bookmark.imageId = req.image.public_id;
+		bookmark.imagePath = req.image.secure_url;
+	}
+
 	try {
 		await bookmark.save();
 		return res.status(200).json({

@@ -9,6 +9,7 @@ import {
 } from "../controllers/bookmarks.js";
 
 import {
+	deleteImageIfError,
 	isAuthenticated,
 	moveImageToCloud,
 	parseGenreStringToArray,
@@ -31,7 +32,8 @@ function initRouter() {
 		parseGenreStringToArray,
 		validateBody(SchemaStore.get("bookmark")),
 		moveImageToCloud,
-		createBookmark
+		createBookmark,
+		deleteImageIfError
 	);
 
 	router.put(

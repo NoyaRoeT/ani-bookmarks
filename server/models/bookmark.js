@@ -33,6 +33,9 @@ const bookmarkSchema = new mongoose.Schema(
 		imagePath: {
 			type: String,
 		},
+		imageId: {
+			type: String,
+		},
 	},
 	{ timestamps: true }
 );
