@@ -55,5 +55,7 @@ bookmarkSchema.path("tags").validate((val) => {
 	return val.length <= 20 && uniqueTagIds.size == val.length;
 });
 
+bookmarkSchema.index({ title: 1, userId: 1 }, { unique: true });
+
 const Bookmark = mongoose.model("Bookmark", bookmarkSchema);
 export default Bookmark;
