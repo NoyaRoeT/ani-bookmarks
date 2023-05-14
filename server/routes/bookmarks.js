@@ -43,7 +43,9 @@ function initRouter() {
 		uploadImageToDisk,
 		parseGenreStringToArray,
 		validateBody(SchemaStore.get("bookmark")),
-		updateBookmark
+		moveImageToCloud,
+		updateBookmark,
+		deleteImageIfError
 	);
 
 	router.delete(

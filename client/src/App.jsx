@@ -84,7 +84,10 @@ function App() {
 				/>
 			)}
 			{!isFetching && isLoggedIn && (
-				<CardContainer bookmarks={bookmarks} />
+				<CardContainer
+					bookmarks={bookmarks}
+					onAddBookmark={updateBookmarksHandler}
+				/>
 			)}
 		</>
 	);

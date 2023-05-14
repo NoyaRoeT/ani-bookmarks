@@ -77,9 +77,9 @@ export const uploadImageToDisk = (req, res, next) => {
 export const moveImageToCloud = async (req, res, next) => {
 	try {
 		if (req.file) {
-			const res = await cloudinaryUpload(req.file.filename);
+			req.image = await cloudinaryUpload(req.file.filename);
 			await fs.unlink(path.join(imagesDirPath, req.file.filename));
-			req.image = res;
+			req.file.isDeleted = true;
 		}
 		return next();
 	} catch (err) {
@@ -89,9 +89,11 @@ export const moveImageToCloud = async (req, res, next) => {
 
 export const deleteImageIfError = async (err, req, res, next) => {
 	try {
-		if (req.image) {
+		if (req.image && !req.image.saved) {
 			await cloudinaryDestroy(req.image.public_id);
-		} else if (req.file) {
+		}
+
+		if (req.file && !req.file.isDeleted) {
 			await fs.unlink(path.join(imagesDirPath, req.file.filename));
 		}
 		return next(err);

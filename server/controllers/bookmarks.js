@@ -2,6 +2,7 @@ import Bookmark from "../models/bookmark.js";
 import ExpressError, { errorTypes } from "../utils/ExpressError.js";
 import GenreStore from "../utils/GenreStore.js";
 import TagStore from "../utils/TagStore.js";
+import { cloudinaryDestroy } from "../utils/imageUpload/cloudinary.js";
 
 export const getBookmarks = async (req, res, next) => {
 	try {
@@ -83,7 +84,18 @@ export const updateBookmark = async (req, res, next) => {
 		bookmark.type = type;
 		bookmark.tags = tags.map((name) => TagStore.getMap()[name]);
 
-		await bookmark.save();
+		if (req.image) {
+			const oldImageId = bookmark.imageId;
+			bookmark.imageId = req.image.public_id;
+			bookmark.imagePath = req.image.secure_url;
+			await bookmark.save();
+			req.image.saved = true;
+			// Only delete from cloud after save is successful
+			cloudinaryDestroy(oldImageId);
+		} else {
+			await bookmark.save();
+		}
+
 		return res.status(200).json({
 			data: bookmark,
 			message: "Successfully updated the bookmark",
@@ -110,6 +122,11 @@ export const deleteBookmark = async (req, res, next) => {
 				.json({ message: "This bookmark does not exist" });
 		}
 		await bookmark.deleteOne();
+
+		if (bookmark.imageId) {
+			await cloudinaryDestroy(bookmark.imageId);
+		}
+
 		return res
 			.status(200)
 			.json({ message: "Successfully deleted this bookmark" });
