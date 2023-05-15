@@ -15,7 +15,8 @@ const Search = ({ sx }) => {
 					display: "flex",
 					maxWidth: "700px",
 					flexGrow: 1,
-					px: theme.spacing(2),
+					pl: theme.spacing(2),
+					pr: theme.spacing(1),
 				}}
 			>
 				<InputBase
