@@ -27,10 +27,12 @@ const BookmarkCard = ({ bookmark }) => {
 			<Card
 				sx={{
 					":hover": {
-						boxShadow: 20,
+						boxShadow: 5,
+						transform: "scale(1.05)",
+						zIndex: 100,
 					},
 					borderRadius: 2,
-					maxWidth: 260,
+					maxWidth: 250,
 				}}
 			>
 				<CardActionArea>
