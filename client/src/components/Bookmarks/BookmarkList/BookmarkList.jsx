@@ -1,6 +1,6 @@
 import React from "react";
-import Grid from "@mui/material/Grid";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
+import { Grid } from "@mui/material";
 
 const BookmarkList = ({ bookmarks }) => {
 	return (

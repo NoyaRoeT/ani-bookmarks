@@ -22,7 +22,7 @@ const bookmarks = [
 
 const Bookmarks = () => {
 	return (
-		<Container>
+		<Container sx={{ mt: "20px" }}>
 			<BookmarkList bookmarks={bookmarks} />
 		</Container>
 	);
