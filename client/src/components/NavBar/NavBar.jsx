@@ -30,10 +30,6 @@ const NavBar = () => {
 		setMobileOpen((prev) => !prev);
 	}
 
-	if (location.pathname === "/login") {
-		return;
-	}
-
 	const drawerWidth = "240px";
 
 	const drawer = (
