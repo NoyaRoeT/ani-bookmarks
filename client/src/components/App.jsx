@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, CssBaseline } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
-import { BookmarkInfo, Login, Bookmarks, NavBar } from ".";
+import { BookmarkInfo, Login, Bookmarks, NavBar, SignUp } from ".";
 const App = () => {
 	return (
 		<>
@@ -17,6 +17,7 @@ const App = () => {
 				<Routes>
 					<Route exact path="/" element={<Bookmarks />} />
 					<Route exact path="/login" element={<Login />} />
+					<Route exact path="/signup" element={<SignUp />} />
 					<Route
 						exact
 						path="/bookmark/:bookmarkId"

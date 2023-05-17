@@ -23,7 +23,6 @@ import { useLocation } from "react-router-dom";
 const NavBar = () => {
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-	const location = useLocation();
 	const [mobileOpen, setMobileOpen] = useState(false);
 
 	function handleDrawerToggle() {
