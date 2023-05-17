@@ -28,6 +28,7 @@ const BookmarkCard = ({ bookmark }) => {
 			<Card
 				sx={{
 					":hover": {
+						cursor: "pointer",
 						boxShadow: 5,
 						transform: "scale(1.05)",
 						zIndex: 100,
@@ -50,9 +51,9 @@ const BookmarkCard = ({ bookmark }) => {
 						left: 0,
 						right: 0,
 						bgcolor: "grey.700",
-						px: "24px",
+						p: "8px",
 						"&:last-child": {
-							pb: "12px",
+							pb: "8px",
 						},
 					}}
 				>

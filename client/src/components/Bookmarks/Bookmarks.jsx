@@ -3,21 +3,21 @@ import React from "react";
 import BookmarkList from "./BookmarkList/BookmarkList";
 
 const bookmarks = [
-	{ title: "Bookmark" },
-	{ title: "Bookmark" },
-	{ title: "Bookmark" },
-	{ title: "Bookmark" },
-	{ title: "Bookmark" },
-	{ title: "Bookmark" },
-	{ title: "Bookmark" },
-	{ title: "Bookmark" },
-	{ title: "Bookmark" },
-	{ title: "Bookmark" },
-	{ title: "Bookmark" },
-	{ title: "Bookmark" },
-	{ title: "Bookmark" },
-	{ title: "Bookmark" },
-	{ title: "Bookmark" },
+	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
+	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
+	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
+	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
+	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
+	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
+	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
+	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
+	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
+	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
+	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
+	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
+	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
+	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
+	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
 ];
 
 const Bookmarks = () => {
