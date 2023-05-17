@@ -1,12 +1,5 @@
 import React from "react";
-import {
-	Grid,
-	Typography,
-	Card,
-	CardMedia,
-	CardContent,
-	CardActionArea,
-} from "@mui/material";
+import { Grid, Typography, Card, CardMedia, CardContent } from "@mui/material";
 
 const BookmarkCard = ({ bookmark }) => {
 	return (

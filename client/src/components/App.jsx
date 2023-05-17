@@ -1,5 +1,5 @@
 import React from "react";
-import { CssBaseline } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import { BookmarkInfo, Login, Bookmarks, NavBar } from ".";
 const App = () => {
@@ -7,7 +7,13 @@ const App = () => {
 		<>
 			<CssBaseline />
 			<NavBar />
-			<main>
+			<Box
+				component="main"
+				sx={{
+					ml: { sm: "240px" },
+					width: { sm: `calc(100% - 240px)` },
+				}}
+			>
 				<Routes>
 					<Route exact path="/" element={<Bookmarks />} />
 					<Route exact path="/login" element={<Login />} />
@@ -17,7 +23,7 @@ const App = () => {
 						element={<BookmarkInfo />}
 					/>
 				</Routes>
-			</main>
+			</Box>
 		</>
 	);
 };

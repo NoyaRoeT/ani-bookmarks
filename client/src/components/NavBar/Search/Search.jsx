@@ -25,7 +25,7 @@ const Search = ({ sx }) => {
 						color: "inherit",
 						flexGrow: 1,
 					}}
-					placeholder="Search bookmarks..."
+					placeholder="Simple Search..."
 					inputProps={{ "aria-label": "Search bookmarks" }}
 				/>
 				<IconButton
