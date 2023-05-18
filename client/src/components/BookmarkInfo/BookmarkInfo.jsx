@@ -11,13 +11,21 @@ import { useTheme } from "@mui/material/styles";
 
 const Item = ({ color, children }) => {
 	return (
-		<Paper sx={{ px: "8px", py: "4px", bgcolor: color }}>{children}</Paper>
+		<Paper
+			sx={{
+				fontSize: "12px",
+				color: "white",
+				px: "8px",
+				py: "4px",
+				bgcolor: color,
+			}}
+		>
+			{children}
+		</Paper>
 	);
 };
 
 const BookmarkInfo = () => {
-	const theme = useTheme();
-
 	return (
 		<Dialog scroll="body" fullWidth open maxWidth="md">
 			<DialogContent>
@@ -34,14 +42,15 @@ const BookmarkInfo = () => {
 						<Typography variant="h5">
 							Tensei Shitara Slime Datta Ken
 						</Typography>
+						<Divider sx={{ my: "12px" }} />
 						<Stack spacing={1} direction="row">
-							<Item color="#42a5f5">Action</Item>
-							<Item color="#42a5f5">Fantasy</Item>
+							<Item color="#1565c0">Action</Item>
+							<Item color="#1565c0">Fantasy</Item>
 							<Item color="#42a5f5">Sci-Fi</Item>
 							<Item color="#42a5f5">Regression</Item>
 							<Item color="#42a5f5">Isekai</Item>
 						</Stack>
-						<Box></Box>
+						<Divider sx={{ my: "12px" }} />
 						<Typography variant="body1">
 							That Time I Got Reincarnated as a Slime (Japanese:
 							転生したらスライムだった件, Hepburn: Tensei Shitara
