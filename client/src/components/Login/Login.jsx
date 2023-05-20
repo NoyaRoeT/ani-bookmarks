@@ -1,24 +1,40 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
+import { AuthContext } from "../../store/context";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-	const handleSubmit = (event) => {
+	const ctx = useContext(AuthContext);
+	const navigate = useNavigate();
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		console.log({
-			email: data.get("email"),
-			password: data.get("password"),
-		});
+		const body = {};
+		data.forEach((value, key) => (body[key] = value));
+		try {
+			const response = await fetch("http://localhost:6001/auth/login", {
+				method: "POST",
+				body: JSON.stringify(body),
+				headers: {
+					"Content-Type": "application/json",
+				},
+				credentials: "include",
+				withCredentials: true,
+			});
+			const resData = await response.json();
+			if (!resData.error) {
+				ctx.setIsAuthenticated(true);
+				navigate("/");
+			}
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (
@@ -63,10 +79,7 @@ export default function Login() {
 						id="password"
 						autoComplete="current-password"
 					/>
-					<FormControlLabel
-						control={<Checkbox value="remember" color="primary" />}
-						label="Remember me"
-					/>
+
 					<Button
 						type="submit"
 						fullWidth
@@ -75,18 +88,6 @@ export default function Login() {
 					>
 						Sign In
 					</Button>
-					<Grid container>
-						<Grid item xs>
-							<Link href="#" variant="body2">
-								Forgot password?
-							</Link>
-						</Grid>
-						<Grid item>
-							<Link href="#" variant="body2">
-								{"Don't have an account? Sign Up"}
-							</Link>
-						</Grid>
-					</Grid>
 				</Box>
 			</Box>
 		</Container>

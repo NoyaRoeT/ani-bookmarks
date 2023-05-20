@@ -1,10 +1,16 @@
 import express from "express";
+import { isAuthenticated } from "../controllers/middleware.js";
 import { authenticateLocal, registerUser } from "../controllers/auth.js";
 import ExpressError, { errorTypes } from "../utils/ExpressError.js";
 
 function initRouter() {
 	const router = express.Router();
 
+	router.get("/checkAuth", isAuthenticated, (req, res) => {
+		res.status(200).json({
+			message: `logged in as ${req.user.username}`,
+		});
+	});
 	router.post("/register", registerUser);
 
 	router.post("/login", authenticateLocal, (req, res) => {

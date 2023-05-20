@@ -1,30 +1,54 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, CssBaseline } from "@mui/material";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { BookmarkInfo, Login, Bookmarks, NavBar, SignUp } from ".";
+import { checkAuth } from "../services/bookmarks";
+import { AuthContext } from "../store/context";
+
 const App = () => {
+	const navigate = useNavigate();
+	const ctx = useContext(AuthContext);
+	const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+
+	useEffect(() => {
+		async function isAuthenticated() {
+			const authStatus = await checkAuth();
+			ctx.setIsAuthenticated(authStatus);
+			setIsCheckingAuth(false);
+		}
+		if (!isCheckingAuth && !ctx.isAuthenticated) {
+			navigate("/login");
+		} else {
+			isAuthenticated();
+		}
+	}, [isCheckingAuth]);
+
 	return (
 		<>
 			<CssBaseline />
-			<NavBar />
-			<Box
-				component="main"
-				sx={{
-					ml: { sm: "240px" },
-					width: { sm: `calc(100% - 240px)` },
-				}}
-			>
-				<Routes>
-					<Route exact path="/" element={<Bookmarks />} />
-					<Route exact path="/login" element={<Login />} />
-					<Route exact path="/signup" element={<SignUp />} />
-					<Route
-						exact
-						path="/bookmark/:bookmarkId"
-						element={<BookmarkInfo />}
-					/>
-				</Routes>
-			</Box>
+			{!isCheckingAuth && (
+				<>
+					<NavBar />
+					<Box
+						component="main"
+						sx={{
+							ml: { sm: "240px" },
+							width: { sm: `calc(100% - 240px)` },
+						}}
+					>
+						<Routes>
+							<Route exact path="/" element={<Bookmarks />} />
+							<Route exact path="/login" element={<Login />} />
+							<Route exact path="/signup" element={<SignUp />} />
+							<Route
+								exact
+								path="/bookmark/:bookmarkId"
+								element={<BookmarkInfo />}
+							/>
+						</Routes>
+					</Box>
+				</>
+			)}
 		</>
 	);
 };

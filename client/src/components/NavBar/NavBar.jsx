@@ -18,7 +18,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Search from "./Search/Search";
 import React, { useState } from "react";
 import { useTheme } from "@mui/material/styles";
-import { useLocation } from "react-router-dom";
 
 const NavBar = () => {
 	const theme = useTheme();
