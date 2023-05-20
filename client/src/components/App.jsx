@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Box, CssBaseline } from "@mui/material";
 import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
-import { BookmarkInfo, Login, Bookmarks, NavBar, SignUp } from ".";
+import { BookmarkInfo, Login, Bookmarks, NavBar, SignUp, AppProgress } from ".";
 import { checkAuth } from "../services/bookmarks";
 import { AuthContext } from "../store/context";
+import Test from "./Test";
 
 const App = () => {
 	const navigate = useNavigate();
@@ -26,6 +27,7 @@ const App = () => {
 	return (
 		<>
 			<CssBaseline />
+			{isCheckingAuth && <AppProgress />}
 			{!isCheckingAuth && (
 				<>
 					<NavBar />
@@ -46,11 +48,13 @@ const App = () => {
 								/>
 							)}
 							<Route exact path="/signup" element={<SignUp />} />
+							<Route exact path="/test" element={<Test />} />
 							<Route
 								exact
 								path="/bookmark/:bookmarkId"
 								element={<BookmarkInfo />}
 							/>
+
 							<Route
 								path="*"
 								element={<Navigate to="/" replace />}

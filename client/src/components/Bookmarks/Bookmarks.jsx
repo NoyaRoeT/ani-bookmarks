@@ -1,25 +1,8 @@
 import { Container } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import BookmarkList from "./BookmarkList/BookmarkList";
 
-const bookmarks = [
-	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
-	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
-	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
-	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
-	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
-	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
-	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
-	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
-	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
-	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
-	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
-	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
-	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
-	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
-	{ title: "Bookmark", genres: ["Action", "Fantasy", "Sci-Fi"] },
-];
-
+const bookmarks = [{ title: "Tensei Shitara Slime Datta Ken", type: "Manga" }];
 const Bookmarks = () => {
 	return (
 		<Container sx={{ mt: "20px" }}>
