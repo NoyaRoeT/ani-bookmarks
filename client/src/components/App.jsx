@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Box, CssBaseline } from "@mui/material";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import { BookmarkInfo, Login, Bookmarks, NavBar, SignUp } from ".";
 import { checkAuth } from "../services/bookmarks";
 import { AuthContext } from "../store/context";
@@ -44,6 +44,10 @@ const App = () => {
 								exact
 								path="/bookmark/:bookmarkId"
 								element={<BookmarkInfo />}
+							/>
+							<Route
+								path="*"
+								element={<Navigate to="/" replace />}
 							/>
 						</Routes>
 					</Box>
