@@ -38,7 +38,13 @@ const App = () => {
 					>
 						<Routes>
 							<Route exact path="/" element={<Bookmarks />} />
-							<Route exact path="/login" element={<Login />} />
+							{!ctx.isAuthenticated && (
+								<Route
+									exact
+									path="/login"
+									element={<Login />}
+								/>
+							)}
 							<Route exact path="/signup" element={<SignUp />} />
 							<Route
 								exact
