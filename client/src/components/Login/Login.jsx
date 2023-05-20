@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Container } from "@mui/material";
+import React, { useContext, useState } from "react";
+import { Container, CircularProgress } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -12,11 +12,15 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
 	const ctx = useContext(AuthContext);
 	const navigate = useNavigate();
+	const [isLoading, setIsLoading] = useState(false);
+	const [isError, setIsError] = useState(false);
+
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
 		const body = {};
 		data.forEach((value, key) => (body[key] = value));
+		setIsLoading(true);
 		try {
 			const response = await fetch("http://localhost:6001/auth/login", {
 				method: "POST",
@@ -30,10 +34,17 @@ export default function Login() {
 			const resData = await response.json();
 			if (!resData.error) {
 				ctx.setIsAuthenticated(true);
+				if (isError) {
+					setIsError(false);
+				}
 				navigate("/");
+			} else {
+				setIsError(true);
 			}
 		} catch (err) {
 			console.log(err);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -60,6 +71,7 @@ export default function Login() {
 					sx={{ mt: 1 }}
 				>
 					<TextField
+						error={isError}
 						margin="normal"
 						required
 						fullWidth
@@ -70,6 +82,7 @@ export default function Login() {
 						autoFocus
 					/>
 					<TextField
+						error={isError}
 						margin="normal"
 						required
 						fullWidth
@@ -79,15 +92,29 @@ export default function Login() {
 						id="password"
 						autoComplete="current-password"
 					/>
-
-					<Button
-						type="submit"
-						fullWidth
-						variant="contained"
-						sx={{ mt: 3, mb: 2 }}
-					>
-						Sign In
-					</Button>
+					<Box sx={{ position: "relative" }}>
+						<Button
+							type="submit"
+							fullWidth
+							variant="contained"
+							disabled={isLoading}
+							sx={{ mt: 3, mb: 3 }}
+						>
+							Sign In
+						</Button>
+						{isLoading && (
+							<CircularProgress
+								size={24}
+								sx={{
+									position: "absolute",
+									top: "50%",
+									left: "50%",
+									marginTop: "-12px",
+									marginLeft: "-12px",
+								}}
+							/>
+						)}
+					</Box>
 				</Box>
 			</Box>
 		</Container>
