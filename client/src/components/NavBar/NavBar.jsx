@@ -2,7 +2,6 @@ import {
 	AppBar,
 	Toolbar,
 	IconButton,
-	Button,
 	useMediaQuery,
 	Divider,
 	List,
@@ -16,11 +15,19 @@ import {
 import Icon from "@mui/material/Icon";
 import MenuIcon from "@mui/icons-material/Menu";
 import Search from "./Search/Search";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useTheme } from "@mui/material/styles";
+import { AuthContext } from "../../store/context";
+import { logout } from "../../services/auth";
+import { useNavigate } from "react-router-dom";
+import AppProgress from "../Progress/AppProgress";
 
 const NavBar = () => {
 	const theme = useTheme();
+	const ctx = useContext(AuthContext);
+	const navigate = useNavigate();
+	const [isLoading, setIsLoading] = useState(false);
+
 	const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 	const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -28,20 +35,36 @@ const NavBar = () => {
 		setMobileOpen((prev) => !prev);
 	}
 
+	async function logoutHandler() {
+		setIsLoading(true);
+		ctx.setIsAuthenticated(!(await logout()));
+		setIsLoading(false);
+		navigate("/login");
+	}
+
 	const drawerWidth = "240px";
+
+	const drawerItems = [
+		{ text: "home", icon: "home" },
+		{ text: "search", icon: "search" },
+		{ text: ctx.isAuthenticated ? "logout" : "login", icon: "lock" },
+	];
 
 	const drawer = (
 		<>
+			{isLoading && <AppProgress />}
 			<Toolbar />
 			<Divider />
 			<List>
-				{[
-					{ text: "home", icon: "home" },
-					{ text: "search", icon: "search" },
-					{ text: "login", icon: "lock" },
-				].map((item, index) => (
+				{drawerItems.map((item, index) => (
 					<ListItem key={item.text} disablePadding>
-						<ListItemButton>
+						<ListItemButton
+							onClick={
+								item.text === "logout"
+									? logoutHandler
+									: () => {}
+							}
+						>
 							<ListItemIcon>
 								<Icon>{item.icon}</Icon>
 							</ListItemIcon>

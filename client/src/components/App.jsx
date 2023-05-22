@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Box, CssBaseline } from "@mui/material";
 import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import { BookmarkInfo, Login, Bookmarks, NavBar, SignUp, AppProgress } from ".";
-import { checkAuth } from "../services/bookmarks";
+import { checkAuth } from "../services/auth";
 import { AuthContext } from "../store/context";
 import Test from "./Test";
 
@@ -10,6 +10,14 @@ const App = () => {
 	const navigate = useNavigate();
 	const ctx = useContext(AuthContext);
 	const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+	const [back, setBack] = useState(false);
+
+	useEffect(() => {
+		window.addEventListener("popstate", () => {
+			setBack((prev) => !prev);
+			setIsCheckingAuth(true);
+		});
+	}, [back]);
 
 	useEffect(() => {
 		async function isAuthenticated() {
