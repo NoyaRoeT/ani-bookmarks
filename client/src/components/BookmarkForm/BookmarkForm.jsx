@@ -96,7 +96,6 @@ const BookmarkForm = ({ label, bookmark }) => {
 								autoFocus
 							/>
 							<ComboBox
-								options={testOptions}
 								onChange={genresChangeHandler}
 								label={"Genre"}
 							/>

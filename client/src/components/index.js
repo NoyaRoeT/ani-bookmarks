@@ -5,3 +5,4 @@ export { default as NavBar } from "./NavBar/NavBar";
 export { default as SignUp } from "./SignUp/SignUp";
 export { default as AppProgress } from "./Progress/AppProgress";
 export { default as ComboBox } from "./ComboBox/ComboBox";
+export { default as BookmarkForm } from "./BookmarkForm/BookmarkForm";

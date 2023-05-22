@@ -47,7 +47,13 @@ const App = () => {
 									element={<Login />}
 								/>
 							)}
-							<Route exact path="/signup" element={<SignUp />} />
+							{!ctx.isAuthenticated && (
+								<Route
+									exact
+									path="/signup"
+									element={<SignUp />}
+								/>
+							)}
 							<Route exact path="/test" element={<Test />} />
 							<Route
 								exact
