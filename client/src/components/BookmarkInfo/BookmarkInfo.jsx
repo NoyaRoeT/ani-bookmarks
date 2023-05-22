@@ -7,7 +7,6 @@ import {
 	Stack,
 	Paper,
 } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 
 const Item = ({ color, children }) => {
 	return (
