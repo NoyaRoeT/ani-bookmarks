@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Autocomplete, TextField, useTheme } from "@mui/material";
 
-const options = ["Fantasy", "Action", "Sci-Fi"];
+const defaultOptions = ["Fantasy", "Action", "Sci-Fi", "Default1", "Default2"];
 
-const ComboBox = ({ id, label, sx, onChange }) => {
-	const [chosen, setChosen] = useState([]);
+const ComboBox = ({ id, label, value, options, sx, onChange }) => {
+	const [chosen, setChosen] = useState(value ? value : []);
 
 	function handleChange(event, value) {
 		setChosen(value);
@@ -20,8 +20,9 @@ const ComboBox = ({ id, label, sx, onChange }) => {
 			multiple
 			value={chosen}
 			onChange={handleChange}
+			sx={{ ...sx }}
 			popupIcon={false}
-			options={options}
+			options={!options ? defaultOptions : options}
 			getOptionDisabled={(option) => {
 				return chosen.some((item) => item === option);
 			}}
