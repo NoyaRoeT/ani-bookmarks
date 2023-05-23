@@ -8,6 +8,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { AuthContext } from "../../store/context";
 import { useLocation, useNavigate } from "react-router-dom";
+import { login } from "../../services/auth";
 
 export default function Login() {
 	const ctx = useContext(AuthContext);
@@ -16,7 +17,6 @@ export default function Login() {
 	const [isError, setIsError] = useState(false);
 
 	const { from } = useLocation().state || { from: { pathname: "/" } };
-	console.log(from);
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
@@ -24,17 +24,8 @@ export default function Login() {
 		data.forEach((value, key) => (body[key] = value));
 		setIsLoading(true);
 		try {
-			const response = await fetch("http://localhost:6001/auth/login", {
-				method: "POST",
-				body: JSON.stringify(body),
-				headers: {
-					"Content-Type": "application/json",
-				},
-				credentials: "include",
-				withCredentials: true,
-			});
-			const resData = await response.json();
-			if (!resData.error) {
+			const result = await login(body);
+			if (result) {
 				ctx.setIsAuthenticated(true);
 				if (isError) {
 					setIsError(false);

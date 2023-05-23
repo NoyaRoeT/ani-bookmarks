@@ -7,6 +7,26 @@ export async function checkAuth() {
 		const resData = await response.json();
 		return !resData.error;
 	} catch (err) {
+		console.log(err);
+		return false;
+	}
+}
+
+export async function login(body) {
+	try {
+		const response = await fetch("http://localhost:6001/auth/login", {
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				"Content-Type": "application/json",
+			},
+			credentials: "include",
+			withCredentials: true,
+		});
+		const resData = await response.json();
+		return !resData.error;
+	} catch (err) {
+		console.log(err);
 		return false;
 	}
 }
@@ -21,6 +41,7 @@ export async function logout() {
 		const resData = await response.json();
 		return !resData.error;
 	} catch (err) {
+		console.log(err);
 		return false;
 	}
 }
