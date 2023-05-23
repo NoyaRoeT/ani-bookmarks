@@ -172,6 +172,10 @@ const NavBar = () => {
 				label={"Add a bookmark"}
 				open={formOpen}
 				onClose={handleCloseForm}
+				variant={"add"}
+				onSubmit={() => {
+					setFormOpen(false);
+				}}
 			/>
 		</>
 	);

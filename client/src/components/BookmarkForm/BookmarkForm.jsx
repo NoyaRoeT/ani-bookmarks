@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
 	Box,
 	Dialog,
@@ -9,20 +9,80 @@ import {
 	TextField,
 	DialogTitle,
 	Grid,
+	Select,
+	MenuItem,
+	InputLabel,
+	CircularProgress,
 } from "@mui/material";
 import { ComboBox } from "../";
+import { addBookmark, editBookmark } from "../../services/bookmarks";
+import { useNavigate } from "react-router-dom";
 
-const BookmarkForm = ({ label, bookmark, open, onClose }) => {
+const genreOptions = ["Fantasy", "Action", "Sci-Fi"];
+const tagOptions = ["Isekai", "Regression", "Magic"];
+
+const BookmarkForm = ({
+	label,
+	bookmark,
+	open,
+	onClose,
+	variant,
+	onSubmit,
+}) => {
 	const [imageUrl, setImageUrl] = useState();
-	const [chosenGenres, setChosenGenres] = useState([]);
-	const [chosenTags, setChosenTags] = useState([]);
+	const [genres, setGenres] = useState([]);
+	const [tags, setTags] = useState([]);
+	const [type, setType] = useState(0);
+	const imageRef = useRef();
+	const titleRef = useRef();
+
+	const [isLoading, setIsLoading] = useState(false);
+
+	const navigate = useNavigate();
+
+	async function submitHandler() {
+		const data = {
+			title: titleRef.current.value,
+			image: imageRef.current.files[0],
+			genres,
+			tags,
+			type,
+		};
+
+		let result;
+		try {
+			setIsLoading(true);
+			if (variant === "edit") {
+				data.id = bookmark._id;
+				result = await editBookmark(data);
+			} else {
+				result = await addBookmark(data);
+			}
+			if (!result) {
+				console.log("Something went wrong");
+			}
+		} catch (err) {
+			console.log(err);
+		} finally {
+			if (onSubmit) {
+				onSubmit();
+			}
+			imageUrl && URL.revokeObjectURL(imageUrl);
+			setImageUrl("");
+			setIsLoading(false);
+			navigate("/");
+		}
+	}
+	function typeChangeHandler(event) {
+		setType(event.target.value);
+	}
 
 	function genresChangeHandler(value) {
-		setChosenGenres(value);
+		setGenres(value);
 	}
 
 	function tagsChangeHandler(value) {
-		setChosenTags(value);
+		setTags(value);
 	}
 
 	function imageChangeHandler(event) {
@@ -77,6 +137,7 @@ const BookmarkForm = ({ label, bookmark, open, onClose }) => {
 										accept="image/*"
 										hidden
 										onChange={imageChangeHandler}
+										ref={imageRef}
 									/>
 								</Button>
 							</FormControl>
@@ -100,15 +161,62 @@ const BookmarkForm = ({ label, bookmark, open, onClose }) => {
 								label="Title"
 								name="title"
 								autoFocus
+								inputRef={titleRef}
 							/>
+							<FormControl margin="normal">
+								<InputLabel id="type">Type</InputLabel>
+								<Select
+									labelId="type"
+									id="type"
+									value={type}
+									label="Type"
+									onChange={typeChangeHandler}
+								>
+									<MenuItem value={0}>Anime</MenuItem>
+									<MenuItem value={1}>Manga</MenuItem>
+									<MenuItem value={2}>Manhwa</MenuItem>
+									<MenuItem value={3}>Manhua</MenuItem>
+									<MenuItem value={4}>Novel</MenuItem>
+								</Select>
+							</FormControl>
 							<ComboBox
 								onChange={genresChangeHandler}
+								options={genreOptions}
 								label={"Genre"}
 							/>
 							<ComboBox
 								onChange={tagsChangeHandler}
+								options={tagOptions}
 								label={"Tags"}
 							/>
+							<Box
+								sx={{
+									position: "relative",
+									mt: 2,
+									float: "right",
+								}}
+							>
+								<Button
+									variant="contained"
+									sx={{ px: 2 }}
+									onClick={submitHandler}
+									disabled={isLoading}
+								>
+									Confirm
+								</Button>
+								{isLoading && (
+									<CircularProgress
+										size={24}
+										sx={{
+											position: "absolute",
+											top: "50%",
+											left: "50%",
+											marginTop: "-12px",
+											marginLeft: "-12px",
+										}}
+									/>
+								)}
+							</Box>
 						</Box>
 					</Grid>
 				</Grid>

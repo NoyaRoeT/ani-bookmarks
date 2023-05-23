@@ -34,7 +34,11 @@ const BookmarkCard = ({ bookmark }) => {
 			>
 				<CardMedia
 					sx={{ height: 300 }}
-					image="https://via.placeholder.com/400"
+					image={
+						bookmark.imagePath
+							? bookmark.imagePath
+							: "https://via.placeholder.com/400"
+					}
 				/>
 				<CardContent
 					sx={{
@@ -65,7 +69,7 @@ const BookmarkCard = ({ bookmark }) => {
 						noWrap
 						variant="h6"
 					>
-						Tensei Shitara Slime Datta Ken
+						{bookmark.title}
 					</Typography>
 				</CardContent>
 			</Card>
