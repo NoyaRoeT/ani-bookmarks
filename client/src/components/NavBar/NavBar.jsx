@@ -14,13 +14,14 @@ import {
 } from "@mui/material";
 import Icon from "@mui/material/Icon";
 import MenuIcon from "@mui/icons-material/Menu";
+import AddIcon from "@mui/icons-material/Add";
 import Search from "./Search/Search";
 import React, { useState, useContext } from "react";
 import { useTheme } from "@mui/material/styles";
 import { AuthContext } from "../../store/context";
 import { logout } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
-import AppProgress from "../Progress/AppProgress";
+import { AppProgress, BookmarkForm } from "../";
 
 const NavBar = () => {
 	const theme = useTheme();
@@ -30,9 +31,17 @@ const NavBar = () => {
 
 	const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 	const [mobileOpen, setMobileOpen] = useState(false);
+	const [formOpen, setFormOpen] = useState(false);
 
 	function handleDrawerToggle() {
 		setMobileOpen((prev) => !prev);
+	}
+
+	function handleShowForm() {
+		setFormOpen(true);
+	}
+	function handleCloseForm() {
+		setFormOpen(false);
 	}
 
 	async function logoutHandler() {
@@ -110,6 +119,16 @@ const NavBar = () => {
 							alignItems: "center",
 						}}
 					/>
+					<IconButton
+						size="large"
+						edge="false"
+						color="inherit"
+						aria-label="add"
+						sx={{ mr: 2 }}
+						onClick={handleShowForm}
+					>
+						<AddIcon />
+					</IconButton>
 				</Toolbar>
 			</AppBar>
 			<Box
@@ -149,6 +168,11 @@ const NavBar = () => {
 					{drawer}
 				</Drawer>
 			</Box>
+			<BookmarkForm
+				label={"Add a bookmark"}
+				open={formOpen}
+				onClose={handleCloseForm}
+			/>
 		</>
 	);
 };

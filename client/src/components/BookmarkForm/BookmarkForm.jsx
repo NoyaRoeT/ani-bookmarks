@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { ComboBox } from "../";
 
-const BookmarkForm = ({ label, bookmark }) => {
+const BookmarkForm = ({ label, bookmark, open, onClose }) => {
 	const [imageUrl, setImageUrl] = useState();
 	const [chosenGenres, setChosenGenres] = useState([]);
 	const [chosenTags, setChosenTags] = useState([]);
@@ -35,7 +35,13 @@ const BookmarkForm = ({ label, bookmark }) => {
 	}
 
 	return (
-		<Dialog scroll="body" fullWidth open maxWidth="md">
+		<Dialog
+			scroll="body"
+			fullWidth
+			open={open}
+			maxWidth="md"
+			onClose={onClose}
+		>
 			<DialogTitle>{label}</DialogTitle>
 			<DialogContent>
 				<Grid container>
