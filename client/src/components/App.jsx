@@ -1,33 +1,30 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Box, CssBaseline } from "@mui/material";
-import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
-import { BookmarkInfo, Login, Bookmarks, NavBar, SignUp, AppProgress } from ".";
+import { Route, Routes } from "react-router-dom";
+import {
+	BookmarkInfo,
+	Login,
+	Bookmarks,
+	NavBar,
+	SignUp,
+	AppProgress,
+	ProtectedRoute,
+} from ".";
 import { checkAuth } from "../services/auth";
 import { AuthContext } from "../store/context";
 import Test from "./Test";
 
 const App = () => {
-	const navigate = useNavigate();
 	const ctx = useContext(AuthContext);
 	const [isCheckingAuth, setIsCheckingAuth] = useState(true);
-	const [back, setBack] = useState(false);
-
-	useEffect(() => {
-		window.addEventListener("popstate", () => {
-			setBack((prev) => !prev);
-			setIsCheckingAuth(true);
-		});
-	}, [back]);
-
+	console.log(ctx.isAuthenticated);
 	useEffect(() => {
 		async function isAuthenticated() {
 			const authStatus = await checkAuth();
 			ctx.setIsAuthenticated(authStatus);
 			setIsCheckingAuth(false);
 		}
-		if (!isCheckingAuth && !ctx.isAuthenticated) {
-			navigate("/login");
-		} else {
+		if (!ctx.isAuthenticated && isCheckingAuth) {
 			isAuthenticated();
 		}
 	}, [isCheckingAuth]);
@@ -47,32 +44,42 @@ const App = () => {
 						}}
 					>
 						<Routes>
-							<Route exact path="/" element={<Bookmarks />} />
-							{!ctx.isAuthenticated && (
-								<Route
-									exact
-									path="/login"
-									element={<Login />}
-								/>
-							)}
-							{!ctx.isAuthenticated && (
-								<Route
-									exact
-									path="/signup"
-									element={<SignUp />}
-								/>
-							)}
-							<Route exact path="/test" element={<Test />} />
-							<Route
-								exact
-								path="/bookmark/:bookmarkId"
-								element={<BookmarkInfo />}
-							/>
+							<Route path="/" element={<ProtectedRoute />}>
+								<Route path="" element={<Bookmarks />} />
+							</Route>
 
 							<Route
+								path="/login"
+								element={<ProtectedRoute noAuth={true} />}
+							>
+								<Route path="" element={<Login />} />
+							</Route>
+
+							<Route
+								path="/signup"
+								element={<ProtectedRoute noAuth={true} />}
+							>
+								<Route path="" element={<SignUp />} />
+							</Route>
+
+							<Route path="/test" element={<ProtectedRoute />}>
+								<Route path="" element={<Test />} />
+							</Route>
+
+							<Route
+								path="/bookmark/"
+								element={<ProtectedRoute />}
+							>
+								<Route
+									path=":bookmarkId"
+									element={<BookmarkInfo />}
+								/>
+							</Route>
+
+							{/* <Route
 								path="*"
 								element={<Navigate to="/" replace />}
-							/>
+							/> */}
 						</Routes>
 					</Box>
 				</>
