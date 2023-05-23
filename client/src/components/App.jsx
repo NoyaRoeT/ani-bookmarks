@@ -17,7 +17,6 @@ import Test from "./Test";
 const App = () => {
 	const ctx = useContext(AuthContext);
 	const [isCheckingAuth, setIsCheckingAuth] = useState(true);
-	console.log(ctx.isAuthenticated);
 	useEffect(() => {
 		async function isAuthenticated() {
 			const authStatus = await checkAuth();
@@ -75,11 +74,6 @@ const App = () => {
 									element={<BookmarkInfo />}
 								/>
 							</Route>
-
-							{/* <Route
-								path="*"
-								element={<Navigate to="/" replace />}
-							/> */}
 						</Routes>
 					</Box>
 				</>

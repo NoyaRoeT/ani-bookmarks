@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { AuthContext } from "../../store/context";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Login() {
 	const ctx = useContext(AuthContext);
@@ -15,6 +15,8 @@ export default function Login() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
 
+	const { from } = useLocation().state || { from: { pathname: "/" } };
+	console.log(from);
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
@@ -37,7 +39,7 @@ export default function Login() {
 				if (isError) {
 					setIsError(false);
 				}
-				navigate("/");
+				navigate(from.pathname);
 			} else {
 				setIsError(true);
 			}
