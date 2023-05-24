@@ -81,11 +81,13 @@ const BookmarkCard = ({ bookmark }) => {
 					</CardContent>
 				</Card>
 			</Grid>
-			<BookmarkInfo
-				bookmark={bookmark}
-				open={showInfo}
-				onClose={() => setShowInfo(false)}
-			/>
+			{showInfo && (
+				<BookmarkInfo
+					bookmark={bookmark}
+					open={showInfo}
+					onClose={() => setShowInfo(false)}
+				/>
+			)}
 		</>
 	);
 };

@@ -68,43 +68,43 @@ const BookmarkInfo = ({ bookmark, open, onClose }) => {
 	}
 	return (
 		<>
-			{!isEditing && (
-				<Dialog
-					open={open}
-					onClose={onClose}
-					scroll="body"
-					fullWidth
-					maxWidth="md"
-				>
-					<Box display="flex">
-						<DialogTitle sx={{ flexGrow: 1 }}>
-							{bookmark.title}
-						</DialogTitle>
-						<IconButton
-							size="large"
-							color="inherit"
-							aria-label="edit"
-							sx={{ mr: 2 }}
-							onClick={() => {
-								setIsEditing(true);
-							}}
-						>
-							<EditIcon />
-						</IconButton>
-						<IconButton
-							size="large"
-							color="inherit"
-							aria-label="delete"
-							sx={{ mr: 2 }}
-							onClick={() => {
-								setOpenDelete(true);
-							}}
-						>
-							<DeleteIcon />
-						</IconButton>
-					</Box>
-					<DialogContent>
-						{error && <Alert severity="error">{error}</Alert>}
+			<Dialog
+				open={open}
+				onClose={onClose}
+				scroll="body"
+				fullWidth
+				maxWidth="md"
+			>
+				<Box display="flex">
+					<DialogTitle sx={{ flexGrow: 1 }}>
+						{bookmark.title}
+					</DialogTitle>
+					<IconButton
+						size="large"
+						color="inherit"
+						aria-label="edit"
+						sx={{ mr: 2 }}
+						onClick={() => {
+							setIsEditing(true);
+						}}
+					>
+						<EditIcon />
+					</IconButton>
+					<IconButton
+						size="large"
+						color="inherit"
+						aria-label="delete"
+						sx={{ mr: 2 }}
+						onClick={() => {
+							setOpenDelete(true);
+						}}
+					>
+						<DeleteIcon />
+					</IconButton>
+				</Box>
+				<DialogContent>
+					{error && <Alert severity="error">{error}</Alert>}
+					{!isEditing && (
 						<Grid container>
 							<Grid
 								item
@@ -174,18 +174,18 @@ const BookmarkInfo = ({ bookmark, open, onClose }) => {
 								</Box>
 							</Grid>
 						</Grid>
-					</DialogContent>
-				</Dialog>
-			)}
-			{isEditing && (
-				<BookmarkForm
-					open={isEditing}
-					label={`Edit ${bookmark.title}`}
-					onClose={() => setIsEditing(false)}
-					variant={"edit"}
-					bookmark={bookmark}
-				/>
-			)}
+					)}
+					{isEditing && (
+						<BookmarkForm
+							onSuccess={() => setIsEditing(false)}
+							onAuthError={onClose}
+							variant={"edit"}
+							bookmark={bookmark}
+						/>
+					)}
+				</DialogContent>
+			</Dialog>
+
 			{/* Delete confirmation alert */}
 			<Dialog
 				open={openDelete}

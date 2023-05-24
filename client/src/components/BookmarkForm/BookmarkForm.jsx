@@ -28,7 +28,7 @@ import { BookmarkContext } from "../../store/BookmarkContext";
 const genreOptions = ["Fantasy", "Action", "Sci-Fi"];
 const tagOptions = ["Isekai", "Regression", "Magic"];
 
-const BookmarkForm = ({ label, bookmark, open, onClose, variant }) => {
+const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 	const [error, setError] = useState(null);
 	const [imageUrl, setImageUrl] = useState(
 		bookmark && bookmark.imagePath ? bookmark.imagePath : null
@@ -49,8 +49,9 @@ const BookmarkForm = ({ label, bookmark, open, onClose, variant }) => {
 	const ctx = useContext(AuthContext);
 	const bookmarks = useContext(BookmarkContext);
 
-	async function onSuccess() {
+	async function handleSuccess() {
 		await bookmarks.getBookmarks();
+		onSuccess();
 	}
 
 	async function submitHandler() {
@@ -75,13 +76,12 @@ const BookmarkForm = ({ label, bookmark, open, onClose, variant }) => {
 				error && setError(null);
 				imageUrl && URL.revokeObjectURL(imageUrl);
 				setImageUrl("");
-				await onSuccess();
-				onClose();
+				await handleSuccess();
 				navigate("/");
 			} else if (result.error.type === 0) {
 				error && setError(null);
 				ctx.setIsAuthenticated(false);
-				onClose();
+				onAuthError();
 			} else {
 				setError(result.error.message);
 			}
@@ -114,137 +114,128 @@ const BookmarkForm = ({ label, bookmark, open, onClose, variant }) => {
 	}
 
 	return (
-		<Dialog
-			scroll="body"
-			fullWidth
-			open={open}
-			maxWidth="md"
-			onClose={onClose}
-		>
-			<DialogTitle>{label}</DialogTitle>
-			<DialogContent>
-				{error && <Alert severity="error">{error}</Alert>}
-				<Grid container>
-					<Grid item xs={12} md={3}>
+		<>
+			{error && <Alert severity="error">{error}</Alert>}
+			<Grid container>
+				<Grid item xs={12} md={3}>
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							alignItems: "center",
+						}}
+					>
+						<Box
+							sx={{ my: "12px" }}
+							maxWidth={"244px"}
+							minWidth={"224px"}
+						>
+							<img
+								width={"100%"}
+								height={"300px"}
+								style={{ objectFit: "cover" }}
+								src={
+									imageUrl
+										? imageUrl
+										: "https://via.placeholder.com/400"
+								}
+							/>
+						</Box>
+						<FormControl>
+							<Button variant="contained" component="label">
+								Upload Image
+								<input
+									type="file"
+									accept="image/*"
+									hidden
+									onChange={imageChangeHandler}
+									ref={imageRef}
+								/>
+							</Button>
+						</FormControl>
+					</Box>
+				</Grid>
+				<Divider
+					sx={{
+						mx: "24px",
+						display: { xs: "none", md: "block" },
+					}}
+					flexItem
+					orientation="vertical"
+				/>
+				<Grid item xs={12} md={8}>
+					<Box>
+						<TextField
+							margin="normal"
+							required
+							fullWidth
+							id="title"
+							label="Title"
+							name="title"
+							autoFocus
+							inputRef={titleRef}
+							defaultValue={bookmark ? bookmark.title : null}
+						/>
+						<FormControl margin="normal">
+							<InputLabel id="type">Type</InputLabel>
+							<Select
+								labelId="type"
+								id="type"
+								value={type}
+								label="Type"
+								onChange={typeChangeHandler}
+							>
+								<MenuItem value={0}>Anime</MenuItem>
+								<MenuItem value={1}>Manga</MenuItem>
+								<MenuItem value={2}>Manhwa</MenuItem>
+								<MenuItem value={3}>Manhua</MenuItem>
+								<MenuItem value={4}>Novel</MenuItem>
+							</Select>
+						</FormControl>
+						<ComboBox
+							onChange={genresChangeHandler}
+							options={genreOptions}
+							value={genres}
+							label={"Genre"}
+						/>
+						<ComboBox
+							onChange={tagsChangeHandler}
+							options={tagOptions}
+							label={"Tags"}
+							value={tags}
+						/>
 						<Box
 							sx={{
-								display: "flex",
-								flexDirection: "column",
-								alignItems: "center",
+								position: "relative",
+								mt: 2,
+								float: "right",
 							}}
 						>
-							<Box
-								sx={{ my: "12px" }}
-								maxWidth={"244px"}
-								minWidth={"224px"}
+							<Button
+								variant="contained"
+								sx={{ px: 2 }}
+								onClick={submitHandler}
+								disabled={isLoading}
 							>
-								<img
-									width={"100%"}
-									height={"300px"}
-									style={{ objectFit: "cover" }}
-									src={
-										imageUrl
-											? imageUrl
-											: "https://via.placeholder.com/400"
-									}
+								Confirm
+							</Button>
+							{isLoading && (
+								<CircularProgress
+									size={24}
+									sx={{
+										position: "absolute",
+										top: "50%",
+										left: "50%",
+										marginTop: "-12px",
+										marginLeft: "-12px",
+									}}
 								/>
-							</Box>
-							<FormControl>
-								<Button variant="contained" component="label">
-									Upload Image
-									<input
-										type="file"
-										accept="image/*"
-										hidden
-										onChange={imageChangeHandler}
-										ref={imageRef}
-									/>
-								</Button>
-							</FormControl>
+							)}
 						</Box>
-					</Grid>
-					<Divider
-						sx={{
-							mx: "24px",
-							display: { xs: "none", md: "block" },
-						}}
-						flexItem
-						orientation="vertical"
-					/>
-					<Grid item xs={12} md={8}>
-						<Box>
-							<TextField
-								margin="normal"
-								required
-								fullWidth
-								id="title"
-								label="Title"
-								name="title"
-								autoFocus
-								inputRef={titleRef}
-								defaultValue={bookmark ? bookmark.title : null}
-							/>
-							<FormControl margin="normal">
-								<InputLabel id="type">Type</InputLabel>
-								<Select
-									labelId="type"
-									id="type"
-									value={type}
-									label="Type"
-									onChange={typeChangeHandler}
-								>
-									<MenuItem value={0}>Anime</MenuItem>
-									<MenuItem value={1}>Manga</MenuItem>
-									<MenuItem value={2}>Manhwa</MenuItem>
-									<MenuItem value={3}>Manhua</MenuItem>
-									<MenuItem value={4}>Novel</MenuItem>
-								</Select>
-							</FormControl>
-							<ComboBox
-								onChange={genresChangeHandler}
-								options={genreOptions}
-								value={genres}
-								label={"Genre"}
-							/>
-							<ComboBox
-								onChange={tagsChangeHandler}
-								options={tagOptions}
-								label={"Tags"}
-								value={tags}
-							/>
-							<Box
-								sx={{
-									position: "relative",
-									mt: 2,
-									float: "right",
-								}}
-							>
-								<Button
-									variant="contained"
-									sx={{ px: 2 }}
-									onClick={submitHandler}
-									disabled={isLoading}
-								>
-									Confirm
-								</Button>
-								{isLoading && (
-									<CircularProgress
-										size={24}
-										sx={{
-											position: "absolute",
-											top: "50%",
-											left: "50%",
-											marginTop: "-12px",
-											marginLeft: "-12px",
-										}}
-									/>
-								)}
-							</Box>
-						</Box>
-					</Grid>
+					</Box>
 				</Grid>
-			</DialogContent>
-		</Dialog>
+			</Grid>
+		</>
 	);
 };
 

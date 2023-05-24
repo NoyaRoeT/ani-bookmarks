@@ -11,6 +11,9 @@ import {
 	ListItemText,
 	Box,
 	Drawer,
+	Dialog,
+	DialogContent,
+	DialogTitle,
 } from "@mui/material";
 import Icon from "@mui/material/Icon";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -172,12 +175,22 @@ const NavBar = () => {
 				</Drawer>
 			</Box>
 			{formOpen && (
-				<BookmarkForm
-					label={"Add a bookmark"}
-					open={formOpen}
+				<Dialog
+					scroll="body"
+					fullWidth
+					open={open}
+					maxWidth="md"
 					onClose={handleCloseForm}
-					variant={"add"}
-				/>
+				>
+					<DialogTitle>"Add a bookmark"</DialogTitle>
+					<DialogContent>
+						<BookmarkForm
+							variant={"add"}
+							onAuthError={handleCloseForm}
+							onSuccess={handleCloseForm}
+						/>
+					</DialogContent>
+				</Dialog>
 			)}
 		</>
 	);
