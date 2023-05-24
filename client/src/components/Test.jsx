@@ -1,8 +1,8 @@
 import React from "react";
-import BookmarkForm from "./BookmarkForm/BookmarkForm";
+import BookmarkInfo from "./BookmarkInfo/BookmarkInfo";
 
 const Test = () => {
-	return <BookmarkForm label={"Edit a bookmark"}></BookmarkForm>;
+	return <BookmarkInfo />;
 };
 
 export default Test;
