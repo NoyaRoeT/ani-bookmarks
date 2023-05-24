@@ -178,7 +178,7 @@ const NavBar = () => {
 				<Dialog
 					scroll="body"
 					fullWidth
-					open={open}
+					open={formOpen}
 					maxWidth="md"
 					onClose={handleCloseForm}
 				>
