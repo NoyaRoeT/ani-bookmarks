@@ -26,10 +26,16 @@ const Item = ({ color, children }) => {
 	);
 };
 
-const BookmarkInfo = () => {
+const BookmarkInfo = ({ bookmark, open, onClose }) => {
 	return (
-		<Dialog scroll="body" fullWidth open maxWidth="md">
-			<DialogTitle>Tensei Shitara Slime Datta Ken</DialogTitle>
+		<Dialog
+			open={open}
+			onClose={onClose}
+			scroll="body"
+			fullWidth
+			maxWidth="md"
+		>
+			<DialogTitle>{bookmark.title}</DialogTitle>
 			<DialogContent>
 				<Grid container>
 					<Grid
@@ -49,7 +55,11 @@ const BookmarkInfo = () => {
 								width={"100%"}
 								height={"300px"}
 								style={{ objectFit: "cover" }}
-								src="https://via.placeholder.com/400"
+								src={
+									bookmark.imagePath
+										? bookmark.imagePath
+										: "https://via.placeholder.com/400"
+								}
 							/>
 						</Box>
 					</Grid>
@@ -75,11 +85,16 @@ const BookmarkInfo = () => {
 							</Typography>
 
 							<Stack spacing={1} direction="row">
-								<Item color="#1565c0">Action</Item>
-								<Item color="#1565c0">Fantasy</Item>
-								<Item color="#42a5f5">Sci-Fi</Item>
-								<Item color="#42a5f5">Regression</Item>
-								<Item color="#42a5f5">Isekai</Item>
+								{bookmark.genres.map((g) => (
+									<Item key={g} color="#1565c0">
+										{g}
+									</Item>
+								))}
+								{bookmark.tags.map((t) => (
+									<Item key={t} color="#42a5f5">
+										{t}
+									</Item>
+								))}
 							</Stack>
 							<Divider sx={{ my: "12px" }} />
 						</Box>
