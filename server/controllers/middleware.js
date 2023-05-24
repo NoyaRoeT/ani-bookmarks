@@ -53,14 +53,19 @@ export const validateBody = (schema) => {
 	};
 };
 
-export const parseGenreStringToArray = (req, res, next) => {
+export const parseGenreAndTagsToArray = (req, res, next) => {
 	if (req.body.genres) {
 		req.body.genres = req.body.genres.split(",");
-		return next();
+	} else {
+		return next(
+			new ExpressError("Missing genres array", errorTypes.GENERAL, 400)
+		);
 	}
-	return next(
-		new ExpressError("Missing genres array", errorTypes.GENERAL, 400)
-	);
+
+	if (req.body.tags) {
+		req.body.tags = req.body.tags.split(",");
+	}
+	return next();
 };
 
 export const uploadImageToDisk = (req, res, next) => {
