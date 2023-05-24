@@ -18,6 +18,7 @@ export async function addBookmark(data) {
 	formData.append("genres", data.genres);
 	formData.append("type", data.type);
 	formData.append("image", data.image);
+	formData.append("tags", data.tags);
 	try {
 		const response = await fetch("http://localhost:6001/bookmarks", {
 			method: "POST",
@@ -39,6 +40,7 @@ export async function editBookmark(data) {
 	formData.append("genres", data.genres);
 	formData.append("type", data.type);
 	formData.append("image", data.image);
+	formData.append("tags", data.tags);
 	try {
 		const response = await fetch(
 			`http://localhost:6001/bookmarks${data.id}`,

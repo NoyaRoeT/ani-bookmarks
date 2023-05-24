@@ -86,13 +86,13 @@ const BookmarkInfo = ({ bookmark, open, onClose }) => {
 
 							<Stack spacing={1} direction="row">
 								{bookmark.genres.map((g) => (
-									<Item key={g} color="#1565c0">
-										{g}
+									<Item key={g.name} color="#1565c0">
+										{g.name}
 									</Item>
 								))}
 								{bookmark.tags.map((t) => (
-									<Item key={t} color="#42a5f5">
-										{t}
+									<Item key={t.name} color="#42a5f5">
+										{t.name}
 									</Item>
 								))}
 							</Stack>

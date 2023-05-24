@@ -45,7 +45,6 @@ const BookmarkForm = ({ label, bookmark, open, onClose, variant }) => {
 			tags,
 			type,
 		};
-
 		let result;
 		try {
 			setIsLoading(true);
