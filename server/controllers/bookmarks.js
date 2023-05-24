@@ -6,7 +6,10 @@ import { cloudinaryDestroy } from "../utils/imageUpload/cloudinary.js";
 
 export const getBookmarks = async (req, res, next) => {
 	try {
-		const bookmarks = await Bookmark.find({ userId: req.user._id });
+		const bookmarks = await Bookmark.find({ userId: req.user._id })
+			.populate("genres", "-_id")
+			.populate("tags", "-_id");
+
 		return res.status(200).json({ data: bookmarks });
 	} catch (err) {
 		return next(new ExpressError(err.message, errorTypes.GENERAL));
