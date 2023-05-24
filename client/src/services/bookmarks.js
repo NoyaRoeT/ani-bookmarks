@@ -25,11 +25,11 @@ export async function addBookmark(data) {
 			credentials: "include",
 			withCredentials: true,
 		});
-		const { error } = await response.json();
-		return !error;
+		const result = await response.json();
+		return result;
 	} catch (err) {
-		console.error(err);
-		return false;
+		console.log(err);
+		return { error: { message: err.message } };
 	}
 }
 
@@ -49,10 +49,10 @@ export async function editBookmark(data) {
 				withCredentials: true,
 			}
 		);
-		const { error } = await response.json();
-		return !error;
+		const result = await response.json();
+		return result;
 	} catch (err) {
-		console.error(err);
-		return false;
+		console.log(err);
+		return { error: { message: err.message } };
 	}
 }

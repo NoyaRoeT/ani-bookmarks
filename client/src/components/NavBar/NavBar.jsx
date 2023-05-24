@@ -112,23 +112,27 @@ const NavBar = () => {
 							<MenuIcon />
 						</IconButton>
 					)}
-					<Search
-						sx={{
-							flexGrow: 1,
-							justifyContent: "center",
-							alignItems: "center",
-						}}
-					/>
-					<IconButton
-						size="large"
-						edge="false"
-						color="inherit"
-						aria-label="add"
-						sx={{ mr: 2 }}
-						onClick={handleShowForm}
-					>
-						<AddIcon />
-					</IconButton>
+					{ctx.isAuthenticated && (
+						<Search
+							sx={{
+								flexGrow: 1,
+								justifyContent: "center",
+								alignItems: "center",
+							}}
+						/>
+					)}
+					{ctx.isAuthenticated && (
+						<IconButton
+							size="large"
+							edge="false"
+							color="inherit"
+							aria-label="add"
+							sx={{ mr: 2 }}
+							onClick={handleShowForm}
+						>
+							<AddIcon />
+						</IconButton>
+					)}
 				</Toolbar>
 			</AppBar>
 			<Box
@@ -173,9 +177,6 @@ const NavBar = () => {
 				open={formOpen}
 				onClose={handleCloseForm}
 				variant={"add"}
-				onSubmit={() => {
-					setFormOpen(false);
-				}}
 			/>
 		</>
 	);

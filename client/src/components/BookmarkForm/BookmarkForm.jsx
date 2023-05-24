@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import {
 	Box,
 	Dialog,
@@ -13,22 +13,18 @@ import {
 	MenuItem,
 	InputLabel,
 	CircularProgress,
+	Alert,
 } from "@mui/material";
 import { ComboBox } from "../";
 import { addBookmark, editBookmark } from "../../services/bookmarks";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../store/context";
 
 const genreOptions = ["Fantasy", "Action", "Sci-Fi"];
 const tagOptions = ["Isekai", "Regression", "Magic"];
 
-const BookmarkForm = ({
-	label,
-	bookmark,
-	open,
-	onClose,
-	variant,
-	onSubmit,
-}) => {
+const BookmarkForm = ({ label, bookmark, open, onClose, variant }) => {
+	const [error, setError] = useState(null);
 	const [imageUrl, setImageUrl] = useState();
 	const [genres, setGenres] = useState([]);
 	const [tags, setTags] = useState([]);
@@ -39,6 +35,7 @@ const BookmarkForm = ({
 	const [isLoading, setIsLoading] = useState(false);
 
 	const navigate = useNavigate();
+	const ctx = useContext(AuthContext);
 
 	async function submitHandler() {
 		const data = {
@@ -58,19 +55,25 @@ const BookmarkForm = ({
 			} else {
 				result = await addBookmark(data);
 			}
-			if (!result) {
-				console.log("Something went wrong");
+
+			if (!result.error) {
+				error && setError(null);
+				imageUrl && URL.revokeObjectURL(imageUrl);
+				setImageUrl("");
+				onClose();
+				navigate("/");
+			} else if (result.error.type === 0) {
+				error && setError(null);
+				ctx.setIsAuthenticated(false);
+				onClose();
+			} else {
+				setError(result.error.message);
 			}
 		} catch (err) {
-			console.log(err);
+			console.error(err);
+			setError(err.message);
 		} finally {
-			if (onSubmit) {
-				onSubmit();
-			}
-			imageUrl && URL.revokeObjectURL(imageUrl);
-			setImageUrl("");
 			setIsLoading(false);
-			navigate("/");
 		}
 	}
 	function typeChangeHandler(event) {
@@ -104,6 +107,7 @@ const BookmarkForm = ({
 		>
 			<DialogTitle>{label}</DialogTitle>
 			<DialogContent>
+				{error && <Alert severity="error">{error}</Alert>}
 				<Grid container>
 					<Grid item xs={12} md={3}>
 						<Box
