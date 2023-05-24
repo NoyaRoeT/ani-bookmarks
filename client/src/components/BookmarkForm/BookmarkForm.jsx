@@ -30,10 +30,16 @@ const tagOptions = ["Isekai", "Regression", "Magic"];
 
 const BookmarkForm = ({ label, bookmark, open, onClose, variant }) => {
 	const [error, setError] = useState(null);
-	const [imageUrl, setImageUrl] = useState();
-	const [genres, setGenres] = useState([]);
-	const [tags, setTags] = useState([]);
-	const [type, setType] = useState(0);
+	const [imageUrl, setImageUrl] = useState(
+		bookmark && bookmark.imagePath ? bookmark.imagePath : null
+	);
+	const [genres, setGenres] = useState(
+		bookmark ? bookmark.genres.map((g) => g.name) : []
+	);
+	const [tags, setTags] = useState(
+		bookmark ? bookmark.tags.map((t) => t.name) : []
+	);
+	const [type, setType] = useState(bookmark ? bookmark.type : 0);
 	const imageRef = useRef();
 	const titleRef = useRef();
 
@@ -176,6 +182,7 @@ const BookmarkForm = ({ label, bookmark, open, onClose, variant }) => {
 								name="title"
 								autoFocus
 								inputRef={titleRef}
+								defaultValue={bookmark ? bookmark.title : null}
 							/>
 							<FormControl margin="normal">
 								<InputLabel id="type">Type</InputLabel>
@@ -196,12 +203,14 @@ const BookmarkForm = ({ label, bookmark, open, onClose, variant }) => {
 							<ComboBox
 								onChange={genresChangeHandler}
 								options={genreOptions}
+								value={genres}
 								label={"Genre"}
 							/>
 							<ComboBox
 								onChange={tagsChangeHandler}
 								options={tagOptions}
 								label={"Tags"}
+								value={tags}
 							/>
 							<Box
 								sx={{

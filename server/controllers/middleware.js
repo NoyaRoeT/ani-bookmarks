@@ -64,6 +64,8 @@ export const parseGenreAndTagsToArray = (req, res, next) => {
 
 	if (req.body.tags) {
 		req.body.tags = req.body.tags.split(",");
+	} else {
+		delete req.body.tags;
 	}
 	return next();
 };

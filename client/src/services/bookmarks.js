@@ -58,7 +58,7 @@ export async function editBookmark(data) {
 	formData.append("tags", data.tags);
 	try {
 		const response = await fetch(
-			`http://localhost:6001/bookmarks${data.id}`,
+			`http://localhost:6001/bookmarks/${data.id}`,
 			{
 				method: "PUT",
 				body: formData,

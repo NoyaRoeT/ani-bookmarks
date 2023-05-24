@@ -171,12 +171,14 @@ const NavBar = () => {
 					{drawer}
 				</Drawer>
 			</Box>
-			<BookmarkForm
-				label={"Add a bookmark"}
-				open={formOpen}
-				onClose={handleCloseForm}
-				variant={"add"}
-			/>
+			{formOpen && (
+				<BookmarkForm
+					label={"Add a bookmark"}
+					open={formOpen}
+					onClose={handleCloseForm}
+					variant={"add"}
+				/>
+			)}
 		</>
 	);
 };
