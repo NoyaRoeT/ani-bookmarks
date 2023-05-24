@@ -182,7 +182,7 @@ const NavBar = () => {
 					maxWidth="md"
 					onClose={handleCloseForm}
 				>
-					<DialogTitle>"Add a bookmark"</DialogTitle>
+					<DialogTitle>Add a bookmark</DialogTitle>
 					<DialogContent>
 						<BookmarkForm
 							variant={"add"}
