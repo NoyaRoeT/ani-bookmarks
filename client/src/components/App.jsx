@@ -11,7 +11,7 @@ import {
 	ProtectedRoute,
 } from ".";
 import { checkAuth } from "../services/auth";
-import { AuthContext } from "../store/context";
+import { AuthContext } from "../store/AuthContext";
 import Test from "./Test";
 
 const App = () => {

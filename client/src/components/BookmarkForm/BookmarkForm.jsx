@@ -16,9 +16,14 @@ import {
 	Alert,
 } from "@mui/material";
 import { ComboBox } from "../";
-import { addBookmark, editBookmark } from "../../services/bookmarks";
+import {
+	addBookmark,
+	editBookmark,
+	fetchBookmarks,
+} from "../../services/bookmarks";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../store/context";
+import { AuthContext } from "../../store/AuthContext";
+import { BookmarkContext } from "../../store/BookmarkContext";
 
 const genreOptions = ["Fantasy", "Action", "Sci-Fi"];
 const tagOptions = ["Isekai", "Regression", "Magic"];
@@ -36,6 +41,14 @@ const BookmarkForm = ({ label, bookmark, open, onClose, variant }) => {
 
 	const navigate = useNavigate();
 	const ctx = useContext(AuthContext);
+	const bookmarks = useContext(BookmarkContext);
+
+	async function onSuccess() {
+		const res = await fetchBookmarks();
+		if (!res.error) {
+			bookmarks.setBookmarks(res.data);
+		}
+	}
 
 	async function submitHandler() {
 		const data = {
@@ -59,6 +72,7 @@ const BookmarkForm = ({ label, bookmark, open, onClose, variant }) => {
 				error && setError(null);
 				imageUrl && URL.revokeObjectURL(imageUrl);
 				setImageUrl("");
+				onSuccess();
 				onClose();
 				navigate("/");
 			} else if (result.error.type === 0) {

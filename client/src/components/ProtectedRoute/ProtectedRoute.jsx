@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { AuthContext } from "../../store/context";
+import { AuthContext } from "../../store/AuthContext";
 import { Outlet, Navigate, useLocation } from "react-router-dom";
 
 const ProtectedRoute = ({ noAuth }) => {

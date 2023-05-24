@@ -1,15 +1,17 @@
 import { Container } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import BookmarkList from "./BookmarkList/BookmarkList";
 import { fetchBookmarks } from "../../services/bookmarks";
+import { BookmarkContext } from "../../store/BookmarkContext";
 
 const Bookmarks = () => {
-	const [bookmarks, setBookmarks] = useState([]);
+	const ctx = useContext(BookmarkContext);
+
 	useEffect(() => {
 		async function getBookmarks() {
 			const res = await fetchBookmarks();
 			if (!res.error) {
-				setBookmarks(res.data);
+				ctx.setBookmarks(res.data);
 			}
 		}
 		getBookmarks();
@@ -17,7 +19,7 @@ const Bookmarks = () => {
 
 	return (
 		<Container sx={{ mt: "20px" }}>
-			<BookmarkList bookmarks={bookmarks} />
+			<BookmarkList bookmarks={ctx.bookmarks} />
 		</Container>
 	);
 };

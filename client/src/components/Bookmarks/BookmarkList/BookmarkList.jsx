@@ -6,7 +6,7 @@ const BookmarkList = ({ bookmarks }) => {
 	return (
 		<Grid container>
 			{bookmarks.map((bookmark, i) => {
-				return <BookmarkCard bookmark={bookmark} />;
+				return <BookmarkCard key={bookmark._id} bookmark={bookmark} />;
 			})}
 		</Grid>
 	);

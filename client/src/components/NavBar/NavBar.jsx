@@ -18,7 +18,7 @@ import AddIcon from "@mui/icons-material/Add";
 import Search from "./Search/Search";
 import React, { useState, useContext } from "react";
 import { useTheme } from "@mui/material/styles";
-import { AuthContext } from "../../store/context";
+import { AuthContext } from "../../store/AuthContext";
 import { logout } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import { AppProgress, BookmarkForm } from "../";
@@ -124,7 +124,6 @@ const NavBar = () => {
 					{ctx.isAuthenticated && (
 						<IconButton
 							size="large"
-							edge="false"
 							color="inherit"
 							aria-label="add"
 							sx={{ mr: 2 }}

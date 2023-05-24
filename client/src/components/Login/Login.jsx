@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { AuthContext } from "../../store/context";
+import { AuthContext } from "../../store/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { login } from "../../services/auth";
 
