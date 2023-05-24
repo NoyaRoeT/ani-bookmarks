@@ -1,8 +1,7 @@
-import { Container } from "@mui/material";
-import React, { useState, useEffect, useContext } from "react";
+import { Container, CircularProgress, Box } from "@mui/material";
 import BookmarkList from "./BookmarkList/BookmarkList";
-import { fetchBookmarks } from "../../services/bookmarks";
 import { BookmarkContext } from "../../store/BookmarkContext";
+import { useContext, useEffect } from "react";
 
 const Bookmarks = () => {
 	const ctx = useContext(BookmarkContext);
@@ -15,9 +14,26 @@ const Bookmarks = () => {
 	}, []);
 
 	return (
-		<Container sx={{ mt: "20px" }}>
-			<BookmarkList bookmarks={ctx.bookmarks} />
-		</Container>
+		<>
+			{!ctx.isLoading && (
+				<Container sx={{ mt: "20px" }}>
+					<BookmarkList bookmarks={ctx.bookmarks} />
+				</Container>
+			)}
+			{ctx.isLoading && (
+				<Box
+					sx={{
+						position: "absolute",
+						top: "50%",
+						left: "50%",
+						marginTop: "-64px",
+						ml: { xs: "-64px", sm: "0px" },
+					}}
+				>
+					<CircularProgress size={128} />
+				</Box>
+			)}
+		</>
 	);
 };
 
