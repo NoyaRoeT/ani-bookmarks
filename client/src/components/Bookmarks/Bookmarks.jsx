@@ -8,13 +8,10 @@ const Bookmarks = () => {
 	const ctx = useContext(BookmarkContext);
 
 	useEffect(() => {
-		async function getBookmarks() {
-			const res = await fetchBookmarks();
-			if (!res.error) {
-				ctx.setBookmarks(res.data);
-			}
-		}
-		getBookmarks();
+		const run = async () => {
+			await ctx.getBookmarks();
+		};
+		run();
 	}, []);
 
 	return (

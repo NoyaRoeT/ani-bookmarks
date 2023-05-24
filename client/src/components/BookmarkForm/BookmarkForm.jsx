@@ -44,10 +44,7 @@ const BookmarkForm = ({ label, bookmark, open, onClose, variant }) => {
 	const bookmarks = useContext(BookmarkContext);
 
 	async function onSuccess() {
-		const res = await fetchBookmarks();
-		if (!res.error) {
-			bookmarks.setBookmarks(res.data);
-		}
+		await bookmarks.getBookmarks();
 	}
 
 	async function submitHandler() {
@@ -72,7 +69,7 @@ const BookmarkForm = ({ label, bookmark, open, onClose, variant }) => {
 				error && setError(null);
 				imageUrl && URL.revokeObjectURL(imageUrl);
 				setImageUrl("");
-				onSuccess();
+				await onSuccess();
 				onClose();
 				navigate("/");
 			} else if (result.error.type === 0) {

@@ -34,6 +34,21 @@ export async function addBookmark(data) {
 	}
 }
 
+export async function deleteBookmark(id) {
+	try {
+		const response = await fetch(`http://localhost:6001/bookmarks/${id}`, {
+			method: "DELETE",
+			credentials: "include",
+			withCredentials: true,
+		});
+		const resData = await response.json();
+		return resData;
+	} catch (err) {
+		console.log(err);
+		return { error: { message: err.message } };
+	}
+}
+
 export async function editBookmark(data) {
 	const formData = new FormData();
 	formData.append("title", data.title);
