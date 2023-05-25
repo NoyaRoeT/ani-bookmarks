@@ -73,3 +73,20 @@ export async function editBookmark(data) {
 		return { error: { message: err.message } };
 	}
 }
+
+export async function fetchGenresAndTags() {
+	try {
+		const response = await fetch(
+			"http://localhost:6001/bookmarks/genresandtags",
+			{
+				credentials: "include",
+				withCredentials: true,
+			}
+		);
+		const resData = await response.json();
+		return resData;
+	} catch (err) {
+		console.log(err);
+		return { error: { message: err.message } };
+	}
+}

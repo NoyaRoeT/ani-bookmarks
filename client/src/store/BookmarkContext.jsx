@@ -7,11 +7,17 @@ export const BookmarkContext = React.createContext({
 	getBookmarks: async () => {},
 	isLoading: false,
 	setIsLoading: () => {},
+	genres: [],
+	setGenres: () => {},
+	tags: [],
+	setTags: () => {},
 });
 
 const BookmarkContextProvider = ({ children }) => {
 	const [bookmarks, setBookmarks] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
+	const [genres, setGenres] = useState([]);
+	const [tags, setTags] = useState([]);
 
 	async function getBookmarks() {
 		try {
@@ -35,6 +41,10 @@ const BookmarkContextProvider = ({ children }) => {
 				getBookmarks,
 				isLoading,
 				setIsLoading,
+				genres,
+				setGenres,
+				tags,
+				setTags,
 			}}
 		>
 			{children}

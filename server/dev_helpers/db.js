@@ -16,19 +16,44 @@ mongoose
 	})
 	.catch((err) => console.log(err));
 
-async function deleteBookmarks() {
-	await Bookmark.deleteMany({});
-	const bookmarks = await Bookmark.find({});
-
-	if (bookmarks.length == 0) {
-		console.log("Deleted all bookmarks");
-	} else {
-		console.log("Failed to delete bookmarks");
-	}
-}
-
 async function seedGenreCollection() {
-	const genreNames = ["Action", "Fantasy", "Sci-Fi"];
+	const genreNames = [
+		"Action",
+		"Adult",
+		"Adventure",
+		"Comedy",
+		"Drama",
+		"Ecchi",
+		"Fantasy",
+		"Gender Bender",
+		"Harem",
+		"Historical",
+		"Horror",
+		"Josei",
+		"Martial Arts",
+		"Mature",
+		"Mecha",
+		"Mystery",
+		"Psychological",
+		"Romance",
+		"School Life",
+		"Sci-fi",
+		"Seinen",
+		"Shoujo",
+		"Shoujo Ai",
+		"Shounen",
+		"Shounen Ai",
+		"Slice of Life",
+		"Smut",
+		"Sports",
+		"Supernatural",
+		"Tragedy",
+		"Wuxia",
+		"Xianxia",
+		"Xuanhuan",
+		"Yaoi",
+		"Yuri",
+	];
 	const genreObjs = genreNames.map((name) => {
 		return { name };
 	});
@@ -45,4 +70,4 @@ async function seedTagCollection() {
 	await Tag.insertMany(tagObjs);
 }
 
-await deleteBookmarks();
+await seedGenreCollection();

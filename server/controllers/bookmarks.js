@@ -162,3 +162,10 @@ export const isBookmarkOwner = async (req, res, next) => {
 		next(new ExpressError(err.message, 500));
 	}
 };
+
+export const getGenresAndTags = (req, res, next) => {
+	const genres = Object.keys(GenreStore.getMap());
+	const tags = Object.keys(TagStore.getMap());
+
+	return res.status(200).json({ data: { genres, tags } });
+};

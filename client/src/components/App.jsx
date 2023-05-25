@@ -13,26 +13,35 @@ import {
 import { checkAuth } from "../services/auth";
 import { AuthContext } from "../store/AuthContext";
 import Test from "./Test";
+import { BookmarkContext } from "../store/BookmarkContext";
+import { fetchGenresAndTags } from "../services/bookmarks";
 
 const App = () => {
 	const ctx = useContext(AuthContext);
-	const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+	const bookmarks = useContext(BookmarkContext);
+	const [isLoading, setIsLoading] = useState(true);
+
 	useEffect(() => {
+		async function getGenresAndTags() {
+			const res = await fetchGenresAndTags();
+			bookmarks.setGenres(res.data.genres);
+			bookmarks.setTags(res.data.tags);
+		}
 		async function isAuthenticated() {
 			const authStatus = await checkAuth();
 			ctx.setIsAuthenticated(authStatus);
-			setIsCheckingAuth(false);
+			setIsLoading(false);
 		}
-		if (!ctx.isAuthenticated && isCheckingAuth) {
-			isAuthenticated();
-		}
-	}, [isCheckingAuth]);
+
+		isAuthenticated();
+		getGenresAndTags();
+	}, []);
 
 	return (
 		<>
 			<CssBaseline />
-			{isCheckingAuth && <AppProgress />}
-			{!isCheckingAuth && (
+			{isLoading && <AppProgress />}
+			{!isLoading && (
 				<>
 					<NavBar />
 					<Box

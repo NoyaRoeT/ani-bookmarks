@@ -16,17 +16,10 @@ import {
 	Alert,
 } from "@mui/material";
 import { ComboBox } from "../";
-import {
-	addBookmark,
-	editBookmark,
-	fetchBookmarks,
-} from "../../services/bookmarks";
+import { addBookmark, editBookmark } from "../../services/bookmarks";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../store/AuthContext";
 import { BookmarkContext } from "../../store/BookmarkContext";
-
-const genreOptions = ["Fantasy", "Action", "Sci-Fi"];
-const tagOptions = ["Isekai", "Regression", "Magic"];
 
 const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 	const [error, setError] = useState(null);
@@ -194,13 +187,13 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 						</FormControl>
 						<ComboBox
 							onChange={genresChangeHandler}
-							options={genreOptions}
+							options={bookmarks.genres}
 							value={genres}
 							label={"Genre"}
 						/>
 						<ComboBox
 							onChange={tagsChangeHandler}
-							options={tagOptions}
+							options={bookmarks.tags}
 							label={"Tags"}
 							value={tags}
 						/>

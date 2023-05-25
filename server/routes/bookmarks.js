@@ -4,6 +4,7 @@ import {
 	deleteBookmark,
 	getBookmark,
 	getBookmarks,
+	getGenresAndTags,
 	isBookmarkOwner,
 	updateBookmark,
 } from "../controllers/bookmarks.js";
@@ -22,6 +23,8 @@ function initRouter() {
 	const router = express.Router();
 
 	router.get("/", isAuthenticated, getBookmarks);
+
+	router.get("/genresandtags", getGenresAndTags);
 
 	router.get("/:bookmarkId", isAuthenticated, isBookmarkOwner, getBookmark);
 

@@ -4,6 +4,7 @@ const ANIME = 0;
 const MANGA = 1;
 const MANHWA = 2;
 const MANHUA = 3;
+const NOVEL = 4;
 
 const bookmarkSchema = new mongoose.Schema(
 	{
@@ -23,7 +24,7 @@ const bookmarkSchema = new mongoose.Schema(
 		type: {
 			type: Number,
 			required: true,
-			enum: [ANIME, MANGA, MANHWA, MANHUA],
+			enum: [ANIME, MANGA, MANHWA, MANHUA, NOVEL],
 		},
 		userId: {
 			type: mongoose.Schema.Types.ObjectId,
