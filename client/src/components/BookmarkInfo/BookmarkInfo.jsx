@@ -27,6 +27,8 @@ const Item = ({ color, children }) => {
 	return (
 		<Paper
 			sx={{
+				mr: 1,
+				mb: 1,
 				fontSize: "12px",
 				color: "white",
 				px: "8px",
@@ -160,7 +162,7 @@ const BookmarkInfo = ({ bookmark, open, onClose }) => {
 										Type: {types[bookmark.type]}
 									</Typography>
 
-									<Stack spacing={1} direction="row">
+									<Stack direction="row" flexWrap={"wrap"}>
 										{bookmark.genres.map((g) => (
 											<Item key={g.name} color="#1565c0">
 												{g.name}

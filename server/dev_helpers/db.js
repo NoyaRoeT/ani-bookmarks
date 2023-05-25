@@ -62,7 +62,21 @@ async function seedGenreCollection() {
 }
 
 async function seedTagCollection() {
-	const tagNames = ["Isekai", "Regression", "Magic"];
+	const tagNames = [
+		"Isekai",
+		"Regression",
+		"Magic",
+		"Beatiful Female Lead",
+		"Broken Engagement",
+		"Female Protagonist",
+		"Male Protagonist",
+		"Hiding True Identity",
+		"Loyal Subordinates",
+		"Strong Protagonist",
+		"Genius Protagonist",
+		"Arranged Marriage",
+		"Underestimated Protagonist",
+	];
 	const tagObjs = tagNames.map((name) => {
 		return { name };
 	});
@@ -70,4 +84,4 @@ async function seedTagCollection() {
 	await Tag.insertMany(tagObjs);
 }
 
-await seedGenreCollection();
+await seedTagCollection();
