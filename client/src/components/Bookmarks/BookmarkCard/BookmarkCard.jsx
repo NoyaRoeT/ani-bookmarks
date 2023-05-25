@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Grid, Typography, Card, CardMedia, CardContent } from "@mui/material";
 import BookmarkInfo from "../../BookmarkInfo/BookmarkInfo";
 
+const types = ["Anime", "Manga", "Manhwa", "Manhua", "Novel"];
+
 const BookmarkCard = ({ bookmark }) => {
 	const [showInfo, setShowInfo] = useState(false);
 
@@ -69,7 +71,7 @@ const BookmarkCard = ({ bookmark }) => {
 							}}
 							variant="body2"
 						>
-							Manga
+							{types[bookmark.type]}
 						</Typography>
 						<Typography
 							sx={{ color: "#f9d3b4", fontSize: "18px" }}
