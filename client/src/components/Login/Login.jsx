@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Container, CircularProgress } from "@mui/material";
+import { Container, CircularProgress, Grid, Link } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -109,6 +109,14 @@ export default function Login() {
 						)}
 					</Box>
 				</Box>
+				<Grid container>
+					<Grid item xs></Grid>
+					<Grid item>
+						<Link href="/signup" variant="body2">
+							{"Don't have an account? Sign Up"}
+						</Link>
+					</Grid>
+				</Grid>
 			</Box>
 		</Container>
 	);
