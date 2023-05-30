@@ -2,23 +2,48 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { CircularProgress } from "@mui/material";
+import { useState } from "react";
+import { signup } from "../../services/auth";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../store/AuthContext";
 
 export default function SignUp() {
-	const handleSubmit = (event) => {
+	const [isLoading, setIsLoading] = useState(false);
+	const [isError, setIsError] = useState(false);
+	const navigate = useNavigate();
+	const ctx = useContext(AuthContext);
+
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		console.log({
-			email: data.get("email"),
-			password: data.get("password"),
-		});
+		const body = {};
+		data.forEach((value, key) => (body[key] = value));
+
+		try {
+			setIsLoading(true);
+			const result = await signup(body);
+			if (result) {
+				ctx.setIsAuthenticated(true);
+				if (isError) {
+					setIsError(false);
+				}
+				navigate("/");
+			} else {
+				setIsError(true);
+			}
+		} catch (err) {
+			console.log(err);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -51,6 +76,7 @@ export default function SignUp() {
 								id="username"
 								label="Username"
 								name="username"
+								error={isError}
 							/>
 						</Grid>
 						<Grid item xs={12}>
@@ -61,6 +87,7 @@ export default function SignUp() {
 								label="Email Address"
 								name="email"
 								autoComplete="email"
+								error={isError}
 							/>
 						</Grid>
 						<Grid item xs={12}>
@@ -72,17 +99,33 @@ export default function SignUp() {
 								type="password"
 								id="password"
 								autoComplete="new-password"
+								error={isError}
 							/>
 						</Grid>
 					</Grid>
-					<Button
-						type="submit"
-						fullWidth
-						variant="contained"
-						sx={{ mt: 3, mb: 2 }}
-					>
-						Sign Up
-					</Button>
+					<Box sx={{ position: "relative" }}>
+						<Button
+							type="submit"
+							fullWidth
+							variant="contained"
+							sx={{ mt: 3, mb: 3 }}
+							disabled={isLoading}
+						>
+							Sign Up
+						</Button>
+						{isLoading && (
+							<CircularProgress
+								size={24}
+								sx={{
+									position: "absolute",
+									top: "50%",
+									left: "50%",
+									marginTop: "-12px",
+									marginLeft: "-12px",
+								}}
+							/>
+						)}
+					</Box>
 					<Grid container justifyContent="flex-end">
 						<Grid item>
 							<Link href="/login" variant="body2">
