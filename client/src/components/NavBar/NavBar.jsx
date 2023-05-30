@@ -59,7 +59,7 @@ const NavBar = () => {
 	const drawerItems = [
 		{ text: "home", icon: "home" },
 		{ text: "search", icon: "search" },
-		{ text: ctx.isAuthenticated ? "logout" : "login", icon: "lock" },
+		{ text: "logout", icon: "lock" },
 	];
 
 	const drawer = (
@@ -115,26 +115,24 @@ const NavBar = () => {
 							<MenuIcon />
 						</IconButton>
 					)}
-					{ctx.isAuthenticated && (
-						<Search
-							sx={{
-								flexGrow: 1,
-								justifyContent: "center",
-								alignItems: "center",
-							}}
-						/>
-					)}
-					{ctx.isAuthenticated && (
-						<IconButton
-							size="large"
-							color="inherit"
-							aria-label="add"
-							sx={{ mr: 2 }}
-							onClick={handleShowForm}
-						>
-							<AddIcon />
-						</IconButton>
-					)}
+
+					<Search
+						sx={{
+							flexGrow: 1,
+							justifyContent: "center",
+							alignItems: "center",
+						}}
+					/>
+
+					<IconButton
+						size="large"
+						color="inherit"
+						aria-label="add"
+						sx={{ mr: 2 }}
+						onClick={handleShowForm}
+					>
+						<AddIcon />
+					</IconButton>
 				</Toolbar>
 			</AppBar>
 			<Box
