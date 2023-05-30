@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, CssBaseline } from "@mui/material";
-import { Route, Routes } from "react-router-dom";
+import { CssBaseline } from "@mui/material";
+import { Route, Routes, Navigate } from "react-router-dom";
 import {
 	BookmarkInfo,
 	Login,
 	Bookmarks,
-	NavBar,
 	SignUp,
 	AppProgress,
 	ProtectedRoute,
@@ -43,48 +42,26 @@ const App = () => {
 			{isLoading && <AppProgress />}
 			{!isLoading && (
 				<>
-					<NavBar />
-					<Box
-						component="main"
-						sx={{
-							ml: { sm: "240px" },
-							width: { sm: `calc(100% - 240px)` },
-						}}
-					>
-						<Routes>
-							<Route path="/" element={<ProtectedRoute />}>
-								<Route path="" element={<Bookmarks />} />
-							</Route>
-
+					<Routes>
+						<Route path="/" element={<ProtectedRoute />}>
+							<Route path="" element={<Bookmarks />} />
+							<Route path="test" element={<Test />} />
 							<Route
-								path="/login"
-								element={<ProtectedRoute noAuth={true} />}
-							>
-								<Route path="" element={<Login />} />
-							</Route>
+								path="bookmark/:bookmarkId"
+								element={<BookmarkInfo />}
+							/>
+						</Route>
 
-							<Route
-								path="/signup"
-								element={<ProtectedRoute noAuth={true} />}
-							>
-								<Route path="" element={<SignUp />} />
-							</Route>
+						<Route
+							path="/"
+							element={<ProtectedRoute noAuth={true} />}
+						>
+							<Route path="login" element={<Login />} />
+							<Route path="signup" element={<SignUp />} />
+						</Route>
 
-							<Route path="/test" element={<ProtectedRoute />}>
-								<Route path="" element={<Test />} />
-							</Route>
-
-							<Route
-								path="/bookmark/"
-								element={<ProtectedRoute />}
-							>
-								<Route
-									path=":bookmarkId"
-									element={<BookmarkInfo />}
-								/>
-							</Route>
-						</Routes>
-					</Box>
+						<Route path="*" element={<Navigate to="/" />} />
+					</Routes>
 				</>
 			)}
 		</>
