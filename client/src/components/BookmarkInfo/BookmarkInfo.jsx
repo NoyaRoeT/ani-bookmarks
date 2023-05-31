@@ -21,8 +21,6 @@ import { AuthContext } from "../../store/AuthContext";
 import { BookmarkContext } from "../../store/BookmarkContext";
 import { BookmarkForm } from "..";
 
-const types = ["Anime", "Manga", "Manhwa", "Manhua", "Novel"];
-
 const Item = ({ color, children }) => {
 	return (
 		<Paper
@@ -159,7 +157,7 @@ const BookmarkInfo = ({ bookmark, open, onClose }) => {
 										variant="subtitle1"
 										sx={{ mb: "12px" }}
 									>
-										Type: {types[bookmark.type]}
+										Type:{` ${bookmark.type.toUpperCase()}`}
 									</Typography>
 
 									<Stack direction="row" flexWrap={"wrap"}>

@@ -15,7 +15,7 @@ function bookmarkSchema() {
 			.items(Joi.string().valid(...Object.keys(TagStore.getMap())))
 			.max(20)
 			.unique(),
-		type: Joi.number().integer().min(0).max(4),
+		type: Joi.string().valid("anime", "manga", "manhwa", "manhua", "novel"),
 		image: Joi.any(),
 	});
 }

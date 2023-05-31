@@ -1,11 +1,5 @@
 import mongoose from "mongoose";
 
-const ANIME = 0;
-const MANGA = 1;
-const MANHWA = 2;
-const MANHUA = 3;
-const NOVEL = 4;
-
 const bookmarkSchema = new mongoose.Schema(
 	{
 		title: {
@@ -22,9 +16,9 @@ const bookmarkSchema = new mongoose.Schema(
 			type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
 		},
 		type: {
-			type: Number,
+			type: String,
 			required: true,
-			enum: [ANIME, MANGA, MANHWA, MANHUA, NOVEL],
+			enum: ["anime", "manga", "manhwa", "manhua", "novel"],
 		},
 		userId: {
 			type: mongoose.Schema.Types.ObjectId,

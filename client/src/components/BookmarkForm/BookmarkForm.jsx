@@ -32,7 +32,7 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 	const [tags, setTags] = useState(
 		bookmark ? bookmark.tags.map((t) => t.name) : []
 	);
-	const [type, setType] = useState(bookmark ? bookmark.type : 0);
+	const [type, setType] = useState(bookmark ? bookmark.type : "");
 	const imageRef = useRef();
 	const titleRef = useRef();
 
@@ -169,20 +169,21 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 							inputRef={titleRef}
 							defaultValue={bookmark ? bookmark.title : null}
 						/>
-						<FormControl margin="normal">
+						<FormControl margin="normal" sx={{ minWidth: "110px" }}>
 							<InputLabel id="type">Type</InputLabel>
 							<Select
+								required
 								labelId="type"
 								id="type"
 								value={type}
 								label="Type"
 								onChange={typeChangeHandler}
 							>
-								<MenuItem value={0}>Anime</MenuItem>
-								<MenuItem value={1}>Manga</MenuItem>
-								<MenuItem value={2}>Manhwa</MenuItem>
-								<MenuItem value={3}>Manhua</MenuItem>
-								<MenuItem value={4}>Novel</MenuItem>
+								<MenuItem value={"anime"}>Anime</MenuItem>
+								<MenuItem value={"manga"}>Manga</MenuItem>
+								<MenuItem value={"manhwa"}>Manhwa</MenuItem>
+								<MenuItem value={"manhua"}>Manhua</MenuItem>
+								<MenuItem value={"novel"}>Novel</MenuItem>
 							</Select>
 						</FormControl>
 						<ComboBox
