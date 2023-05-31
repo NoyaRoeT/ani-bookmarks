@@ -93,7 +93,7 @@ export async function fetchGenresAndTags() {
 
 export async function searchBookmarks(query) {
 	try {
-		const response = await fetch("http://localhost:6001/auth/register", {
+		const response = await fetch("http://localhost:6001/bookmarks/search", {
 			method: "POST",
 			body: JSON.stringify(query),
 			headers: {

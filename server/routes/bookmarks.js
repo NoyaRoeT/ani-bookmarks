@@ -7,6 +7,7 @@ import {
 	getGenresAndTags,
 	isBookmarkOwner,
 	updateBookmark,
+	searchBookmarks,
 } from "../controllers/bookmarks.js";
 
 import {
@@ -25,6 +26,17 @@ function initRouter() {
 	router.get("/", isAuthenticated, getBookmarks);
 
 	router.get("/genresandtags", getGenresAndTags);
+
+	router.post(
+		"/search",
+		(req, res, next) => {
+			console.log(req.body);
+			next();
+		},
+		isAuthenticated,
+		validateBody(SchemaStore.get("search")),
+		searchBookmarks
+	);
 
 	router.get("/:bookmarkId", isAuthenticated, isBookmarkOwner, getBookmark);
 

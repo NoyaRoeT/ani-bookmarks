@@ -76,6 +76,10 @@ async function seedTagCollection() {
 		"Genius Protagonist",
 		"Arranged Marriage",
 		"Underestimated Protagonist",
+		"Devils",
+		"Character Death",
+		"Non-human Protagonist",
+		"Beautiful Visuals",
 	];
 	const tagObjs = tagNames.map((name) => {
 		return { name };

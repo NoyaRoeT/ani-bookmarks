@@ -21,6 +21,7 @@ import GenreStore from "./utils/GenreStore.js";
 import TagStore from "./utils/TagStore.js";
 import SchemaStore from "./utils/SchemaStore.js";
 import bookmarkSchema from "./schemas/bookmark.js";
+import searchSchema from "./schemas/filter.js";
 
 const PORT = process.env.PORT || 6001;
 mongoose.set("strictQuery", false);
@@ -35,6 +36,7 @@ async function startUp() {
 	await GenreStore.init();
 	await TagStore.init();
 	SchemaStore.addSchema("bookmark", bookmarkSchema);
+	SchemaStore.addSchema("search", searchSchema);
 
 	/* CONFIGURATIONS */
 	const app = express();

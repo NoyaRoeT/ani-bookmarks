@@ -15,7 +15,6 @@ const ComboBox = ({ required, id, label, value, options, sx, onChange }) => {
 
 	return (
 		<Autocomplete
-			disablePortal
 			disableClearable
 			multiple
 			value={chosen}

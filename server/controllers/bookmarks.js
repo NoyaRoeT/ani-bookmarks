@@ -169,3 +169,33 @@ export const getGenresAndTags = (req, res, next) => {
 
 	return res.status(200).json({ data: { genres, tags } });
 };
+
+export const searchBookmarks = async (req, res, next) => {
+	const filter = { userId: req.user._id };
+
+	if (req.body.genres && req.body.tags.length) {
+		filter.genres = { $all: req.body.genres };
+	}
+
+	if (req.body.tags && req.body.tags.length) {
+		filter.tags = { $all: req.body.tags };
+	}
+
+	if (req.body.type) {
+		filter.type = req.body.type;
+	}
+
+	if (req.body.title) {
+		const regex = new RegExp(req.body.title, "i");
+		filter.title = { $regex: regex };
+	}
+
+	console.log(filter);
+
+	try {
+		const bookmarks = await Bookmark.find(filter);
+		return res.status(200).json({ data: bookmarks });
+	} catch (err) {
+		next(new ExpressError(err.message, 500));
+	}
+};

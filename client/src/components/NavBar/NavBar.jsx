@@ -174,11 +174,11 @@ const NavBar = () => {
 			</Box>
 			{formOpen && (
 				<Dialog
-					scroll="body"
 					fullWidth
 					open={formOpen}
 					maxWidth="md"
 					onClose={handleCloseForm}
+					sx={{ overflow: "visible" }}
 				>
 					<DialogTitle>Add a bookmark</DialogTitle>
 					<DialogContent>

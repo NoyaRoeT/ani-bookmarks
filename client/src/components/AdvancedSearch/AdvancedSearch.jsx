@@ -1,7 +1,5 @@
 import {
 	Paper,
-	Popper,
-	Grow,
 	FormControl,
 	MenuItem,
 	Button,
@@ -13,6 +11,7 @@ import {
 import ComboBox from "../ComboBox/ComboBox";
 import React, { useContext, useRef, useState } from "react";
 import { BookmarkContext } from "../../store/BookmarkContext";
+import { searchBookmarks } from "../../services/bookmarks";
 
 const AdvancedSearch = () => {
 	const bookmarks = useContext(BookmarkContext);
@@ -40,9 +39,16 @@ const AdvancedSearch = () => {
 			tags,
 			title: titleRef.current.value,
 		};
-		bookmarks.setIsLoading(true);
-		bookmarks.filter = query;
-		bookmarks.setIsLoading(false);
+		try {
+			bookmarks.setIsLoading(true);
+			const res = await searchBookmarks(query);
+
+			console.log(res);
+		} catch (err) {
+			console.log(err);
+		} finally {
+			bookmarks.setIsLoading(false);
+		}
 	}
 
 	return (
