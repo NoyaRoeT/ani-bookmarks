@@ -13,7 +13,9 @@ function searchSchema() {
 			.items(Joi.string().valid(...Object.keys(TagStore.getMap())))
 			.max(20)
 			.unique(),
-		type: Joi.string().valid("anime", "manga", "manhwa", "manhua", "novel"),
+		type: Joi.string()
+			.valid("anime", "manga", "manhwa", "manhua", "novel")
+			.allow(""),
 	});
 }
 

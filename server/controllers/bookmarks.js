@@ -173,12 +173,14 @@ export const getGenresAndTags = (req, res, next) => {
 export const searchBookmarks = async (req, res, next) => {
 	const filter = { userId: req.user._id };
 
-	if (req.body.genres && req.body.tags.length) {
-		filter.genres = { $all: req.body.genres };
+	if (req.body.genres && req.body.genres.length) {
+		filter.genres = {
+			$all: req.body.genres.map((g) => GenreStore.getMap()[g]),
+		};
 	}
 
 	if (req.body.tags && req.body.tags.length) {
-		filter.tags = { $all: req.body.tags };
+		filter.tags = { $all: req.body.tags.map((t) => TagStore.getMap()[t]) };
 	}
 
 	if (req.body.type) {
@@ -189,8 +191,6 @@ export const searchBookmarks = async (req, res, next) => {
 		const regex = new RegExp(req.body.title, "i");
 		filter.title = { $regex: regex };
 	}
-
-	console.log(filter);
 
 	try {
 		const bookmarks = await Bookmark.find(filter);

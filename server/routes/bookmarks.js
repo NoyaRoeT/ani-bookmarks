@@ -29,10 +29,6 @@ function initRouter() {
 
 	router.post(
 		"/search",
-		(req, res, next) => {
-			console.log(req.body);
-			next();
-		},
 		isAuthenticated,
 		validateBody(SchemaStore.get("search")),
 		searchBookmarks
