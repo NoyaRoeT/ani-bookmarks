@@ -193,7 +193,9 @@ export const searchBookmarks = async (req, res, next) => {
 	}
 
 	try {
-		const bookmarks = await Bookmark.find(filter);
+		const bookmarks = await Bookmark.find(filter)
+			.populate("genres", "-_id")
+			.populate("tags", "-_id");
 		return res.status(200).json({ data: bookmarks });
 	} catch (err) {
 		next(new ExpressError(err.message, 500));

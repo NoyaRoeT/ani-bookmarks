@@ -12,13 +12,16 @@ import ComboBox from "../ComboBox/ComboBox";
 import React, { useContext, useRef, useState } from "react";
 import { BookmarkContext } from "../../store/BookmarkContext";
 import { searchBookmarks } from "../../services/bookmarks";
+import { useNavigate } from "react-router-dom";
 
-const AdvancedSearch = () => {
+const AdvancedSearch = ({ sx }) => {
 	const bookmarks = useContext(BookmarkContext);
 	const [type, setType] = useState("");
 	const [genres, setGenres] = useState([]);
 	const [tags, setTags] = useState([]);
 	const titleRef = useRef();
+	const [error, setError] = useState();
+	const navigate = useNavigate();
 
 	function typeChangeHandler(event) {
 		setType(event.target.value);
@@ -39,20 +42,13 @@ const AdvancedSearch = () => {
 			tags,
 			title: titleRef.current.value,
 		};
-		try {
-			bookmarks.setIsLoading(true);
-			const res = await searchBookmarks(query);
-
-			console.log(res);
-		} catch (err) {
-			console.log(err);
-		} finally {
-			bookmarks.setIsLoading(false);
-		}
+		bookmarks.setFilter(query);
+		navigate("/");
 	}
 
 	return (
-		<Paper>
+		<Box sx={{ ...sx }}>
+			{error && <Alert severity="error">{error}</Alert>}
 			<TextField
 				margin="normal"
 				fullWidth
@@ -105,7 +101,7 @@ const AdvancedSearch = () => {
 					Confirm
 				</Button>
 			</Box>
-		</Paper>
+		</Box>
 	);
 };
 

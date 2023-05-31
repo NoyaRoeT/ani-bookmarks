@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { fetchBookmarks } from "../services/bookmarks";
+import { fetchBookmarks, searchBookmarks } from "../services/bookmarks";
 
 export const BookmarkContext = React.createContext({
 	bookmarks: [],
@@ -12,6 +12,7 @@ export const BookmarkContext = React.createContext({
 	tags: [],
 	setTags: () => {},
 	filter: {},
+	setFilter: () => {},
 });
 
 const BookmarkContextProvider = ({ children }) => {
@@ -19,12 +20,12 @@ const BookmarkContextProvider = ({ children }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [genres, setGenres] = useState([]);
 	const [tags, setTags] = useState([]);
-	const filter = {};
+	const [filter, setFilter] = useState({});
 
 	async function getBookmarks() {
 		try {
 			setIsLoading(true);
-			const res = await fetchBookmarks();
+			const res = await searchBookmarks(filter);
 			if (!res.error) {
 				setBookmarks(res.data);
 			}
@@ -48,6 +49,7 @@ const BookmarkContextProvider = ({ children }) => {
 				tags,
 				setTags,
 				filter,
+				setFilter,
 			}}
 		>
 			{children}
