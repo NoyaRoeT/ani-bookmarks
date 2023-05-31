@@ -190,6 +190,7 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 							options={bookmarks.genres}
 							value={genres}
 							label={"Genre"}
+							required={true}
 						/>
 						<ComboBox
 							onChange={tagsChangeHandler}

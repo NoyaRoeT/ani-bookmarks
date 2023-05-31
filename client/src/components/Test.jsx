@@ -1,8 +1,8 @@
 import React from "react";
-import BookmarkInfo from "./BookmarkInfo/BookmarkInfo";
+import AdvancedSearch from "./AdvancedSearch/AdvancedSearch";
 
 const Test = () => {
-	return <BookmarkInfo />;
+	return <AdvancedSearch />;
 };
 
 export default Test;

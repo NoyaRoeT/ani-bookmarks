@@ -11,6 +11,7 @@ export const BookmarkContext = React.createContext({
 	setGenres: () => {},
 	tags: [],
 	setTags: () => {},
+	filter: {},
 });
 
 const BookmarkContextProvider = ({ children }) => {
@@ -18,6 +19,7 @@ const BookmarkContextProvider = ({ children }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [genres, setGenres] = useState([]);
 	const [tags, setTags] = useState([]);
+	const filter = {};
 
 	async function getBookmarks() {
 		try {
@@ -45,6 +47,7 @@ const BookmarkContextProvider = ({ children }) => {
 				setGenres,
 				tags,
 				setTags,
+				filter,
 			}}
 		>
 			{children}

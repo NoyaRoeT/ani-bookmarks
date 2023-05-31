@@ -90,3 +90,22 @@ export async function fetchGenresAndTags() {
 		return { error: { message: err.message } };
 	}
 }
+
+export async function searchBookmarks(query) {
+	try {
+		const response = await fetch("http://localhost:6001/auth/register", {
+			method: "POST",
+			body: JSON.stringify(query),
+			headers: {
+				"Content-Type": "application/json",
+			},
+			credentials: "include",
+			withCredentials: true,
+		});
+		const resData = await response.json();
+		return resData;
+	} catch (err) {
+		console.log(err);
+		return { error: { message: err.message } };
+	}
+}
