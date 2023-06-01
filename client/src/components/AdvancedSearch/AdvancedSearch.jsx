@@ -11,14 +11,20 @@ import {
 import ComboBox from "../ComboBox/ComboBox";
 import React, { useContext, useRef, useState } from "react";
 import { BookmarkContext } from "../../store/BookmarkContext";
-import { searchBookmarks } from "../../services/bookmarks";
 import { useNavigate } from "react-router-dom";
 
 const AdvancedSearch = ({ sx }) => {
 	const bookmarks = useContext(BookmarkContext);
-	const [type, setType] = useState("");
-	const [genres, setGenres] = useState([]);
-	const [tags, setTags] = useState([]);
+
+	const [type, setType] = useState(
+		bookmarks.filter.type ? bookmarks.filter.type : ""
+	);
+	const [genres, setGenres] = useState(
+		bookmarks.filter.genres ? bookmarks.filter.genres : []
+	);
+	const [tags, setTags] = useState(
+		bookmarks.filter.tags ? bookmarks.filter.tags : []
+	);
 	const titleRef = useRef();
 	const [error, setError] = useState();
 	const navigate = useNavigate();
@@ -35,7 +41,7 @@ const AdvancedSearch = ({ sx }) => {
 		setTags(value);
 	}
 
-	async function submitHandler() {
+	function submitHandler() {
 		const query = {
 			type,
 			genres,
@@ -68,6 +74,7 @@ const AdvancedSearch = ({ sx }) => {
 					label="Type"
 					onChange={typeChangeHandler}
 				>
+					<MenuItem value="">None</MenuItem>
 					<MenuItem value={"anime"}>Anime</MenuItem>
 					<MenuItem value={"manga"}>Manga</MenuItem>
 					<MenuItem value={"manhwa"}>Manhwa</MenuItem>

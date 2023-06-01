@@ -19,7 +19,6 @@ const App = () => {
 	const ctx = useContext(AuthContext);
 	const bookmarks = useContext(BookmarkContext);
 	const [isLoading, setIsLoading] = useState(true);
-	console.log(bookmarks.tags);
 	useEffect(() => {
 		async function getGenresAndTags() {
 			const res = await fetchGenresAndTags();

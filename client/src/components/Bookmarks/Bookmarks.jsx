@@ -12,7 +12,7 @@ const Bookmarks = () => {
 			await ctx.getBookmarks();
 		};
 		run();
-	}, []);
+	}, [ctx.filter]);
 
 	return (
 		<>
