@@ -45,7 +45,6 @@ const BookmarkInfo = ({ bookmark, open, onClose }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const ctx = useContext(AuthContext);
 	const bookmarks = useContext(BookmarkContext);
-	console.log(bookmark);
 	async function handleDelete() {
 		try {
 			const res = await deleteBookmark(bookmark._id);

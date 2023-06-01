@@ -19,15 +19,7 @@ const ProtectedRoute = ({ noAuth }) => {
 	return ctx.isAuthenticated ? (
 		<>
 			<NavBar />
-			<Box
-				component="main"
-				sx={{
-					ml: { sm: "240px" },
-					width: { sm: `calc(100% - 240px)` },
-				}}
-			>
-				<Outlet />
-			</Box>
+			<Outlet />
 		</>
 	) : (
 		<Navigate to="/login" state={{ from: location }} replace />

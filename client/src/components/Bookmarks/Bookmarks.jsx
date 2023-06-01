@@ -1,7 +1,8 @@
-import { Container, CircularProgress, Box } from "@mui/material";
+import { Container, CircularProgress, Box, Fab } from "@mui/material";
 import BookmarkList from "./BookmarkList/BookmarkList";
 import { BookmarkContext } from "../../store/BookmarkContext";
 import { useContext, useEffect } from "react";
+import { FloatingAddButton } from "../";
 
 const Bookmarks = () => {
 	const ctx = useContext(BookmarkContext);
@@ -18,6 +19,9 @@ const Bookmarks = () => {
 			{!ctx.isLoading && (
 				<Container sx={{ mt: "20px" }}>
 					<BookmarkList bookmarks={ctx.bookmarks} />
+					<FloatingAddButton
+						sx={{ position: "fixed", bottom: 20, right: 20 }}
+					/>
 				</Container>
 			)}
 			{ctx.isLoading && (
