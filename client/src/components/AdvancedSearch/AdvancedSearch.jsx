@@ -11,7 +11,6 @@ import {
 import ComboBox from "../ComboBox/ComboBox";
 import React, { useContext, useRef, useState } from "react";
 import { BookmarkContext } from "../../store/BookmarkContext";
-import { useNavigate } from "react-router-dom";
 
 const AdvancedSearch = ({ sx }) => {
 	const bookmarks = useContext(BookmarkContext);
@@ -27,7 +26,6 @@ const AdvancedSearch = ({ sx }) => {
 	);
 	const titleRef = useRef();
 	const [error, setError] = useState();
-	const navigate = useNavigate();
 
 	function typeChangeHandler(event) {
 		setType(event.target.value);
@@ -49,7 +47,6 @@ const AdvancedSearch = ({ sx }) => {
 			title: titleRef.current.value,
 		};
 		bookmarks.setFilter(query);
-		navigate("/");
 	}
 
 	return (

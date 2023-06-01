@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import {
 	Box,
 	InputBase,
@@ -10,12 +10,28 @@ import { useTheme } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import ListIcon from "@mui/icons-material/List";
 import { AdvancedSearch } from "../../";
+import { BookmarkContext } from "../../../store/BookmarkContext";
 
 const Search = ({ sx }) => {
 	const theme = useTheme();
 	const styles = sx;
 
 	const [openAdvanced, setOpenAdvanced] = useState(false);
+	const searchRef = useRef();
+	const bookmarkContext = useContext(BookmarkContext);
+
+	function searchHandler() {
+		const query = {
+			title: searchRef.current.value,
+		};
+		bookmarkContext.setFilter(query);
+	}
+
+	function enterHandler(event) {
+		if (event.key === "Enter") {
+			searchHandler();
+		}
+	}
 
 	return (
 		<Box sx={{ ...styles, display: "flex" }}>
@@ -37,12 +53,17 @@ const Search = ({ sx }) => {
 						flexGrow: 1,
 					}}
 					placeholder="Simple Search..."
-					inputProps={{ "aria-label": "Search bookmarks" }}
+					inputProps={{
+						"aria-label": "Search bookmarks",
+						onKeyDown: enterHandler,
+					}}
+					inputRef={searchRef}
 				/>
 				<IconButton
 					type="button"
 					sx={{ p: "10px", color: "inherit" }}
 					aria-label="search"
+					onClick={searchHandler}
 				>
 					<SearchIcon />
 				</IconButton>
