@@ -8,3 +8,4 @@ export { default as ComboBox } from "./ComboBox/ComboBox";
 export { default as BookmarkForm } from "./BookmarkForm/BookmarkForm";
 export { default as ProtectedRoute } from "./ProtectedRoute/ProtectedRoute";
 export { default as FloatingAddButton } from "./FloatingAddButton/FloatingAddButton";
+export { default as AccountButton } from "./AccountButton/AccountButton";
