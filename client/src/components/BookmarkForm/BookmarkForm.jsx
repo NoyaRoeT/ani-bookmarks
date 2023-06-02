@@ -1,20 +1,20 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import {
 	Box,
-	Dialog,
-	DialogContent,
 	Divider,
 	Button,
 	FormControl,
 	TextField,
-	DialogTitle,
 	Grid,
 	Select,
 	MenuItem,
 	InputLabel,
 	CircularProgress,
 	Alert,
+	Typography,
+	IconButton,
 } from "@mui/material";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { ComboBox } from "../";
 import { addBookmark, editBookmark } from "../../services/bookmarks";
 import { useNavigate } from "react-router-dom";
@@ -22,10 +22,6 @@ import { AuthContext } from "../../store/AuthContext";
 import { BookmarkContext } from "../../store/BookmarkContext";
 
 const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
-	const [error, setError] = useState(null);
-	const [imageUrl, setImageUrl] = useState(
-		bookmark && bookmark.imagePath ? bookmark.imagePath : null
-	);
 	const [genres, setGenres] = useState(
 		bookmark ? bookmark.genres.map((g) => g.name) : []
 	);
@@ -35,12 +31,32 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 	const [type, setType] = useState(bookmark ? bookmark.type : "");
 	const imageRef = useRef();
 	const titleRef = useRef();
+	const imageUrlRef = useRef();
+	const [previewUrl, setPreviewUrl] = useState(
+		bookmark && bookmark.imagePath ? bookmark.imagePath : null
+	);
 
+	const [imageUrl, setImageUrl] = useState(
+		bookmark && bookmark.imagePath ? bookmark.imagePath : ""
+	);
+
+	const [showUrlField, setShowUrlField] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState(null);
+	const [useUrl, setUseUrl] = useState();
 
 	const navigate = useNavigate();
 	const ctx = useContext(AuthContext);
 	const bookmarks = useContext(BookmarkContext);
+
+	useEffect(() => {
+		const handler = setTimeout(() => {
+			setPreviewUrl(imageUrl);
+		}, 500);
+		return () => {
+			clearTimeout(handler);
+		};
+	}, [imageUrl]);
 
 	async function handleSuccess() {
 		await bookmarks.getBookmarks();
@@ -50,25 +66,29 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 	async function submitHandler() {
 		const data = {
 			title: titleRef.current.value,
-			image: imageRef.current.files[0],
 			genres,
 			tags,
 			type,
 		};
+		if (useUrl) {
+			data.imageUrl = imageUrlRef.current.value;
+		} else if (imageRef.current.files[0]) {
+			data.image = imageRef.current.files[0];
+		}
+
 		let result;
 		try {
 			setIsLoading(true);
 			if (variant === "edit") {
-				data.id = bookmark._id;
-				result = await editBookmark(data);
+				result = await editBookmark(data, bookmark._id);
 			} else {
 				result = await addBookmark(data);
 			}
 
 			if (!result.error) {
 				error && setError(null);
-				imageUrl && URL.revokeObjectURL(imageUrl);
-				setImageUrl("");
+				previewUrl && URL.revokeObjectURL(previewUrl);
+				setPreviewUrl(null);
 				await handleSuccess();
 				navigate("/");
 			} else if (result.error.type === 0) {
@@ -97,13 +117,19 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 		setTags(value);
 	}
 
-	function imageChangeHandler(event) {
+	function imageUploadHandler(event) {
 		const file = event.target.files[0];
 		if (!file.name.match(/\.(jpg|jpeg|png|gif)$/i)) {
 			return;
 		}
-		imageUrl && URL.revokeObjectURL(imageUrl);
-		setImageUrl(URL.createObjectURL(file));
+		previewUrl && URL.revokeObjectURL(previewUrl);
+		setPreviewUrl(URL.createObjectURL(file));
+		setUseUrl(false);
+	}
+
+	function imageUrlHandler(event) {
+		setImageUrl(event.target.value);
+		setUseUrl(true);
 	}
 
 	return (
@@ -128,23 +154,61 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 								height={"300px"}
 								style={{ objectFit: "cover" }}
 								src={
-									imageUrl
-										? imageUrl
+									previewUrl
+										? previewUrl
 										: "https://via.placeholder.com/400"
 								}
 							/>
 						</Box>
 						<FormControl>
-							<Button variant="contained" component="label">
+							<Button
+								sx={{
+									display: showUrlField
+										? "none"
+										: "inline-flex",
+								}}
+								variant="contained"
+								component="label"
+							>
 								Upload Image
 								<input
 									type="file"
 									accept="image/*"
 									hidden
-									onChange={imageChangeHandler}
+									onChange={imageUploadHandler}
 									ref={imageRef}
 								/>
 							</Button>
+							{!showUrlField && (
+								<Typography textAlign={"center"}>or</Typography>
+							)}
+							{!showUrlField && (
+								<Button
+									type="button"
+									variant="contained"
+									onClick={() => setShowUrlField(true)}
+								>
+									Enter Image Url
+								</Button>
+							)}
+							<Box
+								display={!showUrlField ? "none" : "flex"}
+								justifyContent="center"
+							>
+								<TextField
+									label="Image Url"
+									value={imageUrl}
+									onChange={imageUrlHandler}
+									inputRef={imageUrlRef}
+								/>
+								<IconButton
+									onClick={() => {
+										setShowUrlField(false);
+									}}
+								>
+									<CancelIcon />
+								</IconButton>
+							</Box>
 						</FormControl>
 					</Box>
 				</Grid>

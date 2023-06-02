@@ -52,6 +52,8 @@ export const createBookmark = async (req, res, next) => {
 	if (req.image) {
 		bookmark.imageId = req.image.public_id;
 		bookmark.imagePath = req.image.secure_url;
+	} else if (req.body.imageUrl) {
+		bookmark.imagePath = req.body.imageUrl;
 	}
 
 	try {
@@ -96,6 +98,10 @@ export const updateBookmark = async (req, res, next) => {
 			// Only delete from cloud after save is successful
 			cloudinaryDestroy(oldImageId);
 		} else {
+			if (req.body.imageUrl) {
+				bookmark.imagePath = req.body.imageUrl;
+				bookmark.imageId = undefined;
+			}
 			await bookmark.save();
 		}
 

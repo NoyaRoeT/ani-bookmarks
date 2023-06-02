@@ -14,11 +14,9 @@ export async function fetchBookmarks() {
 
 export async function addBookmark(data) {
 	const formData = new FormData();
-	formData.append("title", data.title);
-	formData.append("genres", data.genres);
-	formData.append("type", data.type);
-	formData.append("image", data.image);
-	formData.append("tags", data.tags);
+	for (const key in data) {
+		formData.append(key, data[key]);
+	}
 	try {
 		const response = await fetch("http://localhost:6001/bookmarks", {
 			method: "POST",
@@ -49,23 +47,18 @@ export async function deleteBookmark(id) {
 	}
 }
 
-export async function editBookmark(data) {
+export async function editBookmark(data, id) {
 	const formData = new FormData();
-	formData.append("title", data.title);
-	formData.append("genres", data.genres);
-	formData.append("type", data.type);
-	formData.append("image", data.image);
-	formData.append("tags", data.tags);
+	for (const key in data) {
+		formData.append(key, data[key]);
+	}
 	try {
-		const response = await fetch(
-			`http://localhost:6001/bookmarks/${data.id}`,
-			{
-				method: "PUT",
-				body: formData,
-				credentials: "include",
-				withCredentials: true,
-			}
-		);
+		const response = await fetch(`http://localhost:6001/bookmarks/${id}`, {
+			method: "PUT",
+			body: formData,
+			credentials: "include",
+			withCredentials: true,
+		});
 		const result = await response.json();
 		return result;
 	} catch (err) {

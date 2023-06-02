@@ -16,7 +16,7 @@ function bookmarkSchema() {
 			.max(20)
 			.unique(),
 		type: Joi.string().valid("anime", "manga", "manhwa", "manhua", "novel"),
-		image: Joi.any(),
+		imageUrl: Joi.string(),
 	});
 }
 
