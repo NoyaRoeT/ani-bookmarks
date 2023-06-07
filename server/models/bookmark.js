@@ -35,7 +35,14 @@ const bookmarkSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
+bookmarkSchema.path("title").validate((val) => {
+	// Only alphanum + ", ' and whitespace
+	const regex = /^[a-z0-9 "']+$/i;
+	return regex.test(val);
+});
+
 bookmarkSchema.path("genres").validate((val) => {
+	// Should not have duplicate genres
 	const uniqueGenreIds = new Set(val.map((id) => id.toString()));
 	return (
 		val.length >= 1 && val.length <= 5 && uniqueGenreIds.size == val.length
@@ -43,6 +50,7 @@ bookmarkSchema.path("genres").validate((val) => {
 });
 
 bookmarkSchema.path("tags").validate((val) => {
+	// Should not have duplicate tags
 	if (val.length === 0) {
 		return true;
 	}
