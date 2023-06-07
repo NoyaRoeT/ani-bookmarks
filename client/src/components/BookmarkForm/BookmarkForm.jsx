@@ -20,6 +20,7 @@ import { addBookmark, editBookmark } from "../../services/bookmarks";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../store/AuthContext";
 import { BookmarkContext } from "../../store/BookmarkContext";
+import { validateBookmark } from "../../utils/bookmark";
 
 const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 	const [genres, setGenres] = useState(
@@ -70,12 +71,22 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 			tags,
 			type,
 		};
+
+		// Use either uploaded image or image url, but not both
 		if (useUrl) {
 			data.imageUrl = imageUrlRef.current.value;
 		} else if (imageRef.current.files[0]) {
 			data.image = imageRef.current.files[0];
 		}
 
+		// Validate fields
+		const invalidField = validateBookmark(data);
+		if (invalidField) {
+			console.log("There are invalid fields");
+			return;
+		}
+
+		// Post to server
 		let result;
 		try {
 			setIsLoading(true);
@@ -120,6 +131,8 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 	function imageUploadHandler(event) {
 		const file = event.target.files[0];
 		if (!file.name.match(/\.(jpg|jpeg|png|gif)$/i)) {
+			previewUrl && URL.revokeObjectURL(previewUrl);
+			previewUrl && setPreviewUrl(undefined);
 			return;
 		}
 		previewUrl && URL.revokeObjectURL(previewUrl);
@@ -255,13 +268,14 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 							options={bookmarks.genres}
 							value={genres}
 							label={"Genre"}
-							required={true}
+							required
 						/>
 						<ComboBox
 							onChange={tagsChangeHandler}
 							options={bookmarks.tags}
 							label={"Tags"}
 							value={tags}
+							required
 						/>
 						<Box
 							sx={{
