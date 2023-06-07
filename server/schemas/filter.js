@@ -4,7 +4,10 @@ import TagStore from "../utils/TagStore.js";
 
 function searchSchema() {
 	return Joi.object({
-		title: Joi.string().max(200).allow(""),
+		title: Joi.string()
+			.max(200)
+			.allow("", "'", ",", "!", "?", '"')
+			.alphanum(),
 		genres: Joi.array()
 			.items(Joi.string().valid(...Object.keys(GenreStore.getMap())))
 			.max(5)

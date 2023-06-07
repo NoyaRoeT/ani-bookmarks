@@ -36,8 +36,8 @@ const bookmarkSchema = new mongoose.Schema(
 );
 
 bookmarkSchema.path("title").validate((val) => {
-	// Only alphanum + ", ' and whitespace
-	const regex = /^[a-z0-9 "']+$/i;
+	// Only alphanum + some puncutations
+	const regex = /^[a-z0-9 "'!?,.]+$/i;
 	return regex.test(val);
 });
 
