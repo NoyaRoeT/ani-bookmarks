@@ -26,19 +26,25 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 	const [genres, setGenres] = useState(
 		bookmark ? bookmark.genres.map((g) => g.name) : []
 	);
+	const [genresError, setGenresError] = useState();
+
 	const [tags, setTags] = useState(
 		bookmark ? bookmark.tags.map((t) => t.name) : []
 	);
-	const [type, setType] = useState(bookmark ? bookmark.type : "");
-	const imageRef = useRef();
-	const titleRef = useRef();
-	const imageUrlRef = useRef();
-	const [previewUrl, setPreviewUrl] = useState(
-		bookmark && bookmark.imagePath ? bookmark.imagePath : null
-	);
 
+	const [type, setType] = useState(bookmark ? bookmark.type : "");
+	const [typeError, setTypeError] = useState();
+
+	const titleRef = useRef();
+	const [titleError, setTitleError] = useState();
+
+	const imageRef = useRef();
+	const imageUrlRef = useRef();
 	const [imageUrl, setImageUrl] = useState(
 		bookmark && bookmark.imagePath ? bookmark.imagePath : ""
+	);
+	const [previewUrl, setPreviewUrl] = useState(
+		bookmark && bookmark.imagePath ? bookmark.imagePath : null
 	);
 
 	const [showUrlField, setShowUrlField] = useState(false);
@@ -81,9 +87,28 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 
 		// Validate fields
 		const invalidField = validateBookmark(data);
+		const fieldsToSetters = {
+			title: setTitleError,
+			genres: setGenresError,
+			type: setTypeError,
+		};
+
 		if (invalidField) {
-			console.log("There are invalid fields");
+			for (const field in fieldsToSetters) {
+				if (invalidField.field === field) {
+					fieldsToSetters[field](true);
+				} else {
+					fieldsToSetters[field](false);
+				}
+			}
+
+			setError(invalidField.message);
 			return;
+		} else {
+			for (const field in fieldsToSetters) {
+				fieldsToSetters[field](false);
+			}
+			error && setError(null);
 		}
 
 		// Post to server
@@ -237,6 +262,7 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 					<Box>
 						<TextField
 							margin="normal"
+							error={titleError}
 							required
 							fullWidth
 							id="title"
@@ -249,6 +275,7 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 						<FormControl margin="normal" sx={{ minWidth: "110px" }}>
 							<InputLabel id="type">Type</InputLabel>
 							<Select
+								error={typeError}
 								required
 								labelId="type"
 								id="type"
@@ -264,6 +291,7 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 							</Select>
 						</FormControl>
 						<ComboBox
+							error={genresError}
 							onChange={genresChangeHandler}
 							options={bookmarks.genres}
 							value={genres}

@@ -5,12 +5,12 @@ export function validateBookmark(bookmark) {
 		return { field: "title", message: "Title is a required field." };
 	}
 
-	if (!bookmark.genres || bookmark.genres.length === 0) {
-		return { field: "genres", message: "At least one genre is required." };
-	}
-
 	if (!bookmark.type) {
 		return { field: "type", message: "A type is required." };
+	}
+
+	if (!bookmark.genres || bookmark.genres.length === 0) {
+		return { field: "genres", message: "At least one genre is required." };
 	}
 
 	// Check valid values

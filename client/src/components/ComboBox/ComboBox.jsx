@@ -3,7 +3,16 @@ import { Autocomplete, TextField, useTheme } from "@mui/material";
 
 const defaultOptions = ["Fantasy", "Action", "Sci-Fi", "Default1", "Default2"];
 
-const ComboBox = ({ required, id, label, value, options, sx, onChange }) => {
+const ComboBox = ({
+	error,
+	required,
+	id,
+	label,
+	value,
+	options,
+	sx,
+	onChange,
+}) => {
 	const [chosen, setChosen] = useState(value ? value : []);
 
 	function handleChange(event, value) {
@@ -27,6 +36,7 @@ const ComboBox = ({ required, id, label, value, options, sx, onChange }) => {
 			}}
 			renderInput={(params) => (
 				<TextField
+					error={error}
 					required={required}
 					margin="normal"
 					{...params}
