@@ -18,7 +18,14 @@ const FloatingAddButton = ({ sx }) => {
 			>
 				<AddIcon />
 			</Fab>
-			{open && <AddBookmarkDialog />}
+			{open && (
+				<AddBookmarkDialog
+					onClose={() => {
+						setOpen(false);
+					}}
+					open={open}
+				/>
+			)}
 		</>
 	);
 };

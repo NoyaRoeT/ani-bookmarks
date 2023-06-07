@@ -2,27 +2,21 @@ import React from "react";
 import { Dialog, DialogTitle, DialogContent } from "@mui/material";
 import { BookmarkForm } from "../";
 
-const AddBookmarkDialog = () => {
+const AddBookmarkDialog = ({ open, onClose }) => {
 	return (
 		<Dialog
 			fullWidth
 			open={open}
 			maxWidth="md"
-			onClose={() => {
-				setOpen(false);
-			}}
+			onClose={onClose}
 			sx={{ overflow: "visible" }}
 		>
 			<DialogTitle>Add a bookmark</DialogTitle>
 			<DialogContent>
 				<BookmarkForm
 					variant={"add"}
-					onAuthError={() => {
-						setOpen(false);
-					}}
-					onSuccess={() => {
-						setOpen(false);
-					}}
+					onAuthError={onClose}
+					onSuccess={onClose}
 				/>
 			</DialogContent>
 		</Dialog>
