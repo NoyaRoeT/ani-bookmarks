@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Fab, Dialog, DialogTitle, DialogContent } from "@mui/material";
+import { Fab } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { BookmarkForm } from "../";
+import { AddBookmarkDialog } from "../";
 
 const FloatingAddButton = ({ sx }) => {
 	const [open, setOpen] = useState(false);
@@ -18,30 +18,7 @@ const FloatingAddButton = ({ sx }) => {
 			>
 				<AddIcon />
 			</Fab>
-			{open && (
-				<Dialog
-					fullWidth
-					open={open}
-					maxWidth="md"
-					onClose={() => {
-						setOpen(false);
-					}}
-					sx={{ overflow: "visible" }}
-				>
-					<DialogTitle>Add a bookmark</DialogTitle>
-					<DialogContent>
-						<BookmarkForm
-							variant={"add"}
-							onAuthError={() => {
-								setOpen(false);
-							}}
-							onSuccess={() => {
-								setOpen(false);
-							}}
-						/>
-					</DialogContent>
-				</Dialog>
-			)}
+			{open && <AddBookmarkDialog />}
 		</>
 	);
 };
