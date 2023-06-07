@@ -22,7 +22,7 @@ const Search = ({ sx }) => {
 
 	function searchHandler() {
 		const query = {
-			title: searchRef.current.value,
+			title: null,
 		};
 		bookmarkContext.setFilter(query);
 	}

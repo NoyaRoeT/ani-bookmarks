@@ -95,6 +95,7 @@ export const moveImageToCloud = async (req, res, next) => {
 };
 
 export const deleteImageIfError = async (err, req, res, next) => {
+	// isDeleted flag to indicate that image was already deleted from local disk
 	try {
 		if (req.image && !req.image.saved) {
 			await cloudinaryDestroy(req.image.public_id);
