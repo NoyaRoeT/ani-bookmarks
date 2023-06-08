@@ -142,15 +142,8 @@ const BookmarkInfo = ({ bookmark, open, onClose }) => {
 									value={bookmark.rating}
 								/>
 							</Grid>
-							<Divider
-								sx={{
-									mx: "24px",
-									display: { xs: "none", md: "block" },
-								}}
-								flexItem
-								orientation="vertical"
-							/>
-							<Grid item xs={12} md={8}>
+
+							<Grid item xs={12} md={8} sx={{ pl: "12px" }}>
 								<Box
 									sx={{
 										p: "12px",
@@ -178,7 +171,6 @@ const BookmarkInfo = ({ bookmark, open, onClose }) => {
 											</Item>
 										))}
 									</Stack>
-									<Divider sx={{ my: "12px" }} />
 								</Box>
 							</Grid>
 						</Grid>

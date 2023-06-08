@@ -265,16 +265,9 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 						</FormControl>
 					</Box>
 				</Grid>
-				<Divider
-					sx={{
-						mx: "24px",
-						display: { xs: "none", md: "block" },
-					}}
-					flexItem
-					orientation="vertical"
-				/>
-				<Grid item xs={12} md={8}>
-					<Box>
+
+				<Grid item xs={12} md={9} sx={{ pl: "24px" }}>
+					<Box sx={{ py: "24px", px: "12px" }}>
 						<TextField
 							margin="normal"
 							error={titleError}
