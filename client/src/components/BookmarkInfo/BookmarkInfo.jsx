@@ -12,6 +12,7 @@ import {
 	DialogContentText,
 	DialogActions,
 	Button,
+	Rating,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -113,7 +114,8 @@ const BookmarkInfo = ({ bookmark, open, onClose }) => {
 								md={3}
 								sx={{
 									display: "flex",
-									justifyContent: "center",
+									flexDirection: "column",
+									alignItems: "center",
 								}}
 							>
 								<Box
@@ -134,6 +136,11 @@ const BookmarkInfo = ({ bookmark, open, onClose }) => {
 										}
 									/>
 								</Box>
+								<Rating
+									size="large"
+									precision={0.5}
+									value={bookmark.rating}
+								/>
 							</Grid>
 							<Divider
 								sx={{

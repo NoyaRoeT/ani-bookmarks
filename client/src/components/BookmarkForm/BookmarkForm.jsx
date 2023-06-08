@@ -13,6 +13,7 @@ import {
 	Alert,
 	Typography,
 	IconButton,
+	Rating,
 } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { ComboBox } from "../";
@@ -23,6 +24,8 @@ import { BookmarkContext } from "../../store/BookmarkContext";
 import { validateBookmark } from "../../utils/bookmark";
 
 const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
+	const [rating, setRating] = useState(bookmark ? bookmark.rating : null);
+
 	const [genres, setGenres] = useState(
 		bookmark ? bookmark.genres.map((g) => g.name) : []
 	);
@@ -76,6 +79,7 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 			genres,
 			tags,
 			type,
+			rating,
 		};
 
 		// Use either uploaded image or image url, but not both
@@ -153,6 +157,11 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 		setTags(value);
 	}
 
+	function ratingChangeHandler(event) {
+		console.log(event.target.value);
+		setRating(Number(event.target.value));
+	}
+
 	function imageUploadHandler(event) {
 		const file = event.target.files[0];
 		if (!file.name.match(/\.(jpg|jpeg|png|gif)$/i)) {
@@ -182,6 +191,12 @@ const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
 							alignItems: "center",
 						}}
 					>
+						<Rating
+							size="large"
+							precision={0.5}
+							onChange={ratingChangeHandler}
+							value={rating}
+						/>
 						<Box
 							sx={{ my: "12px" }}
 							maxWidth={"244px"}

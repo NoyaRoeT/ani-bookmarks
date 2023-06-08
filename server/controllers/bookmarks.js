@@ -40,13 +40,14 @@ export const getBookmark = async (req, res, next) => {
 
 export const createBookmark = async (req, res, next) => {
 	const user = req.user;
-	const { title, genres, type, tags = [] } = req.body;
+	const { title, genres, type, tags = [], rating } = req.body;
 	const bookmark = new Bookmark({
 		title,
 		genres: genres.map((name) => GenreStore.getMap()[name]),
 		type,
 		tags: tags.map((name) => TagStore.getMap()[name]),
 		userId: user._id,
+		rating,
 	});
 
 	if (req.image) {
@@ -82,12 +83,13 @@ export const updateBookmark = async (req, res, next) => {
 				.json({ message: "This bookmark does not exist" });
 		}
 
-		const { title, genres, type, tags = [] } = req.body;
+		const { title, genres, type, tags = [], rating } = req.body;
 
 		bookmark.title = title;
 		bookmark.genres = genres.map((name) => GenreStore.getMap()[name]);
 		bookmark.type = type;
 		bookmark.tags = tags.map((name) => TagStore.getMap()[name]);
+		bookmark.rating = rating;
 
 		if (req.image) {
 			const oldImageId = bookmark.imageId;

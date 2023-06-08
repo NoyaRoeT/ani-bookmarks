@@ -31,6 +31,11 @@ const bookmarkSchema = new mongoose.Schema(
 		imageId: {
 			type: String,
 		},
+		rating: {
+			type: Number,
+			min: [0.5, "Rating cannot be 0 or below"],
+			max: [5, "Rating cannot be above 5"],
+		},
 	},
 	{ timestamps: true }
 );
@@ -56,6 +61,11 @@ bookmarkSchema.path("tags").validate((val) => {
 	}
 	const uniqueTagIds = new Set(val.map((id) => id.toString()));
 	return val.length <= 20 && uniqueTagIds.size == val.length;
+});
+
+bookmarkSchema.path("rating").validate((val) => {
+	// Validate against 0.5 incremental
+	return 2 * val == Math.round(2 * val);
 });
 
 bookmarkSchema.index({ title: 1, userId: 1 }, { unique: true });

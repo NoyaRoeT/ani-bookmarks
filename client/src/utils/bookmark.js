@@ -16,6 +16,7 @@ export function validateBookmark(bookmark) {
 	// Check valid values
 	// ComboBox's MUI Autocomplete component enforces valid values for genres and tags
 	// Select component enforces valid values for type
+	// Rating component enforces valid values for rating
 	// Image url can be any string
 
 	// titleRegex test takes care of disallowing empty string
