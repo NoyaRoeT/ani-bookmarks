@@ -1,6 +1,14 @@
 import React, { useState } from "react";
-import { Grid, Typography, Card, CardMedia, CardContent } from "@mui/material";
+import {
+	Grid,
+	Typography,
+	Card,
+	CardMedia,
+	CardContent,
+	Rating,
+} from "@mui/material";
 import BookmarkInfo from "../../BookmarkInfo/BookmarkInfo";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 const BookmarkCard = ({ bookmark }) => {
 	const [showInfo, setShowInfo] = useState(false);
@@ -13,7 +21,7 @@ const BookmarkCard = ({ bookmark }) => {
 					display: "flex",
 					justifyContent: "center",
 					alignItems: "center",
-					p: "15px",
+					p: "12px",
 				}}
 				item
 				xs={12}
@@ -31,16 +39,15 @@ const BookmarkCard = ({ bookmark }) => {
 							zIndex: 100,
 						},
 						borderRadius: 2,
-						maxWidth: 220,
+						width: "280px",
 						position: "relative",
-						width: 1,
 					}}
 					onClick={() => {
 						setShowInfo(true);
 					}}
 				>
 					<CardMedia
-						sx={{ height: 300 }}
+						sx={{ height: "280px" }}
 						image={
 							bookmark.imagePath
 								? bookmark.imagePath
@@ -61,18 +68,9 @@ const BookmarkCard = ({ bookmark }) => {
 							},
 						}}
 					>
+						<Rating readOnly size="small" value={bookmark.rating} />
 						<Typography
-							sx={{
-								color: "#f0f0f0",
-								textTransform: "uppercase",
-								letterSpacing: "2",
-							}}
-							variant="body2"
-						>
-							{bookmark.type.toUpperCase()}
-						</Typography>
-						<Typography
-							sx={{ color: "#f9d3b4", fontSize: "18px" }}
+							sx={{ color: "#f9d3b4", fontSize: "16px" }}
 							noWrap
 							variant="h6"
 						>
