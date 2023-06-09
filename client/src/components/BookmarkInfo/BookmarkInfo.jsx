@@ -140,6 +140,7 @@ const BookmarkInfo = ({ bookmark, open, onClose }) => {
 									size="large"
 									precision={0.5}
 									value={bookmark.rating}
+									readOnly
 								/>
 							</Grid>
 

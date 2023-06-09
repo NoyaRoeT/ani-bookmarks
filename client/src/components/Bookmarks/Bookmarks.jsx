@@ -1,4 +1,4 @@
-import { Container, CircularProgress, Box, Fab } from "@mui/material";
+import { Container, CircularProgress, Box, Paper } from "@mui/material";
 import BookmarkList from "./BookmarkList/BookmarkList";
 import { BookmarkContext } from "../../store/BookmarkContext";
 import { useContext, useEffect } from "react";
@@ -17,11 +17,25 @@ const Bookmarks = () => {
 	return (
 		<>
 			{!ctx.isLoading && (
-				<Container sx={{ mt: "20px" }}>
-					<BookmarkList bookmarks={ctx.bookmarks} />
-					<FloatingAddButton
-						sx={{ position: "fixed", bottom: 20, right: 20 }}
-					/>
+				<Container
+					disableGutters
+					sx={{
+						my: "24px",
+					}}
+				>
+					<Paper
+						sx={{
+							p: "24px",
+							width: "100%",
+							minHeight: "85vh",
+							borderRadius: 4,
+						}}
+					>
+						<BookmarkList bookmarks={ctx.bookmarks} />
+						<FloatingAddButton
+							sx={{ position: "fixed", bottom: 20, right: 20 }}
+						/>
+					</Paper>
 				</Container>
 			)}
 			{ctx.isLoading && (
