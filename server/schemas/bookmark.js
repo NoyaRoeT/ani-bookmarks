@@ -31,12 +31,12 @@ function bookmarkSchema() {
 		type: Joi.string().valid("anime", "manga", "manhwa", "manhua", "novel"),
 		imageUrl: Joi.string(),
 		rating: Joi.number()
-			.min(0.5)
+			.min(0)
 			.max(5)
 			.custom(customRatingValidator, "Check multiple of 0.5")
 			.messages({
-				"number.min": `Rating should be between 0.5 and 5 (both inclusive).`,
-				"number.max": `Rating should be between 0.5 and 5 (both inclusive).`,
+				"number.min": `Rating should be between 0 and 5 (both inclusive).`,
+				"number.max": `Rating should be between 0 and 5 (both inclusive).`,
 				"any.invalid": `Rating should be a multiple of 0.5`,
 			}),
 	});

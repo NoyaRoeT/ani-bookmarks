@@ -33,7 +33,7 @@ const bookmarkSchema = new mongoose.Schema(
 		},
 		rating: {
 			type: Number,
-			min: [0.5, "Rating cannot be 0 or below"],
+			min: [0, "Rating cannot be below 0"],
 			max: [5, "Rating cannot be above 5"],
 		},
 	},

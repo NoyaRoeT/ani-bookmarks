@@ -24,7 +24,7 @@ import { BookmarkContext } from "../../store/BookmarkContext";
 import { validateBookmark } from "../../utils/bookmark";
 
 const BookmarkForm = ({ bookmark, onAuthError, onSuccess, variant }) => {
-	const [rating, setRating] = useState(bookmark ? bookmark.rating : null);
+	const [rating, setRating] = useState(bookmark ? bookmark.rating : 0);
 
 	const [genres, setGenres] = useState(
 		bookmark ? bookmark.genres.map((g) => g.name) : []
