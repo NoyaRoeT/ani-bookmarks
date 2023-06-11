@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
 import AuthContextProvider from "./store/AuthContext";
 import BookmarkContextProvider from "./store/BookmarkContext";
+import "./index.css";
 const theme = createTheme();
 
 ReactDOM.createRoot(document.getElementById("root")).render(

@@ -52,7 +52,7 @@ const Search = ({ sx }) => {
 						color: "inherit",
 						flexGrow: 1,
 					}}
-					placeholder="Title Search..."
+					placeholder="Search..."
 					inputProps={{
 						"aria-label": "Search bookmarks",
 						onKeyDown: enterHandler,

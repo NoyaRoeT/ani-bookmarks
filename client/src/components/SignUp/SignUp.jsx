@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Paper } from "@mui/material";
 import { useState } from "react";
 import { signup } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
@@ -48,8 +48,10 @@ export default function SignUp() {
 
 	return (
 		<Container component="main" maxWidth="xs">
-			<Box
+			<Paper
 				sx={{
+					p: "32px",
+					borderRadius: 4,
 					marginTop: 8,
 					display: "flex",
 					flexDirection: "column",
@@ -134,7 +136,7 @@ export default function SignUp() {
 						</Grid>
 					</Grid>
 				</Box>
-			</Box>
+			</Paper>
 		</Container>
 	);
 }

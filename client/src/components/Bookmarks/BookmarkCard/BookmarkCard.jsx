@@ -39,8 +39,9 @@ const BookmarkCard = ({ bookmark }) => {
 							zIndex: 100,
 						},
 						borderRadius: 2,
-						width: "280px",
+						maxWidth: "220px",
 						position: "relative",
+						width: 1,
 					}}
 					onClick={() => {
 						setShowInfo(true);

@@ -23,19 +23,10 @@ const Bookmarks = () => {
 						my: "24px",
 					}}
 				>
-					<Paper
-						sx={{
-							p: "24px",
-							width: "100%",
-							minHeight: "85vh",
-							borderRadius: 4,
-						}}
-					>
-						<BookmarkList bookmarks={ctx.bookmarks} />
-						<FloatingAddButton
-							sx={{ position: "fixed", bottom: 20, right: 20 }}
-						/>
-					</Paper>
+					<BookmarkList bookmarks={ctx.bookmarks} />
+					<FloatingAddButton
+						sx={{ position: "fixed", bottom: 20, right: 20 }}
+					/>
 				</Container>
 			)}
 			{ctx.isLoading && (

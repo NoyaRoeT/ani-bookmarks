@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Container, CircularProgress, Grid, Link } from "@mui/material";
+import { Container, CircularProgress, Grid, Link, Paper } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -43,8 +43,10 @@ export default function Login() {
 
 	return (
 		<Container component="main" maxWidth="xs">
-			<Box
+			<Paper
 				sx={{
+					p: "32px",
+					borderRadius: 4,
 					marginTop: 8,
 					display: "flex",
 					flexDirection: "column",
@@ -117,7 +119,7 @@ export default function Login() {
 						</Link>
 					</Grid>
 				</Grid>
-			</Box>
+			</Paper>
 		</Container>
 	);
 }
