@@ -1,1 +1,1 @@
-export const BASE_URL = "https://ani-bookmarks.herokuapp.com/";
+export const BASE_URL = "https://ani-bookmarks.herokuapp.com";
