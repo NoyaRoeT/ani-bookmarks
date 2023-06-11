@@ -1,6 +1,7 @@
+import { BASE_URL } from "./constants";
 export async function checkAuth() {
 	try {
-		const response = await fetch("http://localhost:6001/auth/checkAuth", {
+		const response = await fetch(`${BASE_URL}/auth/checkAuth`, {
 			credentials: "include",
 			withCredentials: true,
 		});
@@ -14,7 +15,7 @@ export async function checkAuth() {
 
 export async function signup(body) {
 	try {
-		const response = await fetch("http://localhost:6001/auth/register", {
+		const response = await fetch(`${BASE_URL}/auth/register`, {
 			method: "POST",
 			body: JSON.stringify(body),
 			headers: {
@@ -33,7 +34,7 @@ export async function signup(body) {
 
 export async function login(body) {
 	try {
-		const response = await fetch("http://localhost:6001/auth/login", {
+		const response = await fetch(`${BASE_URL}/auth/login`, {
 			method: "POST",
 			body: JSON.stringify(body),
 			headers: {
@@ -52,7 +53,7 @@ export async function login(body) {
 
 export async function logout() {
 	try {
-		const response = await fetch("http://localhost:6001/auth/logout", {
+		const response = await fetch(`${BASE_URL}/auth/logout`, {
 			method: "POST",
 			credentials: "include",
 			withCredentials: true,

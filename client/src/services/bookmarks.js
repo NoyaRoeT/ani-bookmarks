@@ -1,6 +1,7 @@
+import { BASE_URL } from "./constants";
 export async function fetchBookmarks() {
 	try {
-		const response = await fetch("http://localhost:6001/bookmarks", {
+		const response = await fetch(`${BASE_URL}/bookmarks`, {
 			credentials: "include",
 			withCredentials: true,
 		});
@@ -18,7 +19,7 @@ export async function addBookmark(data) {
 		formData.append(key, data[key]);
 	}
 	try {
-		const response = await fetch("http://localhost:6001/bookmarks", {
+		const response = await fetch(`${BASE_URL}/bookmarks`, {
 			method: "POST",
 			body: formData,
 			credentials: "include",
@@ -34,7 +35,7 @@ export async function addBookmark(data) {
 
 export async function deleteBookmark(id) {
 	try {
-		const response = await fetch(`http://localhost:6001/bookmarks/${id}`, {
+		const response = await fetch(`${BASE_URL}/bookmarks/${id}`, {
 			method: "DELETE",
 			credentials: "include",
 			withCredentials: true,
@@ -53,7 +54,7 @@ export async function editBookmark(data, id) {
 		formData.append(key, data[key]);
 	}
 	try {
-		const response = await fetch(`http://localhost:6001/bookmarks/${id}`, {
+		const response = await fetch(`${BASE_URL}/bookmarks/${id}`, {
 			method: "PUT",
 			body: formData,
 			credentials: "include",
@@ -69,13 +70,10 @@ export async function editBookmark(data, id) {
 
 export async function fetchGenresAndTags() {
 	try {
-		const response = await fetch(
-			"http://localhost:6001/bookmarks/genresandtags",
-			{
-				credentials: "include",
-				withCredentials: true,
-			}
-		);
+		const response = await fetch(`${BASE_URL}/bookmarks/genresandtags`, {
+			credentials: "include",
+			withCredentials: true,
+		});
 		const resData = await response.json();
 		return resData;
 	} catch (err) {
@@ -86,7 +84,7 @@ export async function fetchGenresAndTags() {
 
 export async function searchBookmarks(query) {
 	try {
-		const response = await fetch("http://localhost:6001/bookmarks/search", {
+		const response = await fetch(`${BASE_URL}/bookmarks/search`, {
 			method: "POST",
 			body: JSON.stringify(query),
 			headers: {
