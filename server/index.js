@@ -45,7 +45,12 @@ async function startUp() {
 	app.use(morgan("common"));
 
 	/* CORS */
-	app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+	app.use(
+		cors({
+			origin: "https://ani-bookmarks.netlify.app/",
+			credentials: true,
+		})
+	);
 
 	/* SESSION SETUP */
 	const sessionStore = MongoStore.create({ mongoUrl: process.env.MONGO_URL });
