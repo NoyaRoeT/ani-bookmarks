@@ -47,7 +47,7 @@ async function startUp() {
 	/* CORS */
 	app.use(
 		cors({
-			origin: "https://ani-bookmarks.netlify.app/",
+			origin: "https://ani-bookmarks.netlify.app",
 			credentials: true,
 		})
 	);
