@@ -144,7 +144,7 @@ const DrawerContent = () => {
 				</ListItemButton>
 			</List>
 			<Button
-				variant="contained"
+				variant="outlined"
 				sx={{
 					display: "flex",
 					justifyContent: "center",
