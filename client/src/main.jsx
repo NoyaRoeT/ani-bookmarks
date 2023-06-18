@@ -1,21 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./components/App";
-import { BrowserRouter } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@mui/material";
-import AuthContextProvider from "./store/AuthContext";
-import BookmarkContextProvider from "./store/BookmarkContext";
+import App from "./App.jsx";
 import "./index.css";
+
+import { createTheme, ThemeProvider } from "@mui/material";
+
 const theme = createTheme();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-	<BrowserRouter>
+	<React.StrictMode>
 		<ThemeProvider theme={theme}>
-			<AuthContextProvider>
-				<BookmarkContextProvider>
-					<App />
-				</BookmarkContextProvider>
-			</AuthContextProvider>
+			<App />
 		</ThemeProvider>
-	</BrowserRouter>
+	</React.StrictMode>
 );
