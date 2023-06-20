@@ -1,14 +1,31 @@
 import React, { useState } from "react";
-import { IconButton, Paper, Toolbar, Box } from "@mui/material";
+import { IconButton, Paper, Toolbar, Box, Menu } from "@mui/material";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import SortIcon from "@mui/icons-material/Sort";
-import { Page, SearchBar, ServerSearch } from "../components";
+import { Page, SearchBar, ServerSearch, SortMenu } from "../components";
 
 const typeOptions = ["Type 1", "Loooooooooooooooooooooooong Type", "short"];
 const genreOptions = ["Genre 1", "Looooooooooooooooooooooong Genre", "short"];
-
+const sortOptions = ["Date Added", "Rating"];
 const Search = () => {
 	const [openServerSearch, setOpenServerSearch] = useState(false);
+
+	const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+	const menuOpen = Boolean(menuAnchorEl);
+
+	const [sortValue, setSortValue] = useState(sortOptions[0]);
+
+	function sortChangeHandler(event, value) {
+		setSortValue(value);
+	}
+
+	function openMenuHandler(event) {
+		setMenuAnchorEl(event.currentTarget);
+	}
+
+	function closeMenuHandler(event) {
+		setMenuAnchorEl(null);
+	}
 
 	function toggleServerSearchHandler() {
 		setOpenServerSearch((prev) => !prev);
@@ -41,11 +58,14 @@ const Search = () => {
 					>
 						<SearchBar onSubmit={localSearchHandler} />
 					</Box>
-					<Box sx={{ display: "flex" }}>
-						<IconButton onClick={toggleServerSearchHandler}>
+					<Box sx={{ display: "flex", mr: 5 }}>
+						<IconButton
+							sx={{ mr: 1 }}
+							onClick={toggleServerSearchHandler}
+						>
 							<ManageSearchIcon />
 						</IconButton>
-						<IconButton>
+						<IconButton onClick={openMenuHandler}>
 							<SortIcon />
 						</IconButton>
 					</Box>
@@ -58,6 +78,14 @@ const Search = () => {
 				genreOptions={genreOptions}
 				tagOptions={genreOptions}
 				typeOptions={typeOptions}
+			/>
+			<SortMenu
+				anchorEl={menuAnchorEl}
+				onClose={closeMenuHandler}
+				open={menuOpen}
+				options={sortOptions}
+				value={sortValue}
+				onChange={sortChangeHandler}
 			/>
 		</Page>
 	);
