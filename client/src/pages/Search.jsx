@@ -58,11 +58,8 @@ const Search = () => {
 					>
 						<SearchBar onSubmit={localSearchHandler} />
 					</Box>
-					<Box sx={{ display: "flex", mr: 5 }}>
-						<IconButton
-							sx={{ mr: 1 }}
-							onClick={toggleServerSearchHandler}
-						>
+					<Box sx={{ display: "flex" }}>
+						<IconButton onClick={toggleServerSearchHandler}>
 							<ManageSearchIcon />
 						</IconButton>
 						<IconButton onClick={openMenuHandler}>
