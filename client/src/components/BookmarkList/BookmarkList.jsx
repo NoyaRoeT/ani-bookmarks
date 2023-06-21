@@ -13,10 +13,9 @@ import GenreTagStack from "../GenreTagStack/GenreTagStack";
 const BookmarkCard = ({ bookmark }) => {
 	return (
 		<Card
-			elevation={0}
 			sx={{
 				mb: 2,
-				boxShadow: "rgba(90, 114, 123, 0.11) 0px 7px 30px 0px",
+				p: 2,
 			}}
 		>
 			<CardActionArea>
@@ -28,6 +27,7 @@ const BookmarkCard = ({ bookmark }) => {
 								height: 160,
 								width: 120,
 								objectFit: "fill",
+								borderRadius: 2,
 							}}
 							image={
 								bookmark.imagePath
@@ -59,7 +59,7 @@ const BookmarkCard = ({ bookmark }) => {
 								fontSize="12px"
 								variant="subtitle2"
 							>
-								({bookmark.rating})
+								{bookmark.type} ({bookmark.rating})
 							</Typography>
 						</Box>
 					</Box>
@@ -78,7 +78,7 @@ const BookmarkCard = ({ bookmark }) => {
 
 const BookmarkList = ({ bookmarks }) => {
 	return (
-		<Container sx={{ mt: 4 }} maxWidth="lg">
+		<Container sx={{ mt: 3 }} maxWidth="lg">
 			{bookmarks.map((bookmark) => (
 				<BookmarkCard bookmark={bookmark} />
 			))}

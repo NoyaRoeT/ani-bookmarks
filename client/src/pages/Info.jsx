@@ -20,25 +20,24 @@ const Info = () => {
 
 	return (
 		<Page>
-			<Paper>
-				<Toolbar
-					sx={{
-						display: "flex",
-						justifyContent: "flex-end",
-						alignItems: "center",
-					}}
-				>
-					<Button color="primary" variant="outlined" sx={{ mr: 1 }}>
-						<EditIcon sx={{ mr: 1 }} />
-						<Typography>Edit</Typography>
-					</Button>
-					<Button color="warning" variant="outlined">
-						<DeleteIcon sx={{ mr: 1 }} />
-						<Typography>Delete</Typography>
-					</Button>
-				</Toolbar>
-			</Paper>
-			<Container>
+			<Toolbar
+				sx={{
+					display: "flex",
+					justifyContent: "flex-end",
+					alignItems: "center",
+				}}
+			>
+				<Button color="primary" variant="outlined" sx={{ mr: 1 }}>
+					<EditIcon sx={{ mr: 1 }} />
+					<Typography>Edit</Typography>
+				</Button>
+				<Button color="warning" variant="outlined">
+					<DeleteIcon sx={{ mr: 1 }} />
+					<Typography>Delete</Typography>
+				</Button>
+			</Toolbar>
+
+			<Container sx={{ mt: 3 }}>
 				<Card
 					sx={{
 						boxShadow: "rgba(90, 114, 123, 0.11) 0px 7px 30px 0px",

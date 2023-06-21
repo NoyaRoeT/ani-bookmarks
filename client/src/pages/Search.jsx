@@ -109,33 +109,33 @@ const Search = () => {
 
 	return (
 		<Page>
-			<Paper>
-				<Toolbar
+			<Toolbar
+				sx={{
+					mt: 1,
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+				}}
+			>
+				<Box
 					sx={{
+						flexGrow: 1,
 						display: "flex",
 						justifyContent: "center",
-						alignItems: "center",
 					}}
 				>
-					<Box
-						sx={{
-							flexGrow: 1,
-							display: "flex",
-							justifyContent: "center",
-						}}
-					>
-						<SearchBar onSubmit={localSearchHandler} />
-					</Box>
-					<Box sx={{ display: "flex" }}>
-						<IconButton onClick={toggleServerSearchHandler}>
-							<ManageSearchIcon />
-						</IconButton>
-						<IconButton onClick={openMenuHandler}>
-							<SortIcon />
-						</IconButton>
-					</Box>
-				</Toolbar>
-			</Paper>
+					<SearchBar onSubmit={localSearchHandler} />
+				</Box>
+				<Box sx={{ display: "flex" }}>
+					<IconButton onClick={toggleServerSearchHandler}>
+						<ManageSearchIcon />
+					</IconButton>
+					<IconButton onClick={openMenuHandler}>
+						<SortIcon />
+					</IconButton>
+				</Box>
+			</Toolbar>
+
 			<ServerSearch
 				open={openServerSearch}
 				onClose={toggleServerSearchHandler}
