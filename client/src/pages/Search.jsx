@@ -2,7 +2,75 @@ import React, { useState } from "react";
 import { IconButton, Paper, Toolbar, Box, Menu } from "@mui/material";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import SortIcon from "@mui/icons-material/Sort";
-import { Page, SearchBar, ServerSearch, SortMenu } from "../components";
+import {
+	BookmarkList,
+	Page,
+	SearchBar,
+	ServerSearch,
+	SortMenu,
+} from "../components";
+
+const bookmarks = [
+	{
+		title: "The Perfect Run",
+		imagePath:
+			"https://www.royalroadcdn.com/public/covers-full/36735-the-perfect-run.jpg?time=1604749383",
+		type: "Novel",
+		genres: ["Action", "Fantasy", "Martial Arts"],
+		tags: [
+			"Overpowered Protagonist",
+			"Hiding True Identity",
+			"Male Protagonist",
+			"Beautiful Female Lead",
+			"Comedic Protagonist",
+		],
+		rating: 4.5,
+	},
+	{
+		title: "Martial King's Retired Life",
+		imagePath:
+			"https://www.royalroadcdn.com/public/covers-full/36735-the-perfect-run.jpg?time=1604749383",
+		type: "Novel",
+		genres: ["Action", "Fantasy", "Martial Arts"],
+		tags: [
+			"Overpowered Protagonist",
+			"Hiding True Identity",
+			"Male Protagonist",
+			"Beautiful Female Lead",
+			"Comedic Protagonist",
+		],
+		rating: 4.5,
+	},
+	{
+		title: "Martial King's Retired Life",
+		imagePath:
+			"https://www.royalroadcdn.com/public/covers-full/36735-the-perfect-run.jpg?time=1604749383",
+		type: "Novel",
+		genres: ["Action", "Fantasy", "Martial Arts"],
+		tags: [
+			"Overpowered Protagonist",
+			"Hiding True Identity",
+			"Male Protagonist",
+			"Beautiful Female Lead",
+			"Comedic Protagonist",
+		],
+		rating: 4.5,
+	},
+	{
+		title: "Martial King's Retired Life",
+
+		type: "Novel",
+		genres: ["Action", "Fantasy", "Martial Arts"],
+		tags: [
+			"Overpowered Protagonist",
+			"Hiding True Identity",
+			"Male Protagonist",
+			"Beautiful Female Lead",
+			"Comedic Protagonist",
+		],
+		rating: 4.5,
+	},
+];
 
 const typeOptions = ["Type 1", "Loooooooooooooooooooooooong Type", "short"];
 const genreOptions = ["Genre 1", "Looooooooooooooooooooooong Genre", "short"];
@@ -84,6 +152,7 @@ const Search = () => {
 				value={sortValue}
 				onChange={sortChangeHandler}
 			/>
+			<BookmarkList bookmarks={bookmarks} />
 		</Page>
 	);
 };

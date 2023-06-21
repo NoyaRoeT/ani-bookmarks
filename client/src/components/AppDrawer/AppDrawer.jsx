@@ -177,19 +177,17 @@ const AppDrawer = () => {
 				sx={{
 					display: { xs: "block", sm: "none" },
 					bgcolor: theme.palette.background.default,
-					color: theme.palette.primary.main,
+					color: theme.palette.text.secondary,
 				}}
 			>
 				<Toolbar>
 					<IconButton
-						color="inherit"
 						aria-label="open drawer"
 						edge="start"
 						onClick={handleDrawerToggle}
 					>
 						<MenuIcon />
 					</IconButton>
-					Responsive Drawer
 				</Toolbar>
 			</AppBar>
 			<Box component="nav" sx={{ width: { drawerWidth } }}>
