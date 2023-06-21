@@ -10,6 +10,9 @@ const theme = createTheme({
 			default: "rgb(250, 251, 251)",
 		},
 	},
+	shadows: {
+		1: "rgba(90, 114, 123, 0.11) 0px 7px 30px 0px",
+	},
 	typography: {
 		button: {
 			textTransform: "none",

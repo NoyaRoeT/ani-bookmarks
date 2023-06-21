@@ -109,7 +109,7 @@ const Search = () => {
 
 	return (
 		<Page>
-			<Paper elevation={0}>
+			<Paper>
 				<Toolbar
 					sx={{
 						display: "flex",

@@ -12,7 +12,13 @@ import GenreTagStack from "../GenreTagStack/GenreTagStack";
 
 const BookmarkCard = ({ bookmark }) => {
 	return (
-		<Card elevation={0} sx={{ mb: 2 }}>
+		<Card
+			elevation={0}
+			sx={{
+				mb: 2,
+				boxShadow: "rgba(90, 114, 123, 0.11) 0px 7px 30px 0px",
+			}}
+		>
 			<CardActionArea>
 				<Box sx={{ display: "flex" }}>
 					<Box>
