@@ -17,6 +17,7 @@ function App() {
 				<Route path="/bookmarks/" element={<ProtectedRoute />}>
 					<Route path=":bookmarkId" element={<Info />} />
 				</Route>
+				<Route path="*" element={<Navigate to="/search" />} />
 			</Routes>
 		</>
 	);
