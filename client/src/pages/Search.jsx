@@ -13,8 +13,7 @@ import {
 const bookmarks = [
 	{
 		title: "The Perfect Run",
-		imagePath:
-			"https://www.royalroadcdn.com/public/covers-full/36735-the-perfect-run.jpg?time=1604749383",
+		imagePath: "https://images.alphacoders.com/129/1298385.jpg",
 		type: "Novel",
 		genres: ["Action", "Fantasy", "Martial Arts"],
 		tags: [
