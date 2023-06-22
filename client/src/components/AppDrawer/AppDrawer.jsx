@@ -22,6 +22,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import LogoutIcon from "@mui/icons-material/Logout";
+import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 
 import logo from "../../assets/logo.jpg";
 
@@ -100,6 +101,12 @@ const DrawerContent = () => {
 						<ArchiveIcon />
 					</ListIcon>
 					<ListItemText primary="Archive" />
+				</ListItemButton>
+				<ListItemButton>
+					<ListIcon>
+						<BookmarkAddIcon />
+					</ListIcon>
+					<ListItemText primary="Add Bookmark" />
 				</ListItemButton>
 			</List>
 			<List
