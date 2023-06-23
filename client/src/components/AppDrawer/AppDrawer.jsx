@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Link } from "react-router-dom";
 import {
 	Drawer,
 	Box,
@@ -76,33 +76,33 @@ const DrawerContent = () => {
 					</ListSubheader>
 				}
 			>
-				<ListItemButton>
+				<ListItemButton component={Link} to="/home">
 					<ListIcon>
 						<BookmarksIcon />
 					</ListIcon>
 					<ListItemText primary="Home" />
 				</ListItemButton>
 
-				<ListItemButton>
+				<ListItemButton component={Link} to="/search">
 					<ListIcon>
 						<SearchIcon />
 					</ListIcon>
 					<ListItemText primary="Search" />
 				</ListItemButton>
 
-				<ListItemButton>
+				<ListItemButton component={Link} to="/favorite">
 					<ListIcon>
 						<FavoriteIcon />
 					</ListIcon>
 					<ListItemText primary="Favorite" />
 				</ListItemButton>
-				<ListItemButton>
+				<ListItemButton component={Link} to="/archive">
 					<ListIcon>
 						<ArchiveIcon />
 					</ListIcon>
 					<ListItemText primary="Archive" />
 				</ListItemButton>
-				<ListItemButton>
+				<ListItemButton component={Link} to="/new">
 					<ListIcon>
 						<BookmarkAddIcon />
 					</ListIcon>
