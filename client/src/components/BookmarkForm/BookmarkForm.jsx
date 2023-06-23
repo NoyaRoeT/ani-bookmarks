@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useReducer, useState } from "react";
 import {
 	Container,
 	Typography,
@@ -17,19 +17,58 @@ import {
 	RadioGroup,
 	FormControlLabel,
 	Radio,
+	FormHelperText,
 } from "@mui/material";
+import { validateBookmark } from "../../utils/helper";
 
 const typeOptions = ["Type 1", "Loooooooooooooooooooooooong Type", "short"];
 const genreOptions = ["Genre 1", "Looooooooooooooooooooooong Genre", "short"];
 const tagOptions = ["Tag 1", "Looooooooooooooooooooooong Genre", "short"];
+
+const errorReducer = (state, action) => {
+	if (action.type === "RESET") {
+		return {
+			title: "",
+			type: "",
+			genres: "",
+		};
+	}
+	if (action.type === "TITLE") {
+		return {
+			title: action.value,
+			type: "",
+			genres: "",
+		};
+	}
+	if (action.type === "TYPE") {
+		return {
+			title: "",
+			type: action.value,
+			genres: "",
+		};
+	}
+	if (action.type === "GENRES") {
+		return {
+			title: "",
+			type: "",
+			genres: action.value,
+		};
+	}
+};
+
 const BookmarkForm = ({ onSubmit }) => {
-	// Field related state
+	// Field state
 	const [rating, setRating] = useState(0);
 	function ratingHandler(event) {
 		setRating(Number(event.target.value));
 	}
 
-	const titleRef = useRef();
+	const [title, setTitle] = useState("");
+	function titleHandler(event) {
+		if (event.target.value.length <= 200) {
+			setTitle(event.target.value);
+		}
+	}
 
 	const [type, setType] = useState("");
 	function typeHandler(event) {
@@ -45,6 +84,13 @@ const BookmarkForm = ({ onSubmit }) => {
 	function tagsHandler(event, value) {
 		setTags(value);
 	}
+
+	// Error state
+	const [error, dispatchError] = useReducer(errorReducer, {
+		title: "",
+		type: "",
+		genres: "",
+	});
 
 	// Image related state
 	const [uploadOption, setUploadOption] = useState("local");
@@ -74,11 +120,14 @@ const BookmarkForm = ({ onSubmit }) => {
 	function localUploadHandler(event) {
 		const file = event.target.files[0];
 		if (!file.name.match(/\.(jpg|jpeg|png|gif)$/i)) {
-			if (previewUrl) {
-				previewUrl && URL.revokeObjectURL(previewUrl);
-				previewUrl && setPreviewUrl("");
-			}
 			setLocalUploadError("Image should be of type jpg/jpeg/png/gif.");
+			return;
+		}
+
+		const sizeLimit = 1024 * 1024;
+		console.log(file);
+		if (file.size > sizeLimit) {
+			setLocalUploadError("Image was too large.");
 			return;
 		}
 
@@ -96,7 +145,7 @@ const BookmarkForm = ({ onSubmit }) => {
 	// Form submission
 	function submitHandler() {
 		const bookmarkData = {
-			title: titleRef.current.value,
+			title,
 			rating,
 			genres,
 			tags,
@@ -108,6 +157,15 @@ const BookmarkForm = ({ onSubmit }) => {
 		} else {
 			bookmarkData.imageUrl = imageUrl;
 		}
+
+		const { field, message } = validateBookmark(bookmarkData);
+
+		if (field) {
+			dispatchError({ type: field, value: message });
+			return;
+		}
+
+		dispatchError({ type: "RESET" });
 
 		onSubmit(bookmarkData);
 	}
@@ -161,25 +219,28 @@ const BookmarkForm = ({ onSubmit }) => {
 											onChange={localUploadHandler}
 										/>
 									</Button>
-									{localUpload && (
-										<Typography
-											display="flex"
-											alignItems="center"
-											sx={{ ml: 1 }}
-										>
-											{localUpload.name}
-										</Typography>
-									)}
-									{localUploadError && (
-										<Typography
-											display="flex"
-											alignItems="flex-end"
-											color="error"
-											sx={{ ml: 1 }}
-										>
-											({localUploadError})
-										</Typography>
-									)}
+									<Box
+										sx={{
+											ml: 1,
+											display: "flex",
+											alignItems: "center",
+											flexGrow: 1,
+										}}
+									>
+										{localUpload && (
+											<Typography sx={{ width: 1 }}>
+												{localUpload.name}{" "}
+												{localUploadError && (
+													<Typography
+														color="error"
+														component="span"
+													>
+														({localUploadError})
+													</Typography>
+												)}
+											</Typography>
+										)}
+									</Box>
 								</>
 							)}
 
@@ -230,7 +291,10 @@ const BookmarkForm = ({ onSubmit }) => {
 							label="Title"
 							required
 							fullWidth
-							inputRef={titleRef}
+							value={title}
+							onChange={titleHandler}
+							error={error.title.length > 0}
+							helperText={error.title}
 						/>
 
 						<FormControl
@@ -238,12 +302,18 @@ const BookmarkForm = ({ onSubmit }) => {
 							sx={{ minWidth: 120 }}
 							required
 						>
-							<InputLabel id="type-select-label">Type</InputLabel>
+							<InputLabel
+								id="type-select-label"
+								error={error.type.length > 0}
+							>
+								Type
+							</InputLabel>
 							<Select
 								label="Type"
 								labelId="type-select-label"
 								value={type}
 								onChange={typeHandler}
+								error={error.type.length > 0}
 							>
 								{type && (
 									<MenuItem value="">
@@ -258,6 +328,7 @@ const BookmarkForm = ({ onSubmit }) => {
 									);
 								})}
 							</Select>
+							<FormHelperText error>{error.type}</FormHelperText>
 						</FormControl>
 
 						<Autocomplete
@@ -273,6 +344,8 @@ const BookmarkForm = ({ onSubmit }) => {
 									margin="normal"
 									variant="outlined"
 									label="Genres"
+									error={error.genres.length > 0}
+									helperText={error.genres}
 									required
 								/>
 							)}
