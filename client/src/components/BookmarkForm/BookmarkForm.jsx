@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import {
 	Container,
 	Typography,
@@ -139,7 +139,6 @@ const BookmarkForm = ({ onSubmit }) => {
 
 	function imageUrlHandler(event) {
 		setImageUrl(event.target.value);
-		setPreviewUrl(event.target.value);
 	}
 
 	// Form submission
@@ -169,6 +168,19 @@ const BookmarkForm = ({ onSubmit }) => {
 
 		onSubmit(bookmarkData);
 	}
+
+	useEffect(() => {
+		if (uploadOption === "url") {
+			const handler = setTimeout(() => {
+				console.log("Changing");
+				setPreviewUrl(imageUrl);
+			}, 500);
+			return () => {
+				clearTimeout(handler);
+			};
+		}
+	}, [imageUrl, uploadOption]);
+
 	return (
 		<Container sx={{ mt: 4 }} maxWidth="lg">
 			<Box sx={{ mb: 4 }}>
