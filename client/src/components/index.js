@@ -7,3 +7,4 @@ export { default as SortMenu } from "./SortMenu/SortMenu";
 export { default as BookmarkList } from "./BookmarkList/BookmarkList";
 export { default as GenreTagStack } from "./GenreTagStack/GenreTagStack";
 export { default as DeleteDialog } from "./DeleteDialog/DeleteDialog";
+export { default as BookmarkForm } from "./BookmarkForm/BookmarkForm";
