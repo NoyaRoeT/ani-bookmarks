@@ -6,7 +6,7 @@ import Search from "./pages/Search";
 import Info from "./pages/Info";
 import Add from "./pages/Add";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
+import SignUp from "./pages/SignUp";
 
 function App() {
 	return (
@@ -22,7 +22,7 @@ function App() {
 				</Route>
 				<Route path="/" element={<ProtectedRoute noAuth />}>
 					<Route path="login" element={<Login />} />
-					<Route path="register" element={<Register />} />
+					<Route path="register" element={<SignUp />} />
 				</Route>
 				<Route path="*" element={<Navigate to="/search" />} />
 			</Routes>
