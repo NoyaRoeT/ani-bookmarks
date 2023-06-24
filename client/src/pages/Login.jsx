@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -18,6 +18,9 @@ export default function Login() {
 	const navigate = useNavigate();
 	const { from } = useLocation().state || { from: { pathname: "/" } };
 
+	// Feedback state
+	const [disableLogin, setDisableLogin] = useState(false);
+
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
@@ -25,12 +28,15 @@ export default function Login() {
 		data.forEach((value, key) => (dataObj[key] = value));
 
 		try {
+			setDisableLogin(true);
 			const res = await login(dataObj);
 			authContext.setUser(res.data);
 			navigate(from.pathname);
 		} catch (err) {
 			console.log(err.response.data);
 			authContext.setUser(null);
+		} finally {
+			setDisableLogin(false);
 		}
 	};
 
@@ -111,6 +117,7 @@ export default function Login() {
 							fullWidth
 							variant="contained"
 							sx={{ mt: 3, mb: 2 }}
+							disabled={disableLogin}
 						>
 							Sign In
 						</Button>

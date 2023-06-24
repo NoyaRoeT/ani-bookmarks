@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,6 +15,9 @@ import { signup } from "../utils/auth";
 const SignUp = () => {
 	const navigate = useNavigate();
 
+	// Feedback state
+	const [disableSignUp, setDisableSignUp] = useState(false);
+
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
@@ -22,10 +25,13 @@ const SignUp = () => {
 		data.forEach((value, key) => (dataObj[key] = value));
 
 		try {
+			setDisableSignUp(true);
 			await signup(dataObj);
 			navigate("/login");
 		} catch (err) {
 			console.log(err.response.data);
+		} finally {
+			setDisableSignUp(false);
 		}
 	};
 
@@ -116,6 +122,7 @@ const SignUp = () => {
 							fullWidth
 							variant="contained"
 							sx={{ mt: 3, mb: 2 }}
+							disabled={disableSignUp}
 						>
 							Sign Up
 						</Button>
