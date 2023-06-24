@@ -8,14 +8,14 @@ function initRouter() {
 
 	router.get("/checkAuth", isAuthenticated, (req, res) => {
 		res.status(200).json({
-			message: `logged in as ${req.user.username}`,
+			data: req.user,
 		});
 	});
 	router.post("/register", registerUser);
 
 	router.post("/login", authenticateLocal, (req, res) => {
 		res.status(200).json({
-			message: `logged in as ${req.user.username}`,
+			data: req.user,
 		});
 	});
 

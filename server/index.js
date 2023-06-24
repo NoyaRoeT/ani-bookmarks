@@ -47,7 +47,7 @@ async function startUp() {
 	/* CORS */
 	app.use(
 		cors({
-			origin: "https://ani-bookmarks.netlify.app",
+			origin: "http://localhost:5173",
 			credentials: true,
 		})
 	);
@@ -81,7 +81,7 @@ async function startUp() {
 	app.use("/users", userRouter());
 	app.use("/bookmarks", bookmarkRouter());
 	app.use((err, req, res, next) => {
-		res.status(err.status).json({
+		return res.status(err.status).json({
 			error: { message: err.message, type: err.type },
 		});
 	});
