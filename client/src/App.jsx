@@ -5,12 +5,13 @@ import { AppDrawer, ProtectedRoute } from "./components";
 import Search from "./pages/Search";
 import Info from "./pages/Info";
 import Add from "./pages/Add";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
 	return (
 		<>
 			<CssBaseline />
-			<AppDrawer />
 			<Routes>
 				<Route path="/" element={<ProtectedRoute />}>
 					<Route path="search" element={<Search />} />
@@ -18,6 +19,10 @@ function App() {
 				</Route>
 				<Route path="/bookmarks/" element={<ProtectedRoute />}>
 					<Route path=":bookmarkId" element={<Info />} />
+				</Route>
+				<Route path="/" element={<ProtectedRoute noAuth />}>
+					<Route path="login" element={<Login />} />
+					<Route path="register" element={<Register />} />
 				</Route>
 				<Route path="*" element={<Navigate to="/search" />} />
 			</Routes>

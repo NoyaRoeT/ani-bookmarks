@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { BrowserRouter } from "react-router-dom";
+import { AuthContextProvider } from "./context/AuthContext.jsx";
 
 const theme = createTheme({
 	palette: {
@@ -24,7 +25,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
 		<BrowserRouter>
 			<ThemeProvider theme={theme}>
-				<App />
+				<AuthContextProvider>
+					<App />
+				</AuthContextProvider>
 			</ThemeProvider>
 		</BrowserRouter>
 	</React.StrictMode>
