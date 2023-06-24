@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import {
 	Drawer,
@@ -25,6 +25,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 
 import { Logo } from "../";
+import { logout } from "../../utils/auth";
+import { AuthContext } from "../../context/AuthContext";
 
 const drawerWidth = 240;
 
@@ -32,6 +34,16 @@ const ListIcon = ({ children }) => {
 	return <ListItemIcon sx={{ minWidth: "40px" }}>{children}</ListItemIcon>;
 };
 const DrawerContent = () => {
+	const authContext = useContext(AuthContext);
+
+	async function logoutHandler() {
+		try {
+			await logout();
+			authContext.setUser(null);
+		} catch (err) {
+			console.log(err);
+		}
+	}
 	return (
 		<Box
 			sx={{
@@ -149,6 +161,7 @@ const DrawerContent = () => {
 					py: "12px",
 					mb: 3,
 				}}
+				onClick={logoutHandler}
 			>
 				<LogoutIcon sx={{ mr: 1 }} />
 				<Typography>Logout</Typography>

@@ -5,13 +5,13 @@ import { AuthContext } from "../../context/AuthContext";
 
 const ProtectedRoute = ({ noAuth }) => {
 	const location = useLocation();
-	const { isAuthenticated } = useContext(AuthContext);
+	const { user } = useContext(AuthContext);
 
 	if (noAuth) {
-		return !isAuthenticated ? <Outlet /> : <Navigate to="/" />;
+		return !user ? <Outlet /> : <Navigate to="/" />;
 	}
 
-	return isAuthenticated ? (
+	return user ? (
 		<>
 			<AppDrawer />
 			<Outlet />;

@@ -1,24 +1,37 @@
-import React from "react";
+import React, { useContext } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { Logo } from "../components";
+import { login } from "../utils/auth";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Login() {
-	const handleSubmit = (event) => {
+	const authContext = useContext(AuthContext);
+	const navigate = useNavigate();
+	const { from } = useLocation().state || { from: { pathname: "/" } };
+
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		console.log({
-			email: data.get("email"),
-			password: data.get("password"),
-		});
+		const dataObj = {};
+		data.forEach((value, key) => (dataObj[key] = value));
+
+		try {
+			const res = await login(dataObj);
+			authContext.setUser(res.data);
+			navigate(from.pathname);
+		} catch (err) {
+			console.log(err.response.data);
+			authContext.setUser(null);
+		}
 	};
 
 	return (

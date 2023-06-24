@@ -9,3 +9,4 @@ export { default as GenreTagStack } from "./GenreTagStack/GenreTagStack";
 export { default as DeleteDialog } from "./DeleteDialog/DeleteDialog";
 export { default as BookmarkForm } from "./BookmarkForm/BookmarkForm";
 export { default as Logo } from "./Logo/Logo";
+export { default as CheckAuth } from "./CheckAuth/CheckAuth";

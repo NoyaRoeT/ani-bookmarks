@@ -1,7 +1,7 @@
 import { CssBaseline } from "@mui/material";
 import { Route, Routes, Navigate } from "react-router-dom";
 
-import { AppDrawer, ProtectedRoute } from "./components";
+import { AppDrawer, CheckAuth, ProtectedRoute } from "./components";
 import Search from "./pages/Search";
 import Info from "./pages/Info";
 import Add from "./pages/Add";
@@ -11,6 +11,7 @@ import SignUp from "./pages/SignUp";
 function App() {
 	return (
 		<>
+			<CheckAuth />
 			<CssBaseline />
 			<Routes>
 				<Route path="/" element={<ProtectedRoute />}>
