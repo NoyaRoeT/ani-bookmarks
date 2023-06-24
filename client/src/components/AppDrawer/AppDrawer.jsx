@@ -24,7 +24,7 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import LogoutIcon from "@mui/icons-material/Logout";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 
-import logo from "../../assets/logo.jpg";
+import { Logo } from "../";
 
 const drawerWidth = 240;
 
@@ -32,7 +32,6 @@ const ListIcon = ({ children }) => {
 	return <ListItemIcon sx={{ minWidth: "40px" }}>{children}</ListItemIcon>;
 };
 const DrawerContent = () => {
-	const theme = useTheme();
 	return (
 		<Box
 			sx={{
@@ -42,17 +41,7 @@ const DrawerContent = () => {
 				minHeight: "100vh",
 			}}
 		>
-			<Box sx={{ display: "flex", alignItems: "center", my: 1 }}>
-				<img src={logo} width={"48px"} />
-				<Typography
-					variant="h1"
-					fontSize="1.25rem"
-					lineHeight="1.75rem"
-					fontWeight={600}
-				>
-					Storybook
-				</Typography>
-			</Box>
+			<Logo sx={{ my: 1 }} />
 			<Box
 				sx={{
 					display: "flex",
