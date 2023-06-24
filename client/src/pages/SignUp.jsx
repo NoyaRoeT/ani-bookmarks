@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -115,8 +115,8 @@ const SignUp = () => {
 						<Grid container>
 							<Grid item xs></Grid>
 							<Grid item>
-								<Link href="#" variant="body2">
-									{"Don't have an account? Sign Up"}
+								<Link to="/login" variant="body2">
+									{"Already have an account? Sign in!"}
 								</Link>
 							</Grid>
 						</Grid>

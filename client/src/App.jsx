@@ -22,7 +22,7 @@ function App() {
 				</Route>
 				<Route path="/" element={<ProtectedRoute noAuth />}>
 					<Route path="login" element={<Login />} />
-					<Route path="register" element={<SignUp />} />
+					<Route path="signup" element={<SignUp />} />
 				</Route>
 				<Route path="*" element={<Navigate to="/search" />} />
 			</Routes>
