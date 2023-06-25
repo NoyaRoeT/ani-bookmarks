@@ -30,7 +30,6 @@ export default function Login() {
 		try {
 			setDisableLogin(true);
 			const res = await login(dataObj);
-			console.log(res.data);
 			authContext.setUser(res.data);
 			navigate(from.pathname);
 		} catch (err) {
