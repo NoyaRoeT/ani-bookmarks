@@ -16,14 +16,7 @@ import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import AsyncComboBox from "../AsyncComboBox/AsyncComboBox";
 import { getGenres, getTags } from "../../utils/bookmarks";
 
-const ServerSearch = ({
-	onClose,
-	open,
-	onSubmit,
-	genreOptions,
-	tagOptions,
-	typeOptions,
-}) => {
+const ServerSearch = ({ onClose, open, onSubmit, typeOptions }) => {
 	const titleRef = useRef();
 	const [type, setType] = useState("");
 	const [genres, setGenres] = useState([]);
@@ -36,7 +29,6 @@ const ServerSearch = ({
 	async function genresLoadFunction() {
 		try {
 			const res = await getGenres();
-
 			return res.data;
 		} catch (err) {
 			console.log(err.response.data);

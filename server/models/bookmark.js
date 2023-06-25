@@ -18,7 +18,7 @@ const bookmarkSchema = new mongoose.Schema(
 		type: {
 			type: String,
 			required: true,
-			enum: ["anime", "manga", "manhwa", "manhua", "novel"],
+			enum: ["Anime", "Manga", "Manhwa", "Manhua", "Novel"],
 		},
 		userId: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -33,6 +33,7 @@ const bookmarkSchema = new mongoose.Schema(
 		},
 		rating: {
 			type: Number,
+			default: 0,
 			min: [0, "Rating cannot be below 0"],
 			max: [5, "Rating cannot be above 5"],
 		},

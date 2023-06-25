@@ -28,7 +28,7 @@ function bookmarkSchema() {
 			.items(Joi.string().valid(...Object.keys(TagStore.getMap())))
 			.max(20)
 			.unique(),
-		type: Joi.string().valid("anime", "manga", "manhwa", "manhua", "novel"),
+		type: Joi.string().valid("Anime", "Manga", "Manhwa", "Manhua", "Novel"),
 		imageUrl: Joi.string(),
 		rating: Joi.number()
 			.min(0)

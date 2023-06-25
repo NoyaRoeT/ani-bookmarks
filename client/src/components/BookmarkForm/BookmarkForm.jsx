@@ -21,9 +21,7 @@ import {
 } from "@mui/material";
 import { validateBookmark } from "../../utils/helper";
 
-const typeOptions = ["Type 1", "Loooooooooooooooooooooooong Type", "short"];
-const genreOptions = ["Genre 1", "Looooooooooooooooooooooong Genre", "short"];
-const tagOptions = ["Tag 1", "Looooooooooooooooooooooong Genre", "short"];
+const typeOptions = ["Anime", "Manga", "Manhwa", "Manhua", "Novel"];
 
 const errorReducer = (state, action) => {
 	if (action.type === "RESET") {

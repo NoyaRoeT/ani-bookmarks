@@ -16,8 +16,9 @@ function searchSchema() {
 			.max(20)
 			.unique(),
 		type: Joi.string()
-			.valid("anime", "manga", "manhwa", "manhua", "novel")
+			.valid("Anime", "Manga", "Manhwa", "Manhua", "Novel")
 			.allow(""),
+		sortBy: Joi.string().required().valid("Last Added", "Rating"),
 	});
 }
 

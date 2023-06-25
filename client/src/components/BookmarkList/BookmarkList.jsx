@@ -91,7 +91,7 @@ const BookmarkList = ({ bookmarks }) => {
 	return (
 		<Container sx={{ mt: 3 }} maxWidth="lg">
 			{bookmarks.map((bookmark) => (
-				<BookmarkCard bookmark={bookmark} />
+				<BookmarkCard key={bookmark._id} bookmark={bookmark} />
 			))}
 		</Container>
 	);

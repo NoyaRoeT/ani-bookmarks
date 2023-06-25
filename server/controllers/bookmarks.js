@@ -206,9 +206,17 @@ export const searchBookmarks = async (req, res, next) => {
 
 	try {
 		const bookmarks = await Bookmark.find(filter)
-			.populate("genres", "-_id")
-			.populate("tags", "-_id");
-		return res.status(200).json({ data: bookmarks });
+			.populate("genres", "name -_id")
+			.populate("tags", "name -_id");
+
+		const processedBookmarks = bookmarks.map((bookmark) => {
+			return {
+				...bookmark.toObject(),
+				genres: bookmark.genres.map((g) => g.name),
+				tags: bookmark.tags.map((t) => t.name),
+			};
+		});
+		return res.status(200).json({ data: processedBookmarks });
 	} catch (err) {
 		next(new ExpressError(err.message, 500));
 	}

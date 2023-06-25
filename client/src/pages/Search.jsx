@@ -72,9 +72,8 @@ const SAMPLE_BOOKMARKS = [
 	},
 ];
 
-const typeOptions = ["Type 1", "Loooooooooooooooooooooooong Type", "short"];
-const genreOptions = ["Genre 1", "Looooooooooooooooooooooong Genre", "short"];
-const sortOptions = ["Date Added", "Rating"];
+const typeOptions = ["Anime", "Manga", "Manhwa", "Manhua", "Novel"];
+const sortOptions = ["Last Added", "Rating"];
 const Search = () => {
 	const [bookmarks, setBookmarks] = useState([]);
 
@@ -105,7 +104,7 @@ const Search = () => {
 		query.sortBy = sortValue;
 		try {
 			const res = await searchBookmarks(query);
-			console.log(res);
+			setBookmarks(res.data);
 		} catch (err) {
 			console.log(err.response.data);
 		}
@@ -148,8 +147,6 @@ const Search = () => {
 				open={openServerSearch}
 				onClose={toggleServerSearchHandler}
 				onSubmit={serverSearchHandler}
-				genreOptions={genreOptions}
-				tagOptions={genreOptions}
 				typeOptions={typeOptions}
 			/>
 			<SortMenu
