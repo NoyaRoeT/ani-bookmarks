@@ -3,7 +3,6 @@ import {
 	createBookmark,
 	deleteBookmark,
 	getBookmark,
-	getBookmarks,
 	isBookmarkOwner,
 	updateBookmark,
 	searchBookmarks,
@@ -23,8 +22,6 @@ import SchemaStore from "../utils/SchemaStore.js";
 
 function initRouter() {
 	const router = express.Router();
-
-	router.get("/", isAuthenticated, getBookmarks);
 
 	router.get("/genres", getGenres);
 	router.get("/tags", getTags);

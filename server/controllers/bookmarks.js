@@ -4,18 +4,6 @@ import GenreStore from "../utils/GenreStore.js";
 import TagStore from "../utils/TagStore.js";
 import { cloudinaryDestroy } from "../utils/imageUpload/cloudinary.js";
 
-export const getBookmarks = async (req, res, next) => {
-	try {
-		const bookmarks = await Bookmark.find({ userId: req.user._id })
-			.populate("genres", "-_id")
-			.populate("tags", "-_id");
-
-		return res.status(200).json({ data: bookmarks });
-	} catch (err) {
-		return next(new ExpressError(err.message, errorTypes.GENERAL));
-	}
-};
-
 export const getBookmark = async (req, res, next) => {
 	const reqBookmarkId = req.params.bookmarkId;
 
