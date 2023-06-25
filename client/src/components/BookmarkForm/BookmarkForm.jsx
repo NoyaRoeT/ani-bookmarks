@@ -6,7 +6,6 @@ import {
 	Card,
 	CardContent,
 	CardMedia,
-	Autocomplete,
 	TextField,
 	Select,
 	FormControl,
@@ -19,7 +18,9 @@ import {
 	Radio,
 	FormHelperText,
 } from "@mui/material";
+import { AsyncComboBox } from "../";
 import { validateBookmark } from "../../utils/helper";
+import { getTags, getGenres } from "../../utils/bookmarks";
 
 const typeOptions = ["Anime", "Manga", "Manhwa", "Manhua", "Novel"];
 
@@ -150,7 +151,9 @@ const BookmarkForm = ({ onSubmit }) => {
 		};
 
 		if (uploadOption === "local") {
-			bookmarkData.image = localUpload;
+			if (localUpload) {
+				bookmarkData.image = localUpload;
+			}
 		} else {
 			bookmarkData.imageUrl = imageUrl;
 		}
@@ -178,6 +181,26 @@ const BookmarkForm = ({ onSubmit }) => {
 			};
 		}
 	}, [imageUrl, uploadOption]);
+
+	async function genresLoadFunction() {
+		try {
+			const res = await getGenres();
+			return res.data;
+		} catch (err) {
+			console.log(err.response.data);
+			return [];
+		}
+	}
+
+	async function tagsLoadFunction() {
+		try {
+			const res = await getTags();
+			return res.data;
+		} catch (err) {
+			console.log(err.response.data);
+			return [];
+		}
+	}
 
 	return (
 		<Container sx={{ mt: 4 }} maxWidth="lg">
@@ -341,41 +364,20 @@ const BookmarkForm = ({ onSubmit }) => {
 							<FormHelperText error>{error.type}</FormHelperText>
 						</FormControl>
 
-						<Autocomplete
+						<AsyncComboBox
 							value={genres}
 							onChange={genresHandler}
-							multiple
-							disableClearable
-							forcePopupIcon={false}
-							options={genreOptions}
-							renderInput={(params) => (
-								<TextField
-									{...params}
-									margin="normal"
-									variant="outlined"
-									label="Genres"
-									error={error.genres.length > 0}
-									helperText={error.genres}
-									required
-								/>
-							)}
+							label="Genres"
+							loadFunction={genresLoadFunction}
+							error={error.genres.length > 0}
+							helperText={error.genres}
 						/>
 
-						<Autocomplete
+						<AsyncComboBox
 							value={tags}
 							onChange={tagsHandler}
-							multiple
-							disableClearable
-							forcePopupIcon={false}
-							options={tagOptions}
-							renderInput={(params) => (
-								<TextField
-									{...params}
-									margin="normal"
-									variant="outlined"
-									label="Tags"
-								/>
-							)}
+							label="Tags"
+							loadFunction={tagsLoadFunction}
 						/>
 					</Box>
 					<Box sx={{ textAlign: "right" }}>

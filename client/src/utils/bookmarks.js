@@ -15,52 +15,17 @@ export async function getTags() {
 	return res.data;
 }
 
-export async function fetchGenresAndTags() {
-	try {
-		const response = await fetch(`${BASE_URL}/bookmarks/genresandtags`, {
-			credentials: "include",
-			withCredentials: true,
-		});
-		const resData = await response.json();
-		return resData;
-	} catch (err) {
-		console.log(err);
-		return { error: { message: err.message } };
-	}
-}
-
-export async function fetchBookmarks() {
-	try {
-		const response = await fetch(`${BASE_URL}/bookmarks`, {
-			credentials: "include",
-			withCredentials: true,
-		});
-		const resData = await response.json();
-		return resData;
-	} catch (err) {
-		console.log(err);
-		return { error: { message: err.message } };
-	}
-}
-
 export async function addBookmark(data) {
 	const formData = new FormData();
 	for (const key in data) {
 		formData.append(key, data[key]);
 	}
-	try {
-		const response = await fetch(`${BASE_URL}/bookmarks`, {
-			method: "POST",
-			body: formData,
-			credentials: "include",
-			withCredentials: true,
-		});
-		const result = await response.json();
-		return result;
-	} catch (err) {
-		console.log(err);
-		return { error: { message: err.message } };
-	}
+	const res = await axiosInstance.post("bookmarks", formData, {
+		headers: {
+			"Content-Type": "multipart/form-data",
+		},
+	});
+	return res.data;
 }
 
 export async function deleteBookmark(id) {

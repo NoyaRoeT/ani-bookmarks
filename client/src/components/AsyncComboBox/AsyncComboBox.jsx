@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Autocomplete, TextField, CircularProgress } from "@mui/material";
 
-const AsyncComboBox = ({ value, onChange, label, loadFunction }) => {
+const AsyncComboBox = ({
+	value,
+	onChange,
+	label,
+	loadFunction,
+	error,
+	helperText,
+}) => {
 	const [options, setOptions] = useState([]);
 	const [open, setOpen] = useState(false);
 	const loading = open && options.length === 0;
@@ -34,6 +41,8 @@ const AsyncComboBox = ({ value, onChange, label, loadFunction }) => {
 					margin="normal"
 					variant="outlined"
 					label={label}
+					error={error}
+					helperText={helperText}
 					InputProps={{
 						...params.InputProps,
 						endAdornment: (
