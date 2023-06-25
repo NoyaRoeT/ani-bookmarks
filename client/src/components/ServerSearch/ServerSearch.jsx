@@ -13,6 +13,8 @@ import {
 	Button,
 } from "@mui/material";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+import AsyncComboBox from "../AsyncComboBox/AsyncComboBox";
+import { getGenres, getTags } from "../../utils/bookmarks";
 
 const ServerSearch = ({
 	onClose,
@@ -25,10 +27,31 @@ const ServerSearch = ({
 	const titleRef = useRef();
 	const [type, setType] = useState("");
 	const [genres, setGenres] = useState([]);
-	const [tags, setTags] = useState();
+	const [tags, setTags] = useState([]);
 
 	function typeChangeHandler(event) {
 		setType(event.target.value);
+	}
+
+	async function genresLoadFunction() {
+		try {
+			const res = await getGenres();
+
+			return res.data;
+		} catch (err) {
+			console.log(err.response.data);
+			return [];
+		}
+	}
+
+	async function tagsLoadFunction() {
+		try {
+			const res = await getTags();
+			return res.data;
+		} catch (err) {
+			console.log(err.response.data);
+			return [];
+		}
 	}
 
 	function genresChangeHandler(event, value) {
@@ -40,8 +63,13 @@ const ServerSearch = ({
 	}
 
 	function searchHandler() {
-		const placeholders = ["A", "B", "C"];
-		onSubmit(placeholders);
+		const query = {
+			title: titleRef.current.value,
+			type,
+			genres,
+			tags,
+		};
+		onSubmit(query);
 	}
 
 	return (
@@ -98,38 +126,18 @@ const ServerSearch = ({
 					</Select>
 				</FormControl>
 
-				<Autocomplete
+				<AsyncComboBox
 					value={genres}
 					onChange={genresChangeHandler}
-					multiple
-					disableClearable
-					forcePopupIcon={false}
-					options={genreOptions}
-					renderInput={(params) => (
-						<TextField
-							{...params}
-							margin="normal"
-							variant="outlined"
-							label="Genres"
-						/>
-					)}
+					label="Genres"
+					loadFunction={genresLoadFunction}
 				/>
 
-				<Autocomplete
+				<AsyncComboBox
 					value={tags}
 					onChange={tagsChangeHandler}
-					multiple
-					disableClearable
-					forcePopupIcon={false}
-					options={tagOptions}
-					renderInput={(params) => (
-						<TextField
-							{...params}
-							margin="normal"
-							variant="outlined"
-							label="Tags"
-						/>
-					)}
+					label="Tags"
+					loadFunction={tagsLoadFunction}
 				/>
 			</Box>
 			<Button

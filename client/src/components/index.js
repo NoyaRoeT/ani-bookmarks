@@ -10,3 +10,4 @@ export { default as DeleteDialog } from "./DeleteDialog/DeleteDialog";
 export { default as BookmarkForm } from "./BookmarkForm/BookmarkForm";
 export { default as Logo } from "./Logo/Logo";
 export { default as CheckAuth } from "./CheckAuth/CheckAuth";
+export { default as AsyncComboBox } from "./AsyncComboBox/AsyncComboBox";

@@ -171,11 +171,15 @@ export const isBookmarkOwner = async (req, res, next) => {
 	}
 };
 
-export const getGenresAndTags = (req, res, next) => {
+export const getGenres = (req, res, next) => {
 	const genres = Object.keys(GenreStore.getMap());
+	return res.status(200).json({ data: genres });
+};
+
+export const getTags = (req, res, next) => {
 	const tags = Object.keys(TagStore.getMap());
 
-	return res.status(200).json({ data: { genres, tags } });
+	return res.status(200).json({ data: tags });
 };
 
 export const searchBookmarks = async (req, res, next) => {

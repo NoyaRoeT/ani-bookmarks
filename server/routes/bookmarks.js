@@ -4,10 +4,11 @@ import {
 	deleteBookmark,
 	getBookmark,
 	getBookmarks,
-	getGenresAndTags,
 	isBookmarkOwner,
 	updateBookmark,
 	searchBookmarks,
+	getGenres,
+	getTags,
 } from "../controllers/bookmarks.js";
 
 import {
@@ -25,7 +26,8 @@ function initRouter() {
 
 	router.get("/", isAuthenticated, getBookmarks);
 
-	router.get("/genresandtags", getGenresAndTags);
+	router.get("/genres", getGenres);
+	router.get("/tags", getTags);
 
 	router.post(
 		"/search",

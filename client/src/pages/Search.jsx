@@ -9,8 +9,9 @@ import {
 	ServerSearch,
 	SortMenu,
 } from "../components";
+import { searchBookmarks } from "../utils/bookmarks";
 
-const bookmarks = [
+const SAMPLE_BOOKMARKS = [
 	{
 		title: "The Perfect Run",
 		imagePath: "https://images.alphacoders.com/129/1298385.jpg",
@@ -75,6 +76,8 @@ const typeOptions = ["Type 1", "Loooooooooooooooooooooooong Type", "short"];
 const genreOptions = ["Genre 1", "Looooooooooooooooooooooong Genre", "short"];
 const sortOptions = ["Date Added", "Rating"];
 const Search = () => {
+	const [bookmarks, setBookmarks] = useState([]);
+
 	const [openServerSearch, setOpenServerSearch] = useState(false);
 
 	const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -98,8 +101,14 @@ const Search = () => {
 		setOpenServerSearch((prev) => !prev);
 	}
 
-	function serverSearchHandler(res) {
-		console.log(res);
+	async function serverSearchHandler(query) {
+		query.sortBy = sortValue;
+		try {
+			const res = await searchBookmarks(query);
+			console.log(res);
+		} catch (err) {
+			console.log(err.response.data);
+		}
 	}
 
 	function localSearchHandler(res) {
