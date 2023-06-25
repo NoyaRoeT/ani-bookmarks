@@ -72,7 +72,6 @@ export const parseGenreAndTagsToArray = (req, res, next) => {
 
 export const uploadImageToDisk = (req, res, next) => {
 	const upload = uploadLocal.single("image");
-
 	upload(req, res, function (err) {
 		if (err) {
 			return next(new ExpressError(err.message, errorTypes.GENERAL));

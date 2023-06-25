@@ -21,9 +21,9 @@ const BookmarkCard = ({ bookmark }) => {
 		>
 			<CardActionArea>
 				<Link
-					to={`/bookmarks/${123}}`}
+					to={`/bookmarks/${bookmark._id}`}
 					state={{ bookmark }}
-					style={{ textDecoration: "none" }}
+					style={{ textDecoration: "none", color: "inherit" }}
 				>
 					<CardContent>
 						<Box sx={{ display: "flex" }}>

@@ -14,13 +14,22 @@ export const getBookmark = async (req, res, next) => {
 	}
 
 	try {
-		const bookmark = await Bookmark.findById(reqBookmarkId);
+		const bookmark = await Bookmark.findById(reqBookmarkId)
+			.populate("genres", "name -_id")
+			.populate("tags", "name -_id");
+
 		if (!bookmark) {
 			return res
 				.status(404)
 				.json({ message: "This bookmark does not exist." });
 		}
-		return res.status(200).json({ data: bookmark });
+		return res.status(200).json({
+			data: {
+				...bookmark.toObject(),
+				genres: bookmark.genres.map((g) => g.name),
+				tags: bookmark.tags.map((t) => t.name),
+			},
+		});
 	} catch (err) {
 		next(new ExpressError(err.message, 500));
 	}

@@ -4,7 +4,6 @@ import { addBookmark } from "../utils/bookmarks";
 
 const Add = () => {
 	async function addHandler(bookmark) {
-		console.log(bookmark);
 		try {
 			const res = await addBookmark(bookmark);
 			console.log(res);

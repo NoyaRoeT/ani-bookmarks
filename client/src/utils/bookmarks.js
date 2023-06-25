@@ -28,6 +28,11 @@ export async function addBookmark(data) {
 	return res.data;
 }
 
+export async function getBookmark(id) {
+	const res = await axiosInstance.get(`bookmarks/${id}`);
+	return res.data;
+}
+
 export async function deleteBookmark(id) {
 	try {
 		const response = await fetch(`${BASE_URL}/bookmarks/${id}`, {
