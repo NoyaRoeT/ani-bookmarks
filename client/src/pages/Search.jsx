@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { IconButton, Paper, Toolbar, Box, Menu } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { IconButton, Toolbar, Box } from "@mui/material";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import SortIcon from "@mui/icons-material/Sort";
 import {
@@ -10,67 +10,6 @@ import {
 	SortMenu,
 } from "../components";
 import { searchBookmarks } from "../utils/bookmarks";
-
-const SAMPLE_BOOKMARKS = [
-	{
-		title: "The Perfect Run",
-		imagePath: "https://images.alphacoders.com/129/1298385.jpg",
-		type: "Novel",
-		genres: ["Action", "Fantasy", "Martial Arts"],
-		tags: [
-			"Overpowered Protagonist",
-			"Hiding True Identity",
-			"Male Protagonist",
-			"Beautiful Female Lead",
-			"Comedic Protagonist",
-		],
-		rating: 4.5,
-	},
-	{
-		title: "Martial King's Retired Life",
-		imagePath:
-			"https://www.royalroadcdn.com/public/covers-full/36735-the-perfect-run.jpg?time=1604749383",
-		type: "Novel",
-		genres: ["Action", "Fantasy", "Martial Arts"],
-		tags: [
-			"Overpowered Protagonist",
-			"Hiding True Identity",
-			"Male Protagonist",
-			"Beautiful Female Lead",
-			"Comedic Protagonist",
-		],
-		rating: 4.5,
-	},
-	{
-		title: "Martial King's Retired Life",
-		imagePath:
-			"https://www.royalroadcdn.com/public/covers-full/36735-the-perfect-run.jpg?time=1604749383",
-		type: "Novel",
-		genres: ["Action", "Fantasy", "Martial Arts"],
-		tags: [
-			"Overpowered Protagonist",
-			"Hiding True Identity",
-			"Male Protagonist",
-			"Beautiful Female Lead",
-			"Comedic Protagonist",
-		],
-		rating: 4.5,
-	},
-	{
-		title: "Martial King's Retired Life",
-
-		type: "Novel",
-		genres: ["Action", "Fantasy", "Martial Arts"],
-		tags: [
-			"Overpowered Protagonist",
-			"Hiding True Identity",
-			"Male Protagonist",
-			"Beautiful Female Lead",
-			"Comedic Protagonist",
-		],
-		rating: 4.5,
-	},
-];
 
 const typeOptions = ["Anime", "Manga", "Manhwa", "Manhua", "Novel"];
 const sortOptions = ["Last Added", "Rating"];
@@ -113,6 +52,19 @@ const Search = () => {
 	function localSearchHandler(res) {
 		console.log(res);
 	}
+
+	useEffect(() => {
+		(async () => {
+			const res = await searchBookmarks({
+				title: "",
+				type: "",
+				genres: [],
+				tags: [],
+				sortBy: sortValue,
+			});
+			setBookmarks(res.data);
+		})();
+	}, []);
 
 	return (
 		<Page>
