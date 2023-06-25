@@ -27,5 +27,21 @@ export function validateBookmark(bookmark) {
 		};
 	}
 
+	// Genres length should be <= 5
+	if (bookmark.genres.length > 5) {
+		return {
+			field: "GENRES",
+			message: "Cannot have more than 5 genres",
+		};
+	}
+
+	// Tags length should be <= 20
+	if (bookmark.tags.length > 20) {
+		return {
+			field: "TAGS",
+			message: "Cannot have more than 20 tags",
+		};
+	}
+
 	return {};
 }

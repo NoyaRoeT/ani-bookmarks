@@ -30,6 +30,7 @@ const errorReducer = (state, action) => {
 			title: "",
 			type: "",
 			genres: "",
+			tags: "",
 		};
 	}
 	if (action.type === "TITLE") {
@@ -37,6 +38,7 @@ const errorReducer = (state, action) => {
 			title: action.value,
 			type: "",
 			genres: "",
+			tags: "",
 		};
 	}
 	if (action.type === "TYPE") {
@@ -44,6 +46,7 @@ const errorReducer = (state, action) => {
 			title: "",
 			type: action.value,
 			genres: "",
+			tags: "",
 		};
 	}
 	if (action.type === "GENRES") {
@@ -51,6 +54,15 @@ const errorReducer = (state, action) => {
 			title: "",
 			type: "",
 			genres: action.value,
+			tags: "",
+		};
+	}
+	if (action.type === "TAGS") {
+		return {
+			title: "",
+			type: "",
+			genres: "",
+			tags: action.value,
 		};
 	}
 };
@@ -89,6 +101,7 @@ const BookmarkForm = ({ onSubmit }) => {
 		title: "",
 		type: "",
 		genres: "",
+		tags: "",
 	});
 
 	// Image related state
@@ -378,6 +391,8 @@ const BookmarkForm = ({ onSubmit }) => {
 							onChange={tagsHandler}
 							label="Tags"
 							loadFunction={tagsLoadFunction}
+							error={error.tags.length > 0}
+							helperText={error.tags}
 						/>
 					</Box>
 					<Box sx={{ textAlign: "right" }}>
