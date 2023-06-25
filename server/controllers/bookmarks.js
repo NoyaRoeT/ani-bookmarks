@@ -194,6 +194,7 @@ export const searchBookmarks = async (req, res, next) => {
 
 	try {
 		const bookmarks = await Bookmark.find(filter)
+			.sort({ createdAt: -1 })
 			.populate("genres", "name -_id")
 			.populate("tags", "name -_id");
 
