@@ -134,7 +134,7 @@ const Info = () => {
 										</Typography>
 										<Box sx={{ mt: 2 }} display="flex">
 											<Rating
-												value={4.5}
+												value={bookmark.rating}
 												precision={0.5}
 												readOnly
 												size="small"

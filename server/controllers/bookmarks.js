@@ -104,6 +104,8 @@ export const updateBookmark = async (req, res, next) => {
 			if (oldImageId) {
 				cloudinaryDestroy(oldImageId);
 			}
+		} else {
+			await bookmark.save();
 		}
 
 		return res.status(200).json({

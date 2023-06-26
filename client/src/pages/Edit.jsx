@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { Container, Box, Typography } from "@mui/material";
 import { BookmarkForm, Page } from "../components";
 import { editBookmark, getBookmark } from "../utils/bookmarks";
 
 const Edit = () => {
+	const navigate = useNavigate();
 	const { bookmarkId } = useParams();
 	const locationState = useLocation().state;
 	const emptyBookmark = {
@@ -39,6 +40,7 @@ const Edit = () => {
 		try {
 			const res = await editBookmark(data, bookmark._id);
 			console.log(res);
+			navigate(`/bookmarks/info/${bookmark._id}`);
 		} catch (err) {
 			console.log(err.response.data);
 		}
