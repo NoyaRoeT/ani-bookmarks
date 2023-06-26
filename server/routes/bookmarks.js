@@ -52,10 +52,6 @@ function initRouter() {
 		isBookmarkOwner,
 		uploadImageToDisk,
 		parseGenreAndTagsToArray,
-		(req, res, next) => {
-			console.log(req.body);
-			next();
-		},
 		validateBody(SchemaStore.get("bookmark")),
 		moveImageToCloud,
 		updateBookmark,

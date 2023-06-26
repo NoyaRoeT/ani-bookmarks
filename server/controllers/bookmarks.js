@@ -89,7 +89,6 @@ export const updateBookmark = async (req, res, next) => {
 		bookmark.rating = rating;
 
 		if (req.image || req.body.imageUrl) {
-			console.log(bookmark.imageId);
 			const oldImageId = bookmark.imageId;
 
 			bookmark.imageId = req.image ? req.image.public_id : undefined;
@@ -103,7 +102,6 @@ export const updateBookmark = async (req, res, next) => {
 			}
 
 			if (oldImageId) {
-				console.log("Destroying old image");
 				cloudinaryDestroy(oldImageId);
 			}
 		}
