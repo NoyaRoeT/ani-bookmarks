@@ -67,31 +67,31 @@ const errorReducer = (state, action) => {
 	}
 };
 
-const BookmarkForm = ({ onSubmit }) => {
+const BookmarkForm = ({ onSubmit, buttonLabel, bookmark, label }) => {
 	// Field state
-	const [rating, setRating] = useState(0);
+	const [rating, setRating] = useState(bookmark ? bookmark.rating : 0);
 	function ratingHandler(event) {
 		setRating(Number(event.target.value));
 	}
 
-	const [title, setTitle] = useState("");
+	const [title, setTitle] = useState(bookmark ? bookmark.title : "");
 	function titleHandler(event) {
 		if (event.target.value.length <= 200) {
 			setTitle(event.target.value);
 		}
 	}
 
-	const [type, setType] = useState("");
+	const [type, setType] = useState(bookmark ? bookmark.type : "");
 	function typeHandler(event) {
 		setType(event.target.value);
 	}
 
-	const [genres, setGenres] = useState([]);
+	const [genres, setGenres] = useState(bookmark ? bookmark.genres : []);
 	function genresHandler(event, value) {
 		setGenres(value);
 	}
 
-	const [tags, setTags] = useState([]);
+	const [tags, setTags] = useState(bookmark ? bookmark.tags : []);
 	function tagsHandler(event, value) {
 		setTags(value);
 	}
@@ -105,12 +105,16 @@ const BookmarkForm = ({ onSubmit }) => {
 	});
 
 	// Image related state
-	const [uploadOption, setUploadOption] = useState("local");
+	const [uploadOption, setUploadOption] = useState(
+		bookmark && bookmark.imagePath ? "url" : "local"
+	);
 
 	const [localUpload, setLocalUpload] = useState(null);
 	const [localUploadError, setLocalUploadError] = useState("");
 
-	const [imageUrl, setImageUrl] = useState("");
+	const [imageUrl, setImageUrl] = useState(
+		bookmark && bookmark.imagePath ? bookmark.imagePath : ""
+	);
 
 	const [previewUrl, setPreviewUrl] = useState("");
 
@@ -137,7 +141,7 @@ const BookmarkForm = ({ onSubmit }) => {
 		}
 
 		const sizeLimit = 1024 * 1024;
-		console.log(file);
+
 		if (file.size > sizeLimit) {
 			setLocalUploadError("Image was too large.");
 			return;
@@ -186,7 +190,6 @@ const BookmarkForm = ({ onSubmit }) => {
 	useEffect(() => {
 		if (uploadOption === "url") {
 			const handler = setTimeout(() => {
-				console.log("Changing");
 				setPreviewUrl(imageUrl);
 			}, 500);
 			return () => {
@@ -219,7 +222,7 @@ const BookmarkForm = ({ onSubmit }) => {
 		<Container sx={{ mt: 4 }} maxWidth="lg">
 			<Box sx={{ mb: 4 }}>
 				<Typography fontSize={30} variant="h1">
-					Add a Bookmark
+					{label}
 				</Typography>
 			</Box>
 			<Card sx={{ mb: 4 }}>
@@ -401,7 +404,7 @@ const BookmarkForm = ({ onSubmit }) => {
 							sx={{ mt: 2 }}
 							variant="contained"
 						>
-							Add
+							{buttonLabel}
 						</Button>
 					</Box>
 				</CardContent>

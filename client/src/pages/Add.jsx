@@ -13,7 +13,11 @@ const Add = () => {
 	}
 	return (
 		<Page>
-			<BookmarkForm onSubmit={addHandler} />
+			<BookmarkForm
+				onSubmit={addHandler}
+				buttonLabel="Add"
+				label="Add a Bookmark"
+			/>
 		</Page>
 	);
 };

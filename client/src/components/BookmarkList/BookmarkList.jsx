@@ -21,7 +21,7 @@ const BookmarkCard = ({ bookmark }) => {
 		>
 			<CardActionArea>
 				<Link
-					to={`/bookmarks/${bookmark._id}`}
+					to={`/bookmarks/info/${bookmark._id}`}
 					state={{ bookmark }}
 					style={{ textDecoration: "none", color: "inherit" }}
 				>

@@ -1,12 +1,13 @@
 import { CssBaseline } from "@mui/material";
 import { Route, Routes, Navigate } from "react-router-dom";
 
-import { AppDrawer, CheckAuth, ProtectedRoute } from "./components";
+import { CheckAuth, ProtectedRoute } from "./components";
 import Search from "./pages/Search";
 import Info from "./pages/Info";
 import Add from "./pages/Add";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import Edit from "./pages/Edit";
 
 function App() {
 	return (
@@ -19,7 +20,8 @@ function App() {
 					<Route path="new" element={<Add />} />
 				</Route>
 				<Route path="/bookmarks/" element={<ProtectedRoute />}>
-					<Route path=":bookmarkId" element={<Info />} />
+					<Route path="info/:bookmarkId" element={<Info />} />
+					<Route path="edit/:bookmarkId" element={<Edit />} />
 				</Route>
 				<Route path="/" element={<ProtectedRoute noAuth />}>
 					<Route path="login" element={<Login />} />

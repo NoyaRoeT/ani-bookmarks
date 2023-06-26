@@ -33,6 +33,20 @@ export async function getBookmark(id) {
 	return res.data;
 }
 
+export async function editBookmark(data, id) {
+	const formData = new FormData();
+	for (const key in data) {
+		formData.append(key, data[key]);
+	}
+
+	const res = await axiosInstance.put(`bookmarks/${id}`, formData, {
+		headers: {
+			"Content-Type": "multipart/form-data",
+		},
+	});
+	return res.data;
+}
+
 export async function deleteBookmark(id) {
 	try {
 		const response = await fetch(`${BASE_URL}/bookmarks/${id}`, {
@@ -42,26 +56,6 @@ export async function deleteBookmark(id) {
 		});
 		const resData = await response.json();
 		return resData;
-	} catch (err) {
-		console.log(err);
-		return { error: { message: err.message } };
-	}
-}
-
-export async function editBookmark(data, id) {
-	const formData = new FormData();
-	for (const key in data) {
-		formData.append(key, data[key]);
-	}
-	try {
-		const response = await fetch(`${BASE_URL}/bookmarks/${id}`, {
-			method: "PUT",
-			body: formData,
-			credentials: "include",
-			withCredentials: true,
-		});
-		const result = await response.json();
-		return result;
 	} catch (err) {
 		console.log(err);
 		return { error: { message: err.message } };

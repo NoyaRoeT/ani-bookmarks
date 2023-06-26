@@ -88,20 +88,24 @@ export const updateBookmark = async (req, res, next) => {
 		bookmark.tags = tags.map((name) => TagStore.getMap()[name]);
 		bookmark.rating = rating;
 
-		if (req.image) {
+		if (req.image || req.body.imageUrl) {
+			console.log(bookmark.imageId);
 			const oldImageId = bookmark.imageId;
-			bookmark.imageId = req.image.public_id;
-			bookmark.imagePath = req.image.secure_url;
+
+			bookmark.imageId = req.image ? req.image.public_id : undefined;
+			bookmark.imagePath = req.image
+				? req.image.secure_url
+				: req.body.imageUrl;
 			await bookmark.save();
-			req.image.saved = true;
-			// Only delete from cloud after save is successful
-			cloudinaryDestroy(oldImageId);
-		} else {
-			if (req.body.imageUrl) {
-				bookmark.imagePath = req.body.imageUrl;
-				bookmark.imageId = undefined;
+
+			if (req.image) {
+				req.image.saved = true;
 			}
-			await bookmark.save();
+
+			if (oldImageId) {
+				console.log("Destroying old image");
+				cloudinaryDestroy(oldImageId);
+			}
 		}
 
 		return res.status(200).json({

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import {
 	Button,
 	Toolbar,
@@ -11,7 +11,6 @@ import {
 	CardMedia,
 	Box,
 	Rating,
-	useTheme,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -28,7 +27,7 @@ const Info = () => {
 		type: "",
 		genres: [],
 		tags: [],
-		rating: [],
+		rating: 0,
 		requireFetch: true,
 	};
 
@@ -46,6 +45,7 @@ const Info = () => {
 					const res = await getBookmark(bookmarkId);
 					setBookmark(res.data);
 				} catch (err) {
+					setBookmark((prev) => ({ ...prev, requireFetch: false }));
 					console.log(err.response.data);
 				}
 			})();
@@ -57,6 +57,7 @@ const Info = () => {
 	function toggleOpenDeleteHandler() {
 		setIsDeleteOpen((prev) => !prev);
 	}
+
 	return (
 		<>
 			<Page>
@@ -72,6 +73,9 @@ const Info = () => {
 							color="primary"
 							variant="outlined"
 							sx={{ mr: 1 }}
+							component={Link}
+							state={{ bookmark }}
+							to={`/bookmarks/edit/${bookmark._id}`}
 						>
 							<EditIcon sx={{ mr: 1 }} />
 							<Typography>Edit</Typography>

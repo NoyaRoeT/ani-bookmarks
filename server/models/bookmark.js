@@ -14,6 +14,7 @@ const bookmarkSchema = new mongoose.Schema(
 		},
 		tags: {
 			type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
+			default: [],
 		},
 		type: {
 			type: String,
