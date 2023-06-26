@@ -48,16 +48,6 @@ export async function editBookmark(data, id) {
 }
 
 export async function deleteBookmark(id) {
-	try {
-		const response = await fetch(`${BASE_URL}/bookmarks/${id}`, {
-			method: "DELETE",
-			credentials: "include",
-			withCredentials: true,
-		});
-		const resData = await response.json();
-		return resData;
-	} catch (err) {
-		console.log(err);
-		return { error: { message: err.message } };
-	}
+	const res = await axiosInstance.delete(`bookmarks/${id}`);
+	return res.data;
 }

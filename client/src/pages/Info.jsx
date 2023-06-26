@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import {
 	Button,
 	Toolbar,
@@ -16,9 +16,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import { GenreTagStack, Page, DeleteDialog } from "../components";
-import { getBookmark } from "../utils/bookmarks";
+import { deleteBookmark, getBookmark } from "../utils/bookmarks";
 
 const Info = () => {
+	const navigate = useNavigate();
 	const { bookmarkId } = useParams();
 	const locationState = useLocation().state;
 
@@ -56,6 +57,17 @@ const Info = () => {
 
 	function toggleOpenDeleteHandler() {
 		setIsDeleteOpen((prev) => !prev);
+	}
+
+	async function deleteHandler() {
+		try {
+			const res = await deleteBookmark(bookmark._id);
+			navigate("/search");
+		} catch (err) {
+			console.log(err.response.data);
+		} finally {
+			toggleOpenDeleteHandler();
+		}
 	}
 
 	return (
@@ -176,7 +188,7 @@ const Info = () => {
 			<DeleteDialog
 				open={isDeleteOpen}
 				onClose={toggleOpenDeleteHandler}
-				onDelete={toggleOpenDeleteHandler}
+				onDelete={deleteHandler}
 			/>
 		</>
 	);
