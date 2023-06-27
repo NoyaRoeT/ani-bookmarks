@@ -2,7 +2,6 @@ import {
 	Card,
 	Container,
 	CardMedia,
-	CardActionArea,
 	Box,
 	Typography,
 	Rating,
@@ -92,15 +91,9 @@ const BookmarkCard = ({ bookmark }) => {
 							>
 								{bookmark.title}
 							</Typography>
+
 							{bookmark.favorite && (
-								<IconButton
-									sx={{
-										display: "flex",
-										color: "red",
-									}}
-								>
-									<FavoriteIcon />
-								</IconButton>
+								<FavoriteIcon sx={{ color: "red" }} />
 							)}
 						</Box>
 						<GenreTagStack
