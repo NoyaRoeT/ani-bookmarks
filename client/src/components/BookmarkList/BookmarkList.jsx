@@ -21,88 +21,95 @@ const BookmarkCard = ({ bookmark }) => {
 				mb: 2,
 			}}
 		>
-			<CardActionArea>
-				<Link
-					to={`/bookmarks/info/${bookmark._id}`}
-					state={{ bookmark }}
-					style={{ textDecoration: "none", color: "inherit" }}
-				>
-					<CardContent>
-						<Box sx={{ display: "flex" }}>
-							<Box>
-								<CardMedia
-									component="img"
-									sx={{
-										height: 160,
-										width: 120,
-										objectFit: "cover",
-										borderRadius: 2,
-									}}
-									image={
-										bookmark.imagePath
-											? bookmark.imagePath
-											: "https://cdn.novelupdates.com/imgmid/series_10553.jpg"
-									}
-								/>
-								<Box
-									sx={{
-										display: "flex",
-										flexDirection: "column",
-										alignItems: "center",
-										mt: 0.5,
-									}}
-								>
-									<Rating
-										size="small"
-										precision={0.5}
-										value={bookmark.rating}
-										readOnly
-										sx={{
-											"& .MuiRating-icon": {
-												width: "1rem",
-											},
-										}}
-									/>
-									<Typography
-										color="primary"
-										fontSize="12px"
-										variant="subtitle2"
-									>
-										{bookmark.type} ({bookmark.rating})
-									</Typography>
-								</Box>
-							</Box>
-							<Box sx={{ ml: 2, width: 1 }}>
-								<Box
-									sx={{
-										width: "100%",
-										display: "flex",
-										justifyContent: "space-between",
-									}}
-								>
-									<Typography variant="h6">
-										{bookmark.title}
-									</Typography>
-									{bookmark.favorite && (
-										<IconButton
-											sx={{
-												display: "flex",
-												color: "red",
-											}}
-										>
-											<FavoriteIcon />
-										</IconButton>
-									)}
-								</Box>
-								<GenreTagStack
-									genres={bookmark.genres}
-									tags={bookmark.tags}
-								/>
-							</Box>
+			<CardContent>
+				<Box sx={{ display: "flex" }}>
+					<Box>
+						<Link
+							to={`/bookmarks/info/${bookmark._id}`}
+							state={{ bookmark }}
+							style={{ textDecoration: "none", color: "inherit" }}
+						>
+							<CardMedia
+								component="img"
+								sx={{
+									height: 160,
+									width: 120,
+									objectFit: "cover",
+									borderRadius: 2,
+								}}
+								image={
+									bookmark.imagePath
+										? bookmark.imagePath
+										: "https://cdn.novelupdates.com/imgmid/series_10553.jpg"
+								}
+							/>
+						</Link>
+						<Box
+							sx={{
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+								mt: 0.5,
+							}}
+						>
+							<Rating
+								size="small"
+								precision={0.5}
+								value={bookmark.rating}
+								readOnly
+								sx={{
+									"& .MuiRating-icon": {
+										width: "1rem",
+									},
+								}}
+							/>
+							<Typography
+								color="primary"
+								fontSize="12px"
+								variant="subtitle2"
+							>
+								{bookmark.type} ({bookmark.rating})
+							</Typography>
 						</Box>
-					</CardContent>
-				</Link>
-			</CardActionArea>
+					</Box>
+					<Box sx={{ ml: 2, width: 1 }}>
+						<Box
+							sx={{
+								width: "100%",
+								display: "flex",
+								justifyContent: "space-between",
+							}}
+						>
+							<Typography
+								component={Link}
+								to={`/bookmarks/info/${bookmark._id}`}
+								state={{ bookmark }}
+								style={{
+									textDecoration: "none",
+									color: "inherit",
+								}}
+								variant="h6"
+							>
+								{bookmark.title}
+							</Typography>
+							{bookmark.favorite && (
+								<IconButton
+									sx={{
+										display: "flex",
+										color: "red",
+									}}
+								>
+									<FavoriteIcon />
+								</IconButton>
+							)}
+						</Box>
+						<GenreTagStack
+							genres={bookmark.genres}
+							tags={bookmark.tags}
+						/>
+					</Box>
+				</Box>
+			</CardContent>
 		</Card>
 	);
 };
