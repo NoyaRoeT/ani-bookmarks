@@ -16,6 +16,7 @@ const sortOptions = ["Last Added", "Rating"];
 const Search = () => {
 	const [bookmarks, setBookmarks] = useState([]);
 
+	const [query, setQuery] = useState({});
 	const [openServerSearch, setOpenServerSearch] = useState(false);
 
 	const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -23,9 +24,19 @@ const Search = () => {
 
 	const [sortValue, setSortValue] = useState(sortOptions[0]);
 
-	function sortChangeHandler(event, value) {
-		if (value !== null) {
-			setSortValue(value);
+	async function sortChangeHandler(event, value) {
+		if (value === null) {
+			return;
+		}
+		setSortValue(value);
+
+		query.sortBy = value;
+		try {
+			const res = await searchBookmarks(query);
+			setBookmarks(res.data);
+			setQuery(query);
+		} catch (err) {
+			console.log(err.response.data);
 		}
 	}
 
@@ -46,6 +57,7 @@ const Search = () => {
 		try {
 			const res = await searchBookmarks(query);
 			setBookmarks(res.data);
+			setQuery(query);
 		} catch (err) {
 			console.log(err.response.data);
 		}
