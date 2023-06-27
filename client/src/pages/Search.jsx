@@ -24,7 +24,9 @@ const Search = () => {
 	const [sortValue, setSortValue] = useState(sortOptions[0]);
 
 	function sortChangeHandler(event, value) {
-		setSortValue(value);
+		if (value !== null) {
+			setSortValue(value);
+		}
 	}
 
 	function openMenuHandler(event) {

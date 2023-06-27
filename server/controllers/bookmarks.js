@@ -209,9 +209,16 @@ export const searchBookmarks = async (req, res, next) => {
 		filter.favorite = true;
 	}
 
+	const sortCriteria = {};
+	if (req.body.sortBy === "Last Added") {
+		sortCriteria.createdAt = -1;
+	} else if (req.body.sortBy === "Rating") {
+		sortCriteria.rating = -1;
+	}
+
 	try {
 		const bookmarks = await Bookmark.find(filter)
-			.sort({ createdAt: -1 })
+			.sort(sortCriteria)
 			.populate("genres", "name -_id")
 			.populate("tags", "name -_id");
 

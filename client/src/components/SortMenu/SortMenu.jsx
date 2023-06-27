@@ -38,7 +38,7 @@ const SortMenu = ({ anchorEl, open, onClose, onChange, value, options }) => {
 				onChange={onChange}
 			>
 				{options.map((i) => (
-					<ToggleButton key={value} value={i}>
+					<ToggleButton key={i} value={i}>
 						{i}
 					</ToggleButton>
 				))}
