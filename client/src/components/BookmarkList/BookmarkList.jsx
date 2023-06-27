@@ -7,7 +7,9 @@ import {
 	Typography,
 	Rating,
 	CardContent,
+	IconButton,
 } from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import React from "react";
 import GenreTagStack from "../GenreTagStack/GenreTagStack";
 import { Link } from "react-router-dom";
@@ -70,10 +72,28 @@ const BookmarkCard = ({ bookmark }) => {
 									</Typography>
 								</Box>
 							</Box>
-							<Box sx={{ ml: 2 }}>
-								<Typography variant="h6">
-									{bookmark.title}
-								</Typography>
+							<Box sx={{ ml: 2, width: 1 }}>
+								<Box
+									sx={{
+										width: "100%",
+										display: "flex",
+										justifyContent: "space-between",
+									}}
+								>
+									<Typography variant="h6">
+										{bookmark.title}
+									</Typography>
+									{bookmark.favorite && (
+										<IconButton
+											sx={{
+												display: "flex",
+												color: "red",
+											}}
+										>
+											<FavoriteIcon />
+										</IconButton>
+									)}
+								</Box>
 								<GenreTagStack
 									genres={bookmark.genres}
 									tags={bookmark.tags}
