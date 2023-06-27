@@ -51,3 +51,8 @@ export async function deleteBookmark(id) {
 	const res = await axiosInstance.delete(`bookmarks/${id}`);
 	return res.data;
 }
+
+export async function favoriteBookmark(id) {
+	const res = await axiosInstance.put(`bookmarks/favorite/${id}`);
+	return res.data;
+}

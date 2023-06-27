@@ -223,3 +223,56 @@ export const searchBookmarks = async (req, res, next) => {
 		next(new ExpressError(err.message, 500));
 	}
 };
+
+export const favoriteBookmark = async (req, res, next) => {
+	const reqBookmarkId = req.params.bookmarkId;
+
+	if (!reqBookmarkId) {
+		return res
+			.status(400)
+			.json({ message: "Missing bookmarkId parameter" });
+	}
+
+	try {
+		const bookmark = await Bookmark.findById(reqBookmarkId);
+		if (!bookmark) {
+			return res
+				.status(404)
+				.json({ message: "This bookmark does not exist" });
+		}
+
+		bookmark.favorite = !bookmark.favorite;
+		await bookmark.save();
+		return res.status(200).json({
+			data: bookmark.favorite,
+			message: bookmark.favorite
+				? "Successfully added to favorites."
+				: "Successfully removed from favorites.",
+		});
+	} catch (err) {
+		next(new ExpressError(err.message, 500));
+	}
+};
+
+export const getFavoriteBookmarks = async (req, res, next) => {
+	try {
+		const bookmarks = await Bookmark.find({
+			userId: req.user._id,
+			favorite: true,
+		})
+			.sort({ createdAt: -1 })
+			.populate("genres", "name -_id")
+			.populate("tags", "name -_id");
+
+		const processedBookmarks = bookmarks.map((bookmark) => {
+			return {
+				...bookmark.toObject(),
+				genres: bookmark.genres.map((g) => g.name),
+				tags: bookmark.tags.map((t) => t.name),
+			};
+		});
+		return res.status(200).json({ data: processedBookmarks });
+	} catch (err) {
+		next(new ExpressError(err.message, 500));
+	}
+};

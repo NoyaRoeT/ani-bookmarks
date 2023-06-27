@@ -8,6 +8,8 @@ import {
 	searchBookmarks,
 	getGenres,
 	getTags,
+	favoriteBookmark,
+	getFavoriteBookmarks,
 } from "../controllers/bookmarks.js";
 
 import {
@@ -56,6 +58,14 @@ function initRouter() {
 		moveImageToCloud,
 		updateBookmark,
 		deleteImageIfError
+	);
+
+	router.get("/favorite", isAuthenticated, getFavoriteBookmarks);
+	router.put(
+		"/favorite/:bookmarkId",
+		isAuthenticated,
+		isBookmarkOwner,
+		favoriteBookmark
 	);
 
 	router.delete(

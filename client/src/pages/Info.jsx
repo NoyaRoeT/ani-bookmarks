@@ -14,9 +14,17 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ArchiveIcon from "@mui/icons-material/Archive";
+import UnarchiveIcon from "@mui/icons-material/Unarchive";
 
 import { GenreTagStack, Page, DeleteDialog } from "../components";
-import { deleteBookmark, getBookmark } from "../utils/bookmarks";
+import {
+	deleteBookmark,
+	favoriteBookmark,
+	getBookmark,
+} from "../utils/bookmarks";
 
 const Info = () => {
 	const navigate = useNavigate();
@@ -61,12 +69,21 @@ const Info = () => {
 
 	async function deleteHandler() {
 		try {
-			const res = await deleteBookmark(bookmark._id);
+			await deleteBookmark(bookmark._id);
 			navigate("/search");
 		} catch (err) {
 			console.log(err.response.data);
 		} finally {
 			toggleOpenDeleteHandler();
+		}
+	}
+
+	async function favoriteHandler() {
+		try {
+			const res = await favoriteBookmark(bookmark._id);
+			setBookmark((prev) => ({ ...prev, favorite: res.data }));
+		} catch (err) {
+			console.log(err.response.data);
 		}
 	}
 
@@ -77,29 +94,54 @@ const Info = () => {
 					<Toolbar
 						sx={{
 							display: "flex",
-							justifyContent: "flex-end",
+							justifyContent: "space-between",
 							alignItems: "center",
 						}}
 					>
-						<Button
-							color="primary"
-							variant="outlined"
-							sx={{ mr: 1 }}
-							component={Link}
-							state={{ bookmark }}
-							to={`/bookmarks/edit/${bookmark._id}`}
-						>
-							<EditIcon sx={{ mr: 1 }} />
-							<Typography>Edit</Typography>
-						</Button>
-						<Button
-							color="warning"
-							variant="outlined"
-							onClick={toggleOpenDeleteHandler}
-						>
-							<DeleteIcon sx={{ mr: 1 }} />
-							<Typography>Delete</Typography>
-						</Button>
+						<Box>
+							<Button
+								color="primary"
+								variant="outlined"
+								sx={{ mr: 1 }}
+								onClick={favoriteHandler}
+							>
+								{bookmark.favorite ? (
+									<FavoriteIcon sx={{ mr: 1 }} />
+								) : (
+									<FavoriteBorderIcon sx={{ mr: 1 }} />
+								)}
+								<Typography>
+									{bookmark.favorite
+										? "Add to Favorite"
+										: "Remove from Favorite"}
+								</Typography>
+							</Button>
+							<Button variant="outlined">
+								<ArchiveIcon sx={{ mr: 1 }} />
+								<Typography>Add to Archive</Typography>
+							</Button>
+						</Box>
+						<Box>
+							<Button
+								color="primary"
+								variant="outlined"
+								sx={{ mr: 1 }}
+								component={Link}
+								state={{ bookmark }}
+								to={`/bookmarks/edit/${bookmark._id}`}
+							>
+								<EditIcon sx={{ mr: 1 }} />
+								<Typography>Edit</Typography>
+							</Button>
+							<Button
+								color="warning"
+								variant="outlined"
+								onClick={toggleOpenDeleteHandler}
+							>
+								<DeleteIcon sx={{ mr: 1 }} />
+								<Typography>Delete</Typography>
+							</Button>
+						</Box>
 					</Toolbar>
 				)}
 
