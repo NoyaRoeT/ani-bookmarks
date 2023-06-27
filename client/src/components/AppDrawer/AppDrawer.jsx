@@ -91,13 +91,13 @@ const DrawerContent = () => {
 					<ListItemText primary="Search" />
 				</ListItemButton>
 
-				<ListItemButton component={Link} to="/favorite">
+				<ListItemButton component={Link} to="/bookmarks/favorite">
 					<ListIcon>
 						<FavoriteIcon />
 					</ListIcon>
 					<ListItemText primary="Favorite" />
 				</ListItemButton>
-				<ListItemButton component={Link} to="/archive">
+				<ListItemButton component={Link} to="/bookmarks/archive">
 					<ListIcon>
 						<ArchiveIcon />
 					</ListIcon>

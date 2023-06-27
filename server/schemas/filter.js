@@ -19,6 +19,7 @@ function searchSchema() {
 			.valid("Anime", "Manga", "Manhwa", "Manhua", "Novel")
 			.allow(""),
 		sortBy: Joi.string().required().valid("Last Added", "Rating"),
+		favorite: Joi.boolean(),
 	});
 }
 

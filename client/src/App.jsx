@@ -8,6 +8,7 @@ import Add from "./pages/Add";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Edit from "./pages/Edit";
+import Favorite from "./pages/Favorite";
 
 function App() {
 	return (
@@ -22,6 +23,7 @@ function App() {
 				<Route path="/bookmarks/" element={<ProtectedRoute />}>
 					<Route path="info/:bookmarkId" element={<Info />} />
 					<Route path="edit/:bookmarkId" element={<Edit />} />
+					<Route path="favorite" element={<Favorite />} />
 				</Route>
 				<Route path="/" element={<ProtectedRoute noAuth />}>
 					<Route path="login" element={<Login />} />

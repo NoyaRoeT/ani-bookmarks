@@ -105,13 +105,13 @@ const Info = () => {
 								sx={{ mr: 1 }}
 								onClick={favoriteHandler}
 							>
-								{bookmark.favorite ? (
+								{!bookmark.favorite ? (
 									<FavoriteIcon sx={{ mr: 1 }} />
 								) : (
 									<FavoriteBorderIcon sx={{ mr: 1 }} />
 								)}
 								<Typography>
-									{bookmark.favorite
+									{!bookmark.favorite
 										? "Add to Favorite"
 										: "Remove from Favorite"}
 								</Typography>

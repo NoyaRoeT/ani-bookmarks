@@ -9,7 +9,6 @@ import {
 	getGenres,
 	getTags,
 	favoriteBookmark,
-	getFavoriteBookmarks,
 } from "../controllers/bookmarks.js";
 
 import {
@@ -60,7 +59,6 @@ function initRouter() {
 		deleteImageIfError
 	);
 
-	router.get("/favorite", isAuthenticated, getFavoriteBookmarks);
 	router.put(
 		"/favorite/:bookmarkId",
 		isAuthenticated,

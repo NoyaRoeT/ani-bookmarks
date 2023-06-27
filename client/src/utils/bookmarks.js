@@ -56,3 +56,11 @@ export async function favoriteBookmark(id) {
 	const res = await axiosInstance.put(`bookmarks/favorite/${id}`);
 	return res.data;
 }
+
+export async function getFavoriteBookmarks() {
+	const res = await axiosInstance.post("bookmarks/search", {
+		favorite: true,
+		sortBy: "Last Added",
+	});
+	return res.data;
+}
