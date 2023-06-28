@@ -11,6 +11,7 @@ import {
 	CardMedia,
 	Box,
 	Rating,
+	IconButton,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -108,7 +109,45 @@ const Info = () => {
 							alignItems: "center",
 						}}
 					>
-						<Box>
+						<Box display={{ md: "none" }}>
+							<IconButton
+								color="primary"
+								onClick={favoriteHandler}
+							>
+								{!bookmark.favorite ? (
+									<FavoriteIcon />
+								) : (
+									<FavoriteBorderIcon />
+								)}
+							</IconButton>
+							<IconButton
+								color="primary"
+								onClick={archiveHandler}
+							>
+								{!bookmark.archived ? (
+									<ArchiveIcon />
+								) : (
+									<UnarchiveIcon />
+								)}
+							</IconButton>
+						</Box>
+						<Box display={{ md: "none" }}>
+							<IconButton
+								color="primary"
+								component={Link}
+								state={{ bookmark }}
+								to={`/bookmarks/edit/${bookmark._id}`}
+							>
+								<EditIcon />
+							</IconButton>
+							<IconButton
+								color="warning"
+								onClick={toggleOpenDeleteHandler}
+							>
+								<DeleteIcon />
+							</IconButton>
+						</Box>
+						<Box display={{ xs: "none", md: "block" }}>
 							<Button
 								color="primary"
 								variant="outlined"
@@ -139,7 +178,7 @@ const Info = () => {
 								</Typography>
 							</Button>
 						</Box>
-						<Box>
+						<Box display={{ xs: "none", md: "block" }}>
 							<Button
 								color="primary"
 								variant="outlined"
