@@ -205,8 +205,13 @@ export const searchBookmarks = async (req, res, next) => {
 		filter.title = { $regex: regex };
 	}
 
-	if (req.body.favorite) {
-		filter.favorite = true;
+	// Use in since these are boolean values
+	if ("favorite" in req.body) {
+		filter.favorite = req.body.favorite;
+	}
+
+	if ("archived" in req.body) {
+		filter.archived = req.body.archived;
 	}
 
 	const sortCriteria = {};
@@ -259,6 +264,36 @@ export const favoriteBookmark = async (req, res, next) => {
 			message: bookmark.favorite
 				? "Successfully added to favorites."
 				: "Successfully removed from favorites.",
+		});
+	} catch (err) {
+		next(new ExpressError(err.message, 500));
+	}
+};
+
+export const archiveBookmark = async (req, res, next) => {
+	const reqBookmarkId = req.params.bookmarkId;
+
+	if (!reqBookmarkId) {
+		return res
+			.status(400)
+			.json({ message: "Missing bookmarkId parameter" });
+	}
+
+	try {
+		const bookmark = await Bookmark.findById(reqBookmarkId);
+		if (!bookmark) {
+			return res
+				.status(404)
+				.json({ message: "This bookmark does not exist" });
+		}
+
+		bookmark.archived = !bookmark.archived;
+		await bookmark.save();
+		return res.status(200).json({
+			data: bookmark.archived,
+			message: bookmark.archived
+				? "Successfully added to archive."
+				: "Successfully restored from archive.",
 		});
 	} catch (err) {
 		next(new ExpressError(err.message, 500));

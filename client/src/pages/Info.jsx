@@ -21,6 +21,7 @@ import UnarchiveIcon from "@mui/icons-material/Unarchive";
 
 import { GenreTagStack, Page, DeleteDialog } from "../components";
 import {
+	archiveBookmark,
 	deleteBookmark,
 	favoriteBookmark,
 	getBookmark,
@@ -87,6 +88,15 @@ const Info = () => {
 		}
 	}
 
+	async function archiveHandler() {
+		try {
+			const res = await archiveBookmark(bookmark._id);
+			setBookmark((prev) => ({ ...prev, archived: res.data }));
+		} catch (err) {
+			console.log(err.response.data);
+		}
+	}
+
 	return (
 		<>
 			<Page>
@@ -116,9 +126,17 @@ const Info = () => {
 										: "Remove from Favorite"}
 								</Typography>
 							</Button>
-							<Button variant="outlined">
-								<ArchiveIcon sx={{ mr: 1 }} />
-								<Typography>Add to Archive</Typography>
+							<Button variant="outlined" onClick={archiveHandler}>
+								{!bookmark.archived ? (
+									<ArchiveIcon sx={{ mr: 1 }} />
+								) : (
+									<UnarchiveIcon sx={{ mr: 1 }} />
+								)}
+								<Typography>
+									{!bookmark.archived
+										? "Add to Archive"
+										: "Remove from Archive"}
+								</Typography>
 							</Button>
 						</Box>
 						<Box>

@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Edit from "./pages/Edit";
 import Favorite from "./pages/Favorite";
+import Archive from "./pages/Archive";
 
 function App() {
 	return (
@@ -24,6 +25,7 @@ function App() {
 					<Route path="info/:bookmarkId" element={<Info />} />
 					<Route path="edit/:bookmarkId" element={<Edit />} />
 					<Route path="favorite" element={<Favorite />} />
+					<Route path="archive" element={<Archive />} />
 				</Route>
 				<Route path="/" element={<ProtectedRoute noAuth />}>
 					<Route path="login" element={<Login />} />

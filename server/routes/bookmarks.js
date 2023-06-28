@@ -9,6 +9,7 @@ import {
 	getGenres,
 	getTags,
 	favoriteBookmark,
+	archiveBookmark,
 } from "../controllers/bookmarks.js";
 
 import {
@@ -64,6 +65,13 @@ function initRouter() {
 		isAuthenticated,
 		isBookmarkOwner,
 		favoriteBookmark
+	);
+
+	router.put(
+		"/archive/:bookmarkId",
+		isAuthenticated,
+		isBookmarkOwner,
+		archiveBookmark
 	);
 
 	router.delete(

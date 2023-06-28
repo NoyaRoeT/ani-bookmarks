@@ -20,6 +20,7 @@ function searchSchema() {
 			.allow(""),
 		sortBy: Joi.string().required().valid("Last Added", "Rating"),
 		favorite: Joi.boolean(),
+		archived: Joi.boolean(),
 	});
 }
 

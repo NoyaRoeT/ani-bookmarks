@@ -60,6 +60,20 @@ export async function favoriteBookmark(id) {
 export async function getFavoriteBookmarks() {
 	const res = await axiosInstance.post("bookmarks/search", {
 		favorite: true,
+		archived: false,
+		sortBy: "Last Added",
+	});
+	return res.data;
+}
+
+export async function archiveBookmark(id) {
+	const res = await axiosInstance.put(`bookmarks/archive/${id}`);
+	return res.data;
+}
+
+export async function getArchivedBookmarks() {
+	const res = await axiosInstance.post("bookmarks/search", {
+		archived: true,
 		sortBy: "Last Added",
 	});
 	return res.data;

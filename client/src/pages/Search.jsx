@@ -54,6 +54,7 @@ const Search = () => {
 
 	async function serverSearchHandler(query) {
 		query.sortBy = sortValue;
+		query.archived = false;
 		try {
 			const res = await searchBookmarks(query);
 			setBookmarks(res.data);
@@ -75,6 +76,7 @@ const Search = () => {
 				genres: [],
 				tags: [],
 				sortBy: sortValue,
+				archived: false,
 			});
 			setBookmarks(res.data);
 		})();

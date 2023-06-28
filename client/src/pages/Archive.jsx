@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Container, Box, Typography } from "@mui/material";
 import { Page, BookmarkList } from "../components";
-import { getFavoriteBookmarks } from "../utils/bookmarks";
+import { getArchivedBookmarks } from "../utils/bookmarks";
 
-const Favorite = () => {
+const Archive = () => {
 	const [bookmarks, setBookmarks] = useState([]);
 
 	useEffect(() => {
 		(async () => {
 			try {
-				const res = await getFavoriteBookmarks();
+				const res = await getArchivedBookmarks();
 				setBookmarks(res.data);
 			} catch (err) {
 				console.log(err.response.data);
@@ -22,7 +22,7 @@ const Favorite = () => {
 			<Container maxWidth="lg" sx={{ mt: 4 }}>
 				<Box sx={{ mb: 4 }}>
 					<Typography fontSize={30} variant="h1">
-						Favorite Bookmarks
+						Archived Bookmarks
 					</Typography>
 				</Box>
 			</Container>
@@ -45,4 +45,4 @@ const Favorite = () => {
 	);
 };
 
-export default Favorite;
+export default Archive;

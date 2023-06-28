@@ -42,6 +42,10 @@ const bookmarkSchema = new mongoose.Schema(
 			type: Boolean,
 			default: false,
 		},
+		archived: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	{ timestamps: true }
 );
