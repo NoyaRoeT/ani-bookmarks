@@ -66,36 +66,38 @@ const BookmarkCard = ({ bookmark }) => {
 								color="primary"
 								fontSize="12px"
 								variant="subtitle2"
+								sx={{
+									display: "flex",
+									alignItems: "center",
+								}}
 							>
+								{bookmark.favorite && (
+									<FavoriteIcon
+										sx={{
+											fontSize: "12px",
+											color: "red",
+											mr: 0.5,
+										}}
+									/>
+								)}
 								{bookmark.type} ({bookmark.rating})
 							</Typography>
 						</Box>
 					</Box>
 					<Box sx={{ ml: 2, width: 1 }}>
-						<Box
-							sx={{
-								width: "100%",
-								display: "flex",
-								justifyContent: "space-between",
+						<Typography
+							component={Link}
+							to={`/bookmarks/info/${bookmark._id}`}
+							state={{ bookmark }}
+							style={{
+								textDecoration: "none",
+								color: "inherit",
 							}}
+							variant="h6"
 						>
-							<Typography
-								component={Link}
-								to={`/bookmarks/info/${bookmark._id}`}
-								state={{ bookmark }}
-								style={{
-									textDecoration: "none",
-									color: "inherit",
-								}}
-								variant="h6"
-							>
-								{bookmark.title}
-							</Typography>
+							{bookmark.title}
+						</Typography>
 
-							{bookmark.favorite && (
-								<FavoriteIcon sx={{ color: "red" }} />
-							)}
-						</Box>
 						<GenreTagStack
 							genres={bookmark.genres}
 							tags={bookmark.tags}
