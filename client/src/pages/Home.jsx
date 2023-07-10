@@ -1,8 +1,16 @@
 import React from "react";
-import { Page } from "../components";
+import { Container } from "@mui/material";
+import { BookmarkCarousel, Page } from "../components";
 
 const Home = () => {
-	return <Page>Home</Page>;
+	return (
+		<Page>
+			<Container maxWidth="lg" sx={{ mt: 3 }}>
+				Home
+				<BookmarkCarousel />
+			</Container>
+		</Page>
+	);
 };
 
 export default Home;
