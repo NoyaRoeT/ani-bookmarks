@@ -115,6 +115,18 @@ const BookmarkList = ({ bookmarks }) => {
 			{bookmarks.map((bookmark) => (
 				<BookmarkCard key={bookmark._id} bookmark={bookmark} />
 			))}
+			{bookmarks.length === 0 && (
+				<Box
+					display="flex"
+					justifyContent="center"
+					alignItems="center"
+					sx={{ height: 520 }}
+				>
+					<Typography variant="h6" textAlign="center">
+						No bookmarks were found...
+					</Typography>
+				</Box>
+			)}
 		</Container>
 	);
 };

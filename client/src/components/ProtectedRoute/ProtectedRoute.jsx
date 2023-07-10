@@ -6,7 +6,7 @@ import { AuthContext } from "../../context/AuthContext";
 const ProtectedRoute = ({ noAuth }) => {
 	const location = useLocation();
 	// from is used to handle the case where a user is redirected from a protected page before auth check is completed
-	const { from } = location.state || { from: { pathname: "/" } };
+	const { from } = location.state || { from: { pathname: "/home" } };
 	const { user } = useContext(AuthContext);
 
 	if (noAuth) {

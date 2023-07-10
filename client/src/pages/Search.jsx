@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IconButton, Toolbar, Box } from "@mui/material";
+import { IconButton, Toolbar, Box, Container, Typography } from "@mui/material";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import SortIcon from "@mui/icons-material/Sort";
 import {
@@ -15,6 +15,8 @@ const typeOptions = ["Anime", "Manga", "Manhwa", "Manhua", "Novel"];
 const sortOptions = ["Last Added", "Rating"];
 const Search = () => {
 	const [bookmarks, setBookmarks] = useState([]);
+	const [filteredBookmarks, setFilteredBookmarks] = useState([]);
+	const [showFilteredBookmarks, setShowFilteredBookmarks] = useState(false);
 
 	const [query, setQuery] = useState({});
 	const [openServerSearch, setOpenServerSearch] = useState(false);
@@ -35,6 +37,7 @@ const Search = () => {
 			const res = await searchBookmarks(query);
 			setBookmarks(res.data);
 			setQuery(query);
+			setShowFilteredBookmarks(false);
 		} catch (err) {
 			console.log(err.response.data);
 		}
@@ -59,13 +62,19 @@ const Search = () => {
 			const res = await searchBookmarks(query);
 			setBookmarks(res.data);
 			setQuery(query);
+			setShowFilteredBookmarks(false);
 		} catch (err) {
 			console.log(err.response.data);
 		}
 	}
 
 	function localSearchHandler(res) {
-		console.log(res);
+		setFilteredBookmarks(
+			bookmarks.filter((b) =>
+				b.title.toLowerCase().includes(res.toLowerCase())
+			)
+		);
+		setShowFilteredBookmarks(true);
 	}
 
 	useEffect(() => {
@@ -125,7 +134,11 @@ const Search = () => {
 				value={sortValue}
 				onChange={sortChangeHandler}
 			/>
-			<BookmarkList bookmarks={bookmarks} />
+			<BookmarkList
+				bookmarks={
+					showFilteredBookmarks ? filteredBookmarks : bookmarks
+				}
+			/>
 		</Page>
 	);
 };

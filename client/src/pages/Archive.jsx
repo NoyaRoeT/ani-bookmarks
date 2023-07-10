@@ -26,21 +26,7 @@ const Archive = () => {
 					</Typography>
 				</Box>
 			</Container>
-			{bookmarks.length > 0 && <BookmarkList bookmarks={bookmarks} />}
-			{bookmarks.length === 0 && (
-				<Container maxWidth="lg" sx={{ mt: 3 }}>
-					<Box
-						display="flex"
-						justifyContent="center"
-						alignItems="center"
-						sx={{ height: 520 }}
-					>
-						<Typography variant="h6" textAlign="center">
-							No bookmarks were found...
-						</Typography>
-					</Box>
-				</Container>
-			)}
+			<BookmarkList bookmarks={bookmarks} />
 		</Page>
 	);
 };

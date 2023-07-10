@@ -10,6 +10,7 @@ import SignUp from "./pages/SignUp";
 import Edit from "./pages/Edit";
 import Favorite from "./pages/Favorite";
 import Archive from "./pages/Archive";
+import Home from "./pages/Home";
 
 function App() {
 	return (
@@ -20,6 +21,7 @@ function App() {
 				<Route path="/" element={<ProtectedRoute />}>
 					<Route path="search" element={<Search />} />
 					<Route path="new" element={<Add />} />
+					<Route path="home" element={<Home />} />
 				</Route>
 				<Route path="/bookmarks/" element={<ProtectedRoute />}>
 					<Route path="info/:bookmarkId" element={<Info />} />
@@ -31,7 +33,7 @@ function App() {
 					<Route path="login" element={<Login />} />
 					<Route path="signup" element={<SignUp />} />
 				</Route>
-				<Route path="*" element={<Navigate to="/search" />} />
+				<Route path="*" element={<Navigate to="/home" />} />
 			</Routes>
 		</>
 	);

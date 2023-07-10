@@ -17,7 +17,7 @@ import {
 	Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import BookmarksIcon from "@mui/icons-material/Bookmarks";
+import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ArchiveIcon from "@mui/icons-material/Archive";
@@ -79,7 +79,7 @@ const DrawerContent = () => {
 			>
 				<ListItemButton component={Link} to="/home">
 					<ListIcon>
-						<BookmarksIcon />
+						<HomeIcon />
 					</ListIcon>
 					<ListItemText primary="Home" />
 				</ListItemButton>
