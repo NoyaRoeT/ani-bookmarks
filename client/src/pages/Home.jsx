@@ -14,8 +14,9 @@ const Home = () => {
 	return (
 		<Page>
 			<Container maxWidth="lg" sx={{ mt: 3 }}>
-				Home
-				<BookmarkCarousel items={items} />
+				<BookmarkCarousel items={items} label="Recently Added" />
+				<BookmarkCarousel items={items} label="Recommended" />
+				<BookmarkCarousel items={items} label="Favorites" />
 			</Container>
 		</Page>
 	);

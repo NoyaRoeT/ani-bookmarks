@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Card, CardActionArea, Typography, useTheme } from "@mui/material";
+import {
+	Box,
+	Card,
+	CardActionArea,
+	CardContent,
+	Typography,
+	useTheme,
+} from "@mui/material";
 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -43,7 +50,7 @@ const CarouselCard = ({ src, text }) => {
 	);
 };
 
-const BookmarkCarousel = ({ items }) => {
+const BookmarkCarousel = ({ items, label }) => {
 	const theme = useTheme();
 
 	const responsive = {
@@ -111,29 +118,36 @@ const BookmarkCarousel = ({ items }) => {
 			slidesToSlide: 2,
 		},
 	};
-	console.log(items);
+
 	return (
-		<>
-			{items && items.length > 0 && (
-				<Carousel responsive={responsive} partialVisible={true}>
-					{items.map((i) => (
-						<CarouselCard src={i.image} text={i.text} />
-					))}
-				</Carousel>
-			)}
-			{(!items || items.length <= 0) && (
-				<Box
-					sx={{
-						display: "flex",
-						justifyContent: "center",
-						alignItems: "center",
-						height: "220px",
-					}}
-				>
-					<Typography variant="h6">No data available...</Typography>
-				</Box>
-			)}
-		</>
+		<Card>
+			<CardContent>
+				<Typography gutterBottom variant="h5" component="div">
+					{label}
+				</Typography>
+				{items && items.length > 0 && (
+					<Carousel responsive={responsive} partialVisible={true}>
+						{items.map((i) => (
+							<CarouselCard src={i.image} text={i.text} />
+						))}
+					</Carousel>
+				)}
+				{(!items || items.length <= 0) && (
+					<Box
+						sx={{
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+							height: "220px",
+						}}
+					>
+						<Typography variant="h6">
+							No data available...
+						</Typography>
+					</Box>
+				)}
+			</CardContent>
+		</Card>
 	);
 };
 
