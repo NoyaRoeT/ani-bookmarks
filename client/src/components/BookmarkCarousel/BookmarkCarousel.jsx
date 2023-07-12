@@ -11,11 +11,11 @@ import {
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-const CarouselCard = ({ src, text }) => {
+const CarouselCard = ({ image, text }) => {
 	return (
 		<Card sx={{ width: "160px", height: "220px" }}>
 			<CardActionArea sx={{ position: "relative" }}>
-				<img width="160px" height="220px" src={src} />
+				<img width="160px" height="220px" src={image} />
 				<Box
 					sx={{
 						position: "absolute",
@@ -50,7 +50,7 @@ const CarouselCard = ({ src, text }) => {
 	);
 };
 
-const BookmarkCarousel = ({ items, label }) => {
+const BookmarkCarousel = ({ items, label, sx }) => {
 	const theme = useTheme();
 
 	const responsive = {
@@ -120,7 +120,7 @@ const BookmarkCarousel = ({ items, label }) => {
 	};
 
 	return (
-		<Card>
+		<Card sx={{ ...sx }}>
 			<CardContent>
 				<Typography gutterBottom variant="h5" component="div">
 					{label}
@@ -128,7 +128,11 @@ const BookmarkCarousel = ({ items, label }) => {
 				{items && items.length > 0 && (
 					<Carousel responsive={responsive} partialVisible={true}>
 						{items.map((i) => (
-							<CarouselCard src={i.image} text={i.text} />
+							<CarouselCard
+								key={i.text}
+								image={i.image}
+								text={i.text}
+							/>
 						))}
 					</Carousel>
 				)}

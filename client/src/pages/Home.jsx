@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "@mui/material";
-import { BookmarkCarousel, Page } from "../components";
+import { BookmarkCarousel, FeaturedCarousel, Page } from "../components";
 
 const items = [];
 for (let i = 0; i != 12; ++i) {
@@ -14,9 +14,17 @@ const Home = () => {
 	return (
 		<Page>
 			<Container maxWidth="lg" sx={{ mt: 3 }}>
-				<BookmarkCarousel items={items} label="Recently Added" />
-				<BookmarkCarousel items={items} label="Recommended" />
-				<BookmarkCarousel items={items} label="Favorites" />
+				<FeaturedCarousel sx={{ mb: 2 }} title="Trending Right Now" />
+				<BookmarkCarousel
+					sx={{ mb: 2 }}
+					items={items}
+					label="Recommended"
+				/>
+				<BookmarkCarousel
+					sx={{ mb: 2 }}
+					items={items}
+					label="Recently Added"
+				/>
 			</Container>
 		</Page>
 	);
