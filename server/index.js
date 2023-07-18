@@ -15,6 +15,7 @@ import MongoStore from "connect-mongo";
 import authRouter from "./routes/auth.js";
 import userRouter from "./routes/users.js";
 import bookmarkRouter from "./routes/bookmarks.js";
+import malRouter from "./routes/mal.js";
 
 import User from "./models/user.js";
 import GenreStore from "./utils/GenreStore.js";
@@ -80,6 +81,7 @@ async function startUp() {
 	app.use("/auth", authRouter());
 	app.use("/users", userRouter());
 	app.use("/bookmarks", bookmarkRouter());
+	app.use("/mal", malRouter());
 	app.use((err, req, res, next) => {
 		return res.status(err.status || 500).json({
 			error: { message: err.message, type: err.type },

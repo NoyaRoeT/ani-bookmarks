@@ -45,7 +45,9 @@ const CarouselCard = ({ image, label, description }) => {
 						{label}
 					</Typography>
 					<Typography variant="body2">
-						{description.substring(0, descCutOff) + "..."}
+						{description.length > descCutOff
+							? description.substring(0, descCutOff) + "..."
+							: description}
 					</Typography>
 				</CardContent>
 			</Box>
@@ -53,7 +55,7 @@ const CarouselCard = ({ image, label, description }) => {
 	);
 };
 
-const FeaturedCarousel = ({ sx, title }) => {
+const FeaturedCarousel = ({ sx, title, items }) => {
 	const responsive = {
 		a: {
 			breakpoint: { max: 4000, min: 0 },
@@ -83,13 +85,17 @@ const FeaturedCarousel = ({ sx, title }) => {
 					</Typography>
 				</CardContent>
 			</Box>
-			<Carousel responsive={responsive}>
-				<CarouselCard
-					label={"Jujutsu Kaisen Season 3"}
-					description="The replaced content is scaled to maintain its aspect ratio while fitting within the element's content box. The entire object is made to fill the box, while preserving its aspect ratio, so the object will be letterboxed if its aspect ratio does not match the aspect ratio of the box. so the object will be letterboxed if its aspect ratio does not match the aspect ratio of the box. so the object will be letterboxed if its aspect ratio does not match the aspect ratio of the box. so the object will be letterboxed if its aspect ratio does not match the aspect ratio of the box."
-					image="https://www.dexerto.com/cdn-cgi/image/width=3840,quality=75,format=auto/https://editors.dexerto.com/wp-content/uploads/2023/05/10/jujutsu-kaisen-season-2-key-visual.jpeg"
-				/>
-			</Carousel>
+			{items && (
+				<Carousel responsive={responsive}>
+					{items.map((i) => (
+						<CarouselCard
+							label={i.label}
+							description={i.description}
+							image={i.image}
+						/>
+					))}
+				</Carousel>
+			)}
 		</Box>
 	);
 };

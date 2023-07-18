@@ -7,14 +7,18 @@ import {
 	Typography,
 	useTheme,
 } from "@mui/material";
-
+import { Link } from "react-router-dom";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-const CarouselCard = ({ image, text }) => {
+const CarouselCard = ({ image, text, link }) => {
 	return (
 		<Card sx={{ width: "160px", height: "220px" }}>
-			<CardActionArea sx={{ position: "relative" }}>
+			<CardActionArea
+				component={Link}
+				to={link}
+				sx={{ position: "relative", height: 1 }}
+			>
 				<img width="160px" height="220px" src={image} />
 				<Box
 					sx={{
@@ -28,7 +32,7 @@ const CarouselCard = ({ image, text }) => {
 					}}
 					style={{
 						background:
-							"linear-gradient(transparent, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.5) 90%, black)",
+							"linear-gradient(transparent, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.7) 90%, black)",
 					}}
 				>
 					<Typography
@@ -132,6 +136,7 @@ const BookmarkCarousel = ({ items, label, sx }) => {
 								key={i.text}
 								image={i.image}
 								text={i.text}
+								link={i.link}
 							/>
 						))}
 					</Carousel>
