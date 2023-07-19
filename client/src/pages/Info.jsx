@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import {
 	Button,
@@ -27,8 +27,10 @@ import {
 	favoriteBookmark,
 	getBookmark,
 } from "../utils/bookmarks";
+import { AuthContext } from "../context/AuthContext";
 
 const Info = () => {
+	const authContext = useContext(AuthContext);
 	const navigate = useNavigate();
 	const { bookmarkId } = useParams();
 	const locationState = useLocation().state;
@@ -57,7 +59,10 @@ const Info = () => {
 					setBookmark(res.data);
 				} catch (err) {
 					setBookmark((prev) => ({ ...prev, requireFetch: false }));
-					console.log(err.response.data);
+					if (err.response && err.response.data.error.type == 0) {
+						authContext.setUser(null);
+					}
+					console.log(err.response.data.error.message);
 				}
 			})();
 		}
@@ -74,7 +79,10 @@ const Info = () => {
 			await deleteBookmark(bookmark._id);
 			navigate("/search");
 		} catch (err) {
-			console.log(err.response.data);
+			if (err.response && err.response.data.error.type == 0) {
+				authContext.setUser(null);
+			}
+			console.log(err.response.data.error.message);
 		} finally {
 			toggleOpenDeleteHandler();
 		}
@@ -85,7 +93,10 @@ const Info = () => {
 			const res = await favoriteBookmark(bookmark._id);
 			setBookmark((prev) => ({ ...prev, favorite: res.data }));
 		} catch (err) {
-			console.log(err.response.data);
+			if (err.response && err.response.data.error.type == 0) {
+				authContext.setUser(null);
+			}
+			console.log(err.response.data.error.message);
 		}
 	}
 
@@ -94,7 +105,10 @@ const Info = () => {
 			const res = await archiveBookmark(bookmark._id);
 			setBookmark((prev) => ({ ...prev, archived: res.data }));
 		} catch (err) {
-			console.log(err.response.data);
+			if (err.response && err.response.data.error.type == 0) {
+				authContext.setUser(null);
+			}
+			console.log(err.response.data.error.message);
 		}
 	}
 

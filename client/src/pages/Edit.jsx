@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { Container, Box, Typography } from "@mui/material";
 import { BookmarkForm, Page } from "../components";
 import { editBookmark, getBookmark } from "../utils/bookmarks";
+import { AuthContext } from "../context/AuthContext";
 
 const Edit = () => {
+	const authContext = useContext(AuthContext);
 	const navigate = useNavigate();
 	const { bookmarkId } = useParams();
 	const locationState = useLocation().state;
@@ -30,7 +32,10 @@ const Edit = () => {
 					setBookmark(res.data);
 				} catch (err) {
 					setBookmark((prev) => ({ ...prev, requireFetch: false }));
-					console.log(err.response.data);
+					if (err.response && err.response.data.error.type == 0) {
+						authContext.setUser(null);
+					}
+					console.log(err.response.data.error.message);
 				}
 			})();
 		}
@@ -42,7 +47,10 @@ const Edit = () => {
 			console.log(res);
 			navigate(`/bookmarks/info/${bookmark._id}`);
 		} catch (err) {
-			console.log(err.response.data);
+			if (err.response && err.response.data.error.type == 0) {
+				authContext.setUser(null);
+			}
+			console.log(err.response.data.error.message);
 		}
 	}
 

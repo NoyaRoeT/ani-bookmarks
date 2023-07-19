@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { IconButton, Toolbar, Box, Container, Typography } from "@mui/material";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import SortIcon from "@mui/icons-material/Sort";
@@ -10,10 +10,13 @@ import {
 	SortMenu,
 } from "../components";
 import { searchBookmarks } from "../utils/bookmarks";
+import { AuthContext } from "../context/AuthContext";
 
 const typeOptions = ["Anime", "Manga", "Manhwa", "Manhua", "Novel"];
 const sortOptions = ["Last Added", "Rating"];
 const Search = () => {
+	const authContext = useContext(AuthContext);
+
 	const [bookmarks, setBookmarks] = useState([]);
 	const [filteredBookmarks, setFilteredBookmarks] = useState([]);
 	const [showFilteredBookmarks, setShowFilteredBookmarks] = useState(false);
@@ -39,7 +42,10 @@ const Search = () => {
 			setQuery(query);
 			setShowFilteredBookmarks(false);
 		} catch (err) {
-			console.log(err.response.data);
+			if (err.response && err.response.data.error.type == 0) {
+				authContext.setUser(null);
+			}
+			console.log(err.response.data.error.message);
 		}
 	}
 
@@ -64,7 +70,10 @@ const Search = () => {
 			setQuery(query);
 			setShowFilteredBookmarks(false);
 		} catch (err) {
-			console.log(err.response.data);
+			if (err.response && err.response.data.error.type == 0) {
+				authContext.setUser(null);
+			}
+			console.log(err.response.data.error.message);
 		}
 	}
 
@@ -79,15 +88,22 @@ const Search = () => {
 
 	useEffect(() => {
 		(async () => {
-			const res = await searchBookmarks({
-				title: "",
-				type: "",
-				genres: [],
-				tags: [],
-				sortBy: sortValue,
-				archived: false,
-			});
-			setBookmarks(res.data);
+			try {
+				const res = await searchBookmarks({
+					title: "",
+					type: "",
+					genres: [],
+					tags: [],
+					sortBy: sortValue,
+					archived: false,
+				});
+				setBookmarks(res.data);
+			} catch (err) {
+				if (err.response && err.response.data.error.type == 0) {
+					authContext.setUser(null);
+				}
+				console.log(err.response.data.error.message);
+			}
 		})();
 	}, []);
 

@@ -47,7 +47,7 @@ const Home = () => {
 				}));
 				setMalPopularComics(malPopularComicsRes);
 			} catch (err) {
-				console.log(err);
+				console.log(err.response.data.message);
 			}
 		})();
 	}, []);
