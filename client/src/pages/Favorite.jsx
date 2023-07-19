@@ -6,11 +6,13 @@ import { AuthContext } from "../context/AuthContext";
 
 const Favorite = () => {
 	const authContext = useContext(AuthContext);
+	const [isFetching, setIsFetching] = useState(false);
 	const [bookmarks, setBookmarks] = useState([]);
 
 	useEffect(() => {
 		(async () => {
 			try {
+				setIsFetching(true);
 				const res = await getFavoriteBookmarks();
 				setBookmarks(res.data);
 			} catch (err) {
@@ -18,6 +20,8 @@ const Favorite = () => {
 					authContext.setUser(null);
 				}
 				console.log(err.response.data.error.message);
+			} finally {
+				setIsFetching(false);
 			}
 		})();
 	}, []);
@@ -31,7 +35,7 @@ const Favorite = () => {
 					</Typography>
 				</Box>
 			</Container>
-			<BookmarkList bookmarks={bookmarks} />
+			<BookmarkList bookmarks={bookmarks} isFetching={isFetching} />
 		</Page>
 	);
 };

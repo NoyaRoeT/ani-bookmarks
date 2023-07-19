@@ -6,7 +6,7 @@ import {
 	Typography,
 	Rating,
 	CardContent,
-	IconButton,
+	CircularProgress,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import React from "react";
@@ -109,13 +109,14 @@ const BookmarkCard = ({ bookmark }) => {
 	);
 };
 
-const BookmarkList = ({ bookmarks }) => {
+const BookmarkList = ({ bookmarks, isFetching }) => {
 	return (
 		<Container sx={{ mt: 3 }} maxWidth="lg">
-			{bookmarks.map((bookmark) => (
-				<BookmarkCard key={bookmark._id} bookmark={bookmark} />
-			))}
-			{bookmarks.length === 0 && (
+			{!isFetching &&
+				bookmarks.map((bookmark) => (
+					<BookmarkCard key={bookmark._id} bookmark={bookmark} />
+				))}
+			{bookmarks.length === 0 && !isFetching && (
 				<Box
 					display="flex"
 					justifyContent="center"
@@ -125,6 +126,19 @@ const BookmarkList = ({ bookmarks }) => {
 					<Typography variant="h6" textAlign="center">
 						No bookmarks were found...
 					</Typography>
+				</Box>
+			)}
+			{isFetching && (
+				<Box
+					sx={{
+						ml: { xs: 0, sm: "120px" },
+						position: "absolute",
+						top: "50%",
+						left: "50%",
+						transform: "translate(-50%, -50%)",
+					}}
+				>
+					<CircularProgress size={128} />
 				</Box>
 			)}
 		</Container>

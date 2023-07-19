@@ -5,11 +5,13 @@ import { getArchivedBookmarks } from "../utils/bookmarks";
 import { AuthContext } from "../context/AuthContext";
 
 const Archive = () => {
+	const [isFetching, setIsFetching] = useState(false);
 	const [bookmarks, setBookmarks] = useState([]);
 	const authContext = useContext(AuthContext);
 	useEffect(() => {
 		(async () => {
 			try {
+				setIsFetching(true);
 				const res = await getArchivedBookmarks();
 				setBookmarks(res.data);
 			} catch (err) {
@@ -17,6 +19,8 @@ const Archive = () => {
 					authContext.setUser(null);
 				}
 				console.log(err.response.data.error.message);
+			} finally {
+				setIsFetching(false);
 			}
 		})();
 	}, []);
@@ -30,7 +34,7 @@ const Archive = () => {
 					</Typography>
 				</Box>
 			</Container>
-			<BookmarkList bookmarks={bookmarks} />
+			<BookmarkList bookmarks={bookmarks} isFetching={isFetching} />
 		</Page>
 	);
 };

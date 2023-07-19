@@ -17,6 +17,8 @@ const sortOptions = ["Last Added", "Rating"];
 const Search = () => {
 	const authContext = useContext(AuthContext);
 
+	const [isFetching, setIsFetching] = useState(false);
+
 	const [bookmarks, setBookmarks] = useState([]);
 	const [filteredBookmarks, setFilteredBookmarks] = useState([]);
 	const [showFilteredBookmarks, setShowFilteredBookmarks] = useState(false);
@@ -37,6 +39,7 @@ const Search = () => {
 
 		query.sortBy = value;
 		try {
+			setIsFetching(true);
 			const res = await searchBookmarks(query);
 			setBookmarks(res.data);
 			setQuery(query);
@@ -46,6 +49,8 @@ const Search = () => {
 				authContext.setUser(null);
 			}
 			console.log(err.response.data.error.message);
+		} finally {
+			setIsFetching(false);
 		}
 	}
 
@@ -65,6 +70,7 @@ const Search = () => {
 		query.sortBy = sortValue;
 		query.archived = false;
 		try {
+			setIsFetching(true);
 			const res = await searchBookmarks(query);
 			setBookmarks(res.data);
 			setQuery(query);
@@ -74,6 +80,8 @@ const Search = () => {
 				authContext.setUser(null);
 			}
 			console.log(err.response.data.error.message);
+		} finally {
+			setIsFetching(false);
 		}
 	}
 
@@ -89,6 +97,7 @@ const Search = () => {
 	useEffect(() => {
 		(async () => {
 			try {
+				setIsFetching(true);
 				const res = await searchBookmarks({
 					title: "",
 					type: "",
@@ -103,6 +112,8 @@ const Search = () => {
 					authContext.setUser(null);
 				}
 				console.log(err.response.data.error.message);
+			} finally {
+				setIsFetching(false);
 			}
 		})();
 	}, []);
@@ -151,6 +162,7 @@ const Search = () => {
 				onChange={sortChangeHandler}
 			/>
 			<BookmarkList
+				isFetching={isFetching}
 				bookmarks={
 					showFilteredBookmarks ? filteredBookmarks : bookmarks
 				}
