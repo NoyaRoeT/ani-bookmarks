@@ -12,6 +12,7 @@ import {
 	Box,
 	Rating,
 	IconButton,
+	Skeleton,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -28,6 +29,57 @@ import {
 	getBookmark,
 } from "../utils/bookmarks";
 import { AuthContext } from "../context/AuthContext";
+
+const LoadingSkeleton = () => {
+	return (
+		<Card
+			sx={{
+				boxShadow: "rgba(90, 114, 123, 0.11) 0px 7px 30px 0px",
+			}}
+		>
+			<CardContent>
+				<Grid container maxWidth="lg">
+					<Grid
+						sx={{ pr: { md: 5 } }}
+						item
+						sm={12}
+						md={5}
+						display="flex"
+						justifyContent="center"
+					>
+						<Skeleton
+							variant="rounded"
+							width={"100%"}
+							height={360}
+						/>
+					</Grid>
+
+					<Grid item sm={12} md={7}>
+						<Typography
+							sx={{ mt: 2 }}
+							variant="h2"
+							fontSize={"2rem"}
+						>
+							<Skeleton />
+						</Typography>
+						<Box sx={{ mt: 2 }} display="flex">
+							<Skeleton
+								variant="text"
+								fontSize="1rem"
+								width={"100%"}
+							/>
+						</Box>
+						<Skeleton
+							sx={{ mt: 2 }}
+							variant="rectangular"
+							height={240}
+						/>
+					</Grid>
+				</Grid>
+			</CardContent>
+		</Card>
+	);
+};
 
 const Info = () => {
 	const authContext = useContext(AuthContext);
@@ -48,7 +100,7 @@ const Info = () => {
 		locationState ? locationState.bookmark : emptyBookmark
 	);
 
-	const bookmarkExists = bookmark._id || bookmark.requireFetch; //requireFetch checks if bookmark is being fetched, ._id if fetch is done
+	const bookmarkExists = bookmark._id || bookmark.requireFetch; // True if bookmark has an id or if haven't tried to fetch
 
 	// If visit via url
 	useEffect(() => {
@@ -217,7 +269,7 @@ const Info = () => {
 				)}
 
 				<Container maxWidth="lg" sx={{ mt: 3 }}>
-					{bookmarkExists && (
+					{bookmarkExists && !bookmark.requireFetch && (
 						<Card
 							sx={{
 								boxShadow:
@@ -253,7 +305,7 @@ const Info = () => {
 										<Typography
 											sx={{ mt: 2 }}
 											variant="h2"
-											fontSize={30}
+											fontSize={"2rem"}
 										>
 											{bookmark.title}
 										</Typography>
@@ -284,6 +336,7 @@ const Info = () => {
 							</CardContent>
 						</Card>
 					)}
+					{bookmark.requireFetch && <LoadingSkeleton />}
 					{!bookmarkExists && (
 						<Box
 							display="flex"
