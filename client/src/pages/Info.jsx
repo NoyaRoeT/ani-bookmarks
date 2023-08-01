@@ -296,7 +296,7 @@ const Info = () => {
 											image={
 												bookmark.imagePath
 													? bookmark.imagePath
-													: "https://images.alphacoders.com/129/1298385.jpg"
+													: "https://deconova.eu/wp-content/uploads/2016/02/default-placeholder.png"
 											}
 										/>
 									</Grid>

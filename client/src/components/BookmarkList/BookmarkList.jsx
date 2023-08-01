@@ -39,7 +39,7 @@ const BookmarkCard = ({ bookmark }) => {
 								image={
 									bookmark.imagePath
 										? bookmark.imagePath
-										: "https://cdn.novelupdates.com/imgmid/series_10553.jpg"
+										: "https://deconova.eu/wp-content/uploads/2016/02/default-placeholder.png"
 								}
 							/>
 						</Link>

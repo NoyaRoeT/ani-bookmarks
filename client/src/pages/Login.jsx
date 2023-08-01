@@ -16,7 +16,7 @@ import { AuthContext } from "../context/AuthContext";
 export default function Login() {
 	const authContext = useContext(AuthContext);
 	const navigate = useNavigate();
-	const { from } = useLocation().state || { from: { pathname: "/" } };
+	const { from } = useLocation().state || { from: { pathname: "/home" } };
 
 	// Feedback state
 	const [disableLogin, setDisableLogin] = useState(false);

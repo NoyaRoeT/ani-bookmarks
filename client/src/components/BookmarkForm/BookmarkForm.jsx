@@ -314,7 +314,7 @@ const BookmarkForm = ({ onSubmit, buttonLabel, bookmark, label }) => {
 							image={
 								previewUrl
 									? previewUrl
-									: "https://pbs.twimg.com/media/FlXJnJjXkAEAJFs.jpg:large"
+									: "https://deconova.eu/wp-content/uploads/2016/02/default-placeholder.png"
 							}
 						/>
 					</Box>

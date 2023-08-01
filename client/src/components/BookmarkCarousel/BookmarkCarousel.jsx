@@ -19,7 +19,15 @@ const CarouselCard = ({ image, text, link }) => {
 				to={link}
 				sx={{ position: "relative", height: 1 }}
 			>
-				<img width="160px" height="220px" src={image} />
+				<img
+					width="160px"
+					height="220px"
+					src={
+						image
+							? image
+							: "https://deconova.eu/wp-content/uploads/2016/02/default-placeholder.png"
+					}
+				/>
 				<Box
 					sx={{
 						position: "absolute",
