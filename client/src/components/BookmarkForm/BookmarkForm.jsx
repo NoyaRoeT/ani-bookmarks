@@ -67,7 +67,13 @@ const errorReducer = (state, action) => {
 	}
 };
 
-const BookmarkForm = ({ onSubmit, buttonLabel, bookmark, label }) => {
+const BookmarkForm = ({
+	onSubmit,
+	buttonLabel,
+	bookmark,
+	label,
+	onServerError,
+}) => {
 	// Field state
 	const [rating, setRating] = useState(bookmark ? bookmark.rating : 0);
 	function ratingHandler(event) {
@@ -203,7 +209,7 @@ const BookmarkForm = ({ onSubmit, buttonLabel, bookmark, label }) => {
 			const res = await getGenres();
 			return res.data;
 		} catch (err) {
-			console.log(err.response.data);
+			onServerError("Something went wrong!");
 			return [];
 		}
 	}
@@ -213,7 +219,7 @@ const BookmarkForm = ({ onSubmit, buttonLabel, bookmark, label }) => {
 			const res = await getTags();
 			return res.data;
 		} catch (err) {
-			console.log(err.response.data);
+			onServerError("Something went wrong!");
 			return [];
 		}
 	}

@@ -20,6 +20,9 @@ const Home = () => {
 	const [topSeasonal, setTopSeasonal] = useState([]);
 	const [malPopularComics, setMalPopularComics] = useState([]);
 
+	const [error, setError] = useState("");
+	const open = error.length !== 0;
+
 	useEffect(() => {
 		(async () => {
 			try {
@@ -47,12 +50,18 @@ const Home = () => {
 				}));
 				setMalPopularComics(malPopularComicsRes);
 			} catch (err) {
-				console.log(err.response.data.message);
+				setError("Something went wrong!");
 			}
 		})();
 	}, []);
 	return (
 		<Page>
+			<ErrorFlash
+				sx={{ width: { sm: "720px" }, ml: { sm: "120px" } }}
+				open={open}
+				onClose={() => setError("")}
+				text={error}
+			/>
 			<Container maxWidth="lg" sx={{ mt: 3 }}>
 				<BookmarkCarousel
 					sx={{ mb: 2 }}

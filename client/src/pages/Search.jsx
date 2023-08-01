@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { IconButton, Toolbar, Box, Container, Typography } from "@mui/material";
+import { IconButton, Toolbar, Box } from "@mui/material";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import SortIcon from "@mui/icons-material/Sort";
 import {
@@ -8,6 +8,7 @@ import {
 	SearchBar,
 	ServerSearch,
 	SortMenu,
+	ErrorFlash,
 } from "../components";
 import { searchBookmarks } from "../utils/bookmarks";
 import { AuthContext } from "../context/AuthContext";
@@ -31,6 +32,9 @@ const Search = () => {
 
 	const [sortValue, setSortValue] = useState(sortOptions[0]);
 
+	const [error, setError] = useState("");
+	const open = error.length !== 0;
+
 	async function sortChangeHandler(event, value) {
 		if (value === null) {
 			return;
@@ -48,7 +52,7 @@ const Search = () => {
 			if (err.response && err.response.data.error.type == 0) {
 				authContext.setUser(null);
 			}
-			console.log(err.response.data.error.message);
+			setError("Something went wrong!");
 		} finally {
 			setIsFetching(false);
 		}
@@ -79,7 +83,7 @@ const Search = () => {
 			if (err.response && err.response.data.error.type == 0) {
 				authContext.setUser(null);
 			}
-			console.log(err.response.data.error.message);
+			setError("Something went wrong!");
 		} finally {
 			setIsFetching(false);
 		}
@@ -111,7 +115,7 @@ const Search = () => {
 				if (err.response && err.response.data.error.type == 0) {
 					authContext.setUser(null);
 				}
-				console.log(err.response.data.error.message);
+				setError("Something went wrong!");
 			} finally {
 				setIsFetching(false);
 			}
@@ -120,6 +124,12 @@ const Search = () => {
 
 	return (
 		<Page>
+			<ErrorFlash
+				sx={{ width: { sm: "720px" }, ml: { sm: "120px" } }}
+				open={open}
+				onClose={() => setError("")}
+				text={error}
+			/>
 			<Toolbar
 				sx={{
 					mt: 1,

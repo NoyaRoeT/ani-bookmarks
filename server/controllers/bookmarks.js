@@ -3,6 +3,7 @@ import ExpressError, { errorTypes } from "../utils/ExpressError.js";
 import GenreStore from "../utils/GenreStore.js";
 import TagStore from "../utils/TagStore.js";
 import { cloudinaryDestroy } from "../utils/imageUpload/cloudinary.js";
+import mongoose from "mongoose";
 
 export const getBookmark = async (req, res, next) => {
 	const reqBookmarkId = req.params.bookmarkId;
@@ -14,6 +15,14 @@ export const getBookmark = async (req, res, next) => {
 	}
 
 	try {
+		if (!mongoose.isValidObjectId(reqBookmarkId)) {
+			return next(
+				new ExpressError("This bookmark does not exist.", 1, 404)
+			);
+		}
+
+		console.log(mongoose.isValidObjectId(reqBookmarkId));
+
 		const bookmark = await Bookmark.findById(reqBookmarkId)
 			.populate("genres", "name -_id")
 			.populate("tags", "name -_id");
@@ -75,9 +84,9 @@ export const updateBookmark = async (req, res, next) => {
 	try {
 		const bookmark = await Bookmark.findById(reqBookmarkId);
 		if (!bookmark) {
-			return res
-				.status(404)
-				.json({ message: "This bookmark does not exist" });
+			return next(
+				new ExpressError("This bookmark does not exist.", 1, 404)
+			);
 		}
 
 		const { title, genres, type, tags = [], rating } = req.body;
@@ -155,6 +164,12 @@ export const isBookmarkOwner = async (req, res, next) => {
 	}
 
 	try {
+		if (!mongoose.isValidObjectId(req.params.bookmarkId)) {
+			return next(
+				new ExpressError("This bookmark does not exist.", 1, 404)
+			);
+		}
+
 		const bookmark = await Bookmark.findById(req.params.bookmarkId);
 		if (!bookmark) {
 			return res

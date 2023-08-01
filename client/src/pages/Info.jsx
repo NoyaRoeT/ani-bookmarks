@@ -21,7 +21,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import UnarchiveIcon from "@mui/icons-material/Unarchive";
 
-import { GenreTagStack, Page, DeleteDialog } from "../components";
+import { GenreTagStack, Page, DeleteDialog, ErrorFlash } from "../components";
 import {
 	archiveBookmark,
 	deleteBookmark,
@@ -102,6 +102,9 @@ const Info = () => {
 
 	const bookmarkExists = bookmark._id || bookmark.requireFetch; // True if bookmark has an id or if haven't tried to fetch
 
+	const [error, setError] = useState("");
+	const open = error.length !== 0;
+
 	// If visit via url
 	useEffect(() => {
 		if (bookmark.requireFetch) {
@@ -114,7 +117,10 @@ const Info = () => {
 					if (err.response && err.response.data.error.type == 0) {
 						authContext.setUser(null);
 					}
-					console.log(err.response.data.error.message);
+
+					if (err.response && err.response.status !== 404) {
+						setError("Something went wrong!");
+					}
 				}
 			})();
 		}
@@ -134,7 +140,7 @@ const Info = () => {
 			if (err.response && err.response.data.error.type == 0) {
 				authContext.setUser(null);
 			}
-			console.log(err.response.data.error.message);
+			setError("Something went wrong!");
 		} finally {
 			toggleOpenDeleteHandler();
 		}
@@ -148,7 +154,7 @@ const Info = () => {
 			if (err.response && err.response.data.error.type == 0) {
 				authContext.setUser(null);
 			}
-			console.log(err.response.data.error.message);
+			setError("Something went wrong!");
 		}
 	}
 
@@ -160,13 +166,19 @@ const Info = () => {
 			if (err.response && err.response.data.error.type == 0) {
 				authContext.setUser(null);
 			}
-			console.log(err.response.data.error.message);
+			setError("Something went wrong!");
 		}
 	}
 
 	return (
 		<>
 			<Page>
+				<ErrorFlash
+					sx={{ width: { sm: "720px" }, ml: { sm: "120px" } }}
+					open={open}
+					onClose={() => setError("")}
+					text={error}
+				/>
 				{bookmarkExists && (
 					<Toolbar
 						sx={{

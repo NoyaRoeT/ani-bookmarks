@@ -1,5 +1,6 @@
-import { CssBaseline } from "@mui/material";
-import { Route, Routes, Navigate } from "react-router-dom";
+import React, { useState } from "react";
+import { CssBaseline, Alert, Snackbar } from "@mui/material";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 
 import { CheckAuth, ProtectedRoute } from "./components";
 import Search from "./pages/Search";
@@ -34,6 +35,7 @@ function App() {
 					<Route path="signup" element={<SignUp />} />
 				</Route>
 				<Route path="*" element={<Navigate to="/home" />} />
+				<Route exact path="" element={<Navigate to="/home" />} />
 			</Routes>
 		</>
 	);

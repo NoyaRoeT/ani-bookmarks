@@ -11,7 +11,6 @@ const CheckAuth = () => {
 				const res = await checkAuth();
 				authContext.setUser(res.data);
 			} catch (err) {
-				console.log(err.response.data);
 				authContext.setUser(null);
 			}
 		}

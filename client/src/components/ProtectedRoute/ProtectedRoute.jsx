@@ -10,7 +10,11 @@ const ProtectedRoute = ({ noAuth }) => {
 	const { user } = useContext(AuthContext);
 
 	if (noAuth) {
-		return !user ? <Outlet /> : <Navigate to={from.pathname} />;
+		return !user ? (
+			<Outlet />
+		) : (
+			<Navigate to={from.pathname === "/" ? "/home" : from.pathname} />
+		);
 	}
 
 	return user ? (
