@@ -9,28 +9,38 @@ export const getBookmark = async (req, res, next) => {
 	const reqBookmarkId = req.params.bookmarkId;
 
 	if (!reqBookmarkId) {
-		return res
-			.status(400)
-			.json({ message: "Missing bookmarkId parameter" });
+		return next(
+			new ExpressError(
+				"Missing bookmarkId parameter",
+				errorTypes.GENERAL,
+				400
+			)
+		);
 	}
 
 	try {
 		if (!mongoose.isValidObjectId(reqBookmarkId)) {
 			return next(
-				new ExpressError("This bookmark does not exist.", 1, 404)
+				new ExpressError(
+					"This bookmark does not exist.",
+					errorTypes.GENERAL,
+					404
+				)
 			);
 		}
-
-		console.log(mongoose.isValidObjectId(reqBookmarkId));
 
 		const bookmark = await Bookmark.findById(reqBookmarkId)
 			.populate("genres", "name -_id")
 			.populate("tags", "name -_id");
 
 		if (!bookmark) {
-			return res
-				.status(404)
-				.json({ message: "This bookmark does not exist." });
+			return next(
+				new ExpressError(
+					"This bookmark does not exist.",
+					errorTypes.GENERAL,
+					404
+				)
+			);
 		}
 		return res.status(200).json({
 			data: {
@@ -77,15 +87,23 @@ export const createBookmark = async (req, res, next) => {
 export const updateBookmark = async (req, res, next) => {
 	const reqBookmarkId = req.params.bookmarkId;
 	if (!reqBookmarkId) {
-		return res
-			.status(400)
-			.json({ message: "Missing bookmarkId parameter" });
+		return next(
+			new ExpressError(
+				"Missing bookmarkId parameter",
+				errorTypes.GENERAL,
+				400
+			)
+		);
 	}
 	try {
 		const bookmark = await Bookmark.findById(reqBookmarkId);
 		if (!bookmark) {
 			return next(
-				new ExpressError("This bookmark does not exist.", 1, 404)
+				new ExpressError(
+					"This bookmark does not exist.",
+					errorTypes.GENERAL,
+					404
+				)
 			);
 		}
 
@@ -130,17 +148,25 @@ export const deleteBookmark = async (req, res, next) => {
 	const reqBookmarkId = req.params.bookmarkId;
 
 	if (!reqBookmarkId) {
-		return res
-			.status(400)
-			.json({ message: "Missing bookmarkId parameter" });
+		return next(
+			new ExpressError(
+				"Missing bookmarkId parameter",
+				errorTypes.GENERAL,
+				400
+			)
+		);
 	}
 
 	try {
 		const bookmark = await Bookmark.findById(reqBookmarkId);
 		if (!bookmark) {
-			return res
-				.status(404)
-				.json({ message: "This bookmark does not exist" });
+			return next(
+				new ExpressError(
+					"This bookmark does not exist",
+					errorTypes.GENERAL,
+					404
+				)
+			);
 		}
 		await bookmark.deleteOne();
 
@@ -158,9 +184,13 @@ export const deleteBookmark = async (req, res, next) => {
 
 export const isBookmarkOwner = async (req, res, next) => {
 	if (!req.params.bookmarkId) {
-		return res
-			.status(400)
-			.json({ message: "Missing bookmarkId parameter" });
+		return next(
+			new ExpressError(
+				"Missing bookmarkId parameter",
+				errorTypes.GENERAL,
+				400
+			)
+		);
 	}
 
 	try {
@@ -172,14 +202,18 @@ export const isBookmarkOwner = async (req, res, next) => {
 
 		const bookmark = await Bookmark.findById(req.params.bookmarkId);
 		if (!bookmark) {
-			return res
-				.status(404)
-				.json({ message: "This bookmark does not exist" });
+			return next(
+				new ExpressError("This bookmark does not exist.", 1, 404)
+			);
 		}
 		if (!req.user._id.equals(bookmark.userId)) {
-			return res.status(401).json({
-				message: "Not authorized to access this bookmark",
-			});
+			return next(
+				new ExpressError(
+					"Not authorized to access this bookmark.",
+					1,
+					401
+				)
+			);
 		}
 		next();
 	} catch (err) {
@@ -259,17 +293,21 @@ export const favoriteBookmark = async (req, res, next) => {
 	const reqBookmarkId = req.params.bookmarkId;
 
 	if (!reqBookmarkId) {
-		return res
-			.status(400)
-			.json({ message: "Missing bookmarkId parameter" });
+		return next(
+			new ExpressError(
+				"Missing bookmarkId parameter",
+				errorTypes.GENERAL,
+				400
+			)
+		);
 	}
 
 	try {
 		const bookmark = await Bookmark.findById(reqBookmarkId);
 		if (!bookmark) {
-			return res
-				.status(404)
-				.json({ message: "This bookmark does not exist" });
+			return next(
+				new ExpressError("This bookmark does not exist.", 1, 404)
+			);
 		}
 
 		bookmark.favorite = !bookmark.favorite;
@@ -289,17 +327,21 @@ export const archiveBookmark = async (req, res, next) => {
 	const reqBookmarkId = req.params.bookmarkId;
 
 	if (!reqBookmarkId) {
-		return res
-			.status(400)
-			.json({ message: "Missing bookmarkId parameter" });
+		return next(
+			new ExpressError(
+				"Missing bookmarkId parameter",
+				errorTypes.GENERAL,
+				400
+			)
+		);
 	}
 
 	try {
 		const bookmark = await Bookmark.findById(reqBookmarkId);
 		if (!bookmark) {
-			return res
-				.status(404)
-				.json({ message: "This bookmark does not exist" });
+			return next(
+				new ExpressError("This bookmark does not exist.", 1, 404)
+			);
 		}
 
 		bookmark.archived = !bookmark.archived;
