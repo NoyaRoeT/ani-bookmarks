@@ -32,7 +32,9 @@ const SignUp = () => {
 			await signup(dataObj);
 			navigate("/login");
 		} catch (err) {
-			setError("Something went wrong!");
+			if (err.response && err.response.status === 500) {
+				setError("Something went wrong!");
+			}
 		} finally {
 			setDisableSignUp(false);
 		}

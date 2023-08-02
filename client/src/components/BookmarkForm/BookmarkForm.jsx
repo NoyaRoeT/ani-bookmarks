@@ -209,7 +209,9 @@ const BookmarkForm = ({
 			const res = await getGenres();
 			return res.data;
 		} catch (err) {
-			onServerError("Something went wrong!");
+			if (err.response && err.response.status === 500) {
+				setError("Something went wrong!");
+			}
 			return [];
 		}
 	}
@@ -219,7 +221,9 @@ const BookmarkForm = ({
 			const res = await getTags();
 			return res.data;
 		} catch (err) {
-			onServerError("Something went wrong!");
+			if (err.response && err.response.status === 500) {
+				setError("Something went wrong!");
+			}
 			return [];
 		}
 	}

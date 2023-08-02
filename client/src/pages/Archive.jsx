@@ -22,7 +22,9 @@ const Archive = () => {
 				if (err.response && err.response.data.error.type == 0) {
 					authContext.setUser(null);
 				}
-				setError("Something went wrong!");
+				if (err.response && err.response.status === 500) {
+					setError("Something went wrong!");
+				}
 			} finally {
 				setIsFetching(false);
 			}

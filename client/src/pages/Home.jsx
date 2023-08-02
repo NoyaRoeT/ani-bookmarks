@@ -50,7 +50,9 @@ const Home = () => {
 				}));
 				setMalPopularComics(malPopularComicsRes);
 			} catch (err) {
-				setError("Something went wrong!");
+				if (err.response && err.response.status === 500) {
+					setError("Something went wrong!");
+				}
 			}
 		})();
 	}, []);

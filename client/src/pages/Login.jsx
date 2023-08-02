@@ -37,7 +37,10 @@ export default function Login() {
 			navigate(from.pathname);
 		} catch (err) {
 			authContext.setUser(null);
-			setError("Something went wrong!");
+
+			if (err.response && err.response.status === 500) {
+				setError("Something went wrong!");
+			}
 		} finally {
 			setDisableLogin(false);
 		}
