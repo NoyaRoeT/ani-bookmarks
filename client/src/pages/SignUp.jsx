@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,14 +11,50 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { Logo, ErrorFlash } from "../components";
 import { signup } from "../utils/auth";
+import { validateSignUp } from "../utils/helper";
+
+const errorReducer = (state, action) => {
+	if (action.type === "RESET") {
+		return {
+			email: "",
+			username: "",
+			password: "",
+		};
+	} else if (action.type === "EMAIL") {
+		return {
+			email: action.value,
+			username: "",
+			password: "",
+		};
+	} else if (action.type === "USERNAME") {
+		return {
+			email: "",
+			username: action.value,
+			password: "",
+		};
+	} else if (action.type === "PASSWORD") {
+		return {
+			email: "",
+			username: "",
+			password: action.value,
+		};
+	}
+};
 
 const SignUp = () => {
 	const navigate = useNavigate();
 
 	// Feedback state
 	const [disableSignUp, setDisableSignUp] = useState(false);
-	const [error, setError] = useState("");
-	const open = error.length !== 0;
+	const [flashError, setFlashError] = useState("");
+	const openFlash = flashError.length !== 0;
+
+	// Error state
+	const [error, dispatchError] = useReducer(errorReducer, {
+		email: "",
+		username: "",
+		password: "",
+	});
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -26,14 +62,22 @@ const SignUp = () => {
 		const dataObj = {};
 		data.forEach((value, key) => (dataObj[key] = value));
 
+		const { field, message } = validateSignUp(dataObj);
+
+		if (field) {
+			dispatchError({ type: field, value: message });
+			return;
+		}
+		dispatchError({ type: "RESET" });
+
 		try {
-			setError("");
+			setFlashError("");
 			setDisableSignUp(true);
 			await signup(dataObj);
 			navigate("/login");
 		} catch (err) {
 			if (err.response && err.response.status === 500) {
-				setError("Something went wrong!");
+				setFlashError("Something went wrong!");
 			}
 		} finally {
 			setDisableSignUp(false);
@@ -44,9 +88,9 @@ const SignUp = () => {
 		<>
 			<ErrorFlash
 				sx={{ width: { sm: "720px" } }}
-				open={open}
-				onClose={() => setError("")}
-				text={error}
+				open={openFlash}
+				onClose={() => setFlashError("")}
+				text={flashError}
 			/>
 			<Grid container component="main" sx={{ height: "100vh" }}>
 				<Logo
@@ -109,6 +153,8 @@ const SignUp = () => {
 								name="email"
 								autoComplete="email"
 								autoFocus
+								error={error.email.length > 0}
+								helperText={error.email}
 							/>
 							<TextField
 								margin="normal"
@@ -119,6 +165,8 @@ const SignUp = () => {
 								name="username"
 								autoComplete="username"
 								autoFocus
+								error={error.username.length > 0}
+								helperText={error.username}
 							/>
 							<TextField
 								margin="normal"
@@ -129,6 +177,8 @@ const SignUp = () => {
 								type="password"
 								id="password"
 								autoComplete="current-password"
+								error={error.password.length > 0}
+								helperText={error.password}
 							/>
 
 							<Button

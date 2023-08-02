@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
+import { Alert } from "@mui/material";
 import { ErrorFlash, Logo } from "../components";
 import { login } from "../utils/auth";
 import { AuthContext } from "../context/AuthContext";
@@ -23,6 +24,8 @@ export default function Login() {
 	const [error, setError] = useState("");
 	const open = error.length !== 0;
 
+	const [authError, setAuthError] = useState(false);
+
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
@@ -31,6 +34,7 @@ export default function Login() {
 
 		try {
 			setError("");
+			setAuthError(false);
 			setDisableLogin(true);
 			const res = await login(dataObj);
 			authContext.setUser(res.data);
@@ -40,6 +44,8 @@ export default function Login() {
 
 			if (err.response && err.response.status === 500) {
 				setError("Something went wrong!");
+			} else if (err.response && err.response.status === 401) {
+				setAuthError(true);
 			}
 		} finally {
 			setDisableLogin(false);
@@ -101,6 +107,14 @@ export default function Login() {
 						<Typography component="h1" variant="h5">
 							Sign in
 						</Typography>
+						{authError && (
+							<Alert
+								sx={{ width: "100%", mt: 1 }}
+								severity="error"
+							>
+								Invalid credentials.
+							</Alert>
+						)}
 						<Box
 							component="form"
 							noValidate
@@ -116,6 +130,7 @@ export default function Login() {
 								name="email"
 								autoComplete="email"
 								autoFocus
+								error={authError}
 							/>
 							<TextField
 								margin="normal"
@@ -126,6 +141,7 @@ export default function Login() {
 								type="password"
 								id="password"
 								autoComplete="current-password"
+								error={authError}
 							/>
 
 							<Button

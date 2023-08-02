@@ -45,3 +45,53 @@ export function validateBookmark(bookmark) {
 
 	return {};
 }
+
+function checkIfEmail(email) {
+	const emailRegExp =
+		/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi;
+	return emailRegExp.test(email);
+}
+
+function checkValidUsername(username) {
+	const regExp = /^[a-z0-9]+$/i;
+	return regExp.test(username);
+}
+
+function checkValidPassword(password) {
+	const regExp =
+		/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+	return regExp.test(password);
+}
+
+export function validateSignUp(user) {
+	if (!checkIfEmail(user.email)) {
+		return {
+			field: "EMAIL",
+			message: "Please enter a valid email.",
+		};
+	}
+
+	if (user.username.length < 4) {
+		return {
+			field: "USERNAME",
+			message: "Username must have at least 4 characters.",
+		};
+	}
+
+	if (!checkValidUsername(user.username)) {
+		return {
+			field: "USERNAME",
+			message: "Username must only contain alphanumeric characters.",
+		};
+	}
+
+	if (!checkValidPassword(user.password)) {
+		return {
+			field: "PASSWORD",
+			message:
+				"Password must contain at least eight characters, with minimum one uppercase letter, one lower case letter, a number and special character.",
+		};
+	}
+
+	return {};
+}
