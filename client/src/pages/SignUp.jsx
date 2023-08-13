@@ -66,7 +66,7 @@ const SignUp = () => {
 
 		if (field) {
 			dispatchError({ type: field, value: message });
-			// return;
+			return;
 		}
 		dispatchError({ type: "RESET" });
 
