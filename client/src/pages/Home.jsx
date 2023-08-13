@@ -7,14 +7,6 @@ import {
 	getTopSeasonalAnime,
 } from "../utils/mal";
 
-const items = [];
-for (let i = 0; i != 12; ++i) {
-	items.push({
-		image: "https://static.zerochan.net/Makima.full.2930187.jpg",
-		text: "Chainsaw Man",
-	});
-}
-
 const Home = () => {
 	const [topAiring, setTopAiring] = useState([]);
 	const [topSeasonal, setTopSeasonal] = useState([]);
