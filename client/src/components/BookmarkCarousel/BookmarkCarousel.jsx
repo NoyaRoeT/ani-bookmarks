@@ -22,6 +22,9 @@ const CarouselCard = ({ image, text, link }) => {
 				<img
 					width="160px"
 					height="220px"
+					style={{
+						objectFit: "cover",
+					}}
 					src={
 						image
 							? image

@@ -78,3 +78,11 @@ export async function getArchivedBookmarks() {
 	});
 	return res.data;
 }
+
+export async function getRecentlyAdded() {
+	const res = await axiosInstance.post("bookmarks/search", {
+		sortBy: "Last Added",
+		limit: 20,
+	});
+	return res.data;
+}

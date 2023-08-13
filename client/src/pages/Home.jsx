@@ -6,11 +6,13 @@ import {
 	getTopAiringAnime,
 	getTopSeasonalAnime,
 } from "../utils/mal";
+import { getRecentlyAdded } from "../utils/bookmarks";
 
 const Home = () => {
 	const [topAiring, setTopAiring] = useState([]);
 	const [topSeasonal, setTopSeasonal] = useState([]);
 	const [malPopularComics, setMalPopularComics] = useState([]);
+	const [recentlyAdded, setRecentlyAdded] = useState([]);
 
 	const [error, setError] = useState("");
 	const open = error.length !== 0;
@@ -18,6 +20,14 @@ const Home = () => {
 	useEffect(() => {
 		(async () => {
 			try {
+				let res = await getRecentlyAdded();
+				res = res.data.map((i) => ({
+					text: i.title,
+					image: i.imagePath,
+					link: `/bookmarks/info/${i._id}`,
+				}));
+
+				setRecentlyAdded(res);
 				let topAiringRes = await getTopAiringAnime();
 				topAiringRes = topAiringRes.map((i) => ({
 					text: i.title,
@@ -45,6 +55,7 @@ const Home = () => {
 				if (err.response && err.response.status === 500) {
 					setError("Something went wrong!");
 				}
+				console.log(err);
 			}
 		})();
 	}, []);
@@ -57,6 +68,11 @@ const Home = () => {
 				text={error}
 			/>
 			<Container maxWidth="lg" sx={{ mt: 3 }}>
+				<BookmarkCarousel
+					sx={{ mb: 2 }}
+					items={recentlyAdded}
+					label="Recently Added"
+				/>
 				<BookmarkCarousel
 					sx={{ mb: 2 }}
 					items={topAiring}

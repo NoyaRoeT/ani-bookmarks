@@ -105,3 +105,4 @@ async function seedTagCollection() {
 }
 
 await seedTagCollection();
+await seedGenreCollection();

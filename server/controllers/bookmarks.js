@@ -274,7 +274,8 @@ export const searchBookmarks = async (req, res, next) => {
 		const bookmarks = await Bookmark.find(filter)
 			.sort(sortCriteria)
 			.populate("genres", "name -_id")
-			.populate("tags", "name -_id");
+			.populate("tags", "name -_id")
+			.limit(req.body.limit);
 
 		const processedBookmarks = bookmarks.map((bookmark) => {
 			return {

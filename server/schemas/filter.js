@@ -21,6 +21,7 @@ function searchSchema() {
 		sortBy: Joi.string().required().valid("Last Added", "Rating"),
 		favorite: Joi.boolean(),
 		archived: Joi.boolean(),
+		limit: Joi.number().optional().min(0),
 	});
 }
 
