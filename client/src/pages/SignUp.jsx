@@ -66,7 +66,7 @@ const SignUp = () => {
 
 		if (field) {
 			dispatchError({ type: field, value: message });
-			return;
+			// return;
 		}
 		dispatchError({ type: "RESET" });
 
@@ -155,6 +155,9 @@ const SignUp = () => {
 								autoFocus
 								error={error.email.length > 0}
 								helperText={error.email}
+								inputProps={{
+									maxLength: 200,
+								}}
 							/>
 							<TextField
 								margin="normal"
@@ -167,6 +170,9 @@ const SignUp = () => {
 								autoFocus
 								error={error.username.length > 0}
 								helperText={error.username}
+								inputProps={{
+									maxLength: 20,
+								}}
 							/>
 							<TextField
 								margin="normal"
@@ -179,6 +185,9 @@ const SignUp = () => {
 								autoComplete="current-password"
 								error={error.password.length > 0}
 								helperText={error.password}
+								inputProps={{
+									maxLength: 200,
+								}}
 							/>
 
 							<Button

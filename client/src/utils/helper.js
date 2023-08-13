@@ -47,8 +47,7 @@ export function validateBookmark(bookmark) {
 }
 
 function checkIfEmail(email) {
-	const emailRegExp =
-		/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi;
+	const emailRegExp = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
 	return emailRegExp.test(email);
 }
 

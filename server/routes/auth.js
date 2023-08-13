@@ -1,7 +1,8 @@
 import express from "express";
-import { isAuthenticated } from "../controllers/middleware.js";
+import { isAuthenticated, validateBody } from "../controllers/middleware.js";
 import { authenticateLocal, registerUser } from "../controllers/auth.js";
 import ExpressError, { errorTypes } from "../utils/ExpressError.js";
+import SchemaStore from "../utils/SchemaStore.js";
 
 function initRouter() {
 	const router = express.Router();
@@ -11,7 +12,11 @@ function initRouter() {
 			data: req.user,
 		});
 	});
-	router.post("/register", registerUser);
+	router.post(
+		"/register",
+		validateBody(SchemaStore.get("user")),
+		registerUser
+	);
 
 	router.post("/login", authenticateLocal, (req, res) => {
 		res.status(200).json({

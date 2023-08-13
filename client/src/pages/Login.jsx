@@ -107,20 +107,21 @@ export default function Login() {
 						<Typography component="h1" variant="h5">
 							Sign in
 						</Typography>
-						{authError && (
-							<Alert
-								sx={{ width: "100%", mt: 1 }}
-								severity="error"
-							>
-								Invalid credentials.
-							</Alert>
-						)}
+
 						<Box
 							component="form"
 							noValidate
 							onSubmit={handleSubmit}
 							sx={{ mt: 1 }}
 						>
+							{authError && (
+								<Alert
+									sx={{ width: "100%", mt: 1 }}
+									severity="error"
+								>
+									Invalid credentials.
+								</Alert>
+							)}
 							<TextField
 								margin="normal"
 								required

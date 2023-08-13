@@ -23,6 +23,7 @@ import TagStore from "./utils/TagStore.js";
 import SchemaStore from "./utils/SchemaStore.js";
 import bookmarkSchema from "./schemas/bookmark.js";
 import searchSchema from "./schemas/filter.js";
+import userSchema from "./schemas/user.js";
 
 const PORT = process.env.PORT || 6001;
 mongoose.set("strictQuery", false);
@@ -38,6 +39,7 @@ async function startUp() {
 	await TagStore.init();
 	SchemaStore.addSchema("bookmark", bookmarkSchema);
 	SchemaStore.addSchema("search", searchSchema);
+	SchemaStore.addSchema("user", userSchema);
 
 	/* CONFIGURATIONS */
 	const app = express();
