@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "@mui/material";
-import { BookmarkCarousel, FeaturedCarousel, Page } from "../components";
+import { BookmarkCarousel, Page, ErrorFlash } from "../components";
 import {
 	getPopularComics,
 	getTopAiringAnime,
