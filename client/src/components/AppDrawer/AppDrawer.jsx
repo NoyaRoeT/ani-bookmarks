@@ -120,7 +120,7 @@ const DrawerContent = () => {
 					</ListSubheader>
 				}
 			>
-				<ListItemButton>
+				<ListItemButton component={Link} to="https://myanimelist.net/">
 					<ListIcon>
 						<img
 							width="24px"
@@ -130,7 +130,10 @@ const DrawerContent = () => {
 					</ListIcon>
 					<ListItemText primary="MyAnimeList" />
 				</ListItemButton>
-				<ListItemButton>
+				<ListItemButton
+					component={Link}
+					to="https://www.novelupdates.com/"
+				>
 					<ListIcon>
 						<img
 							width="24px"
@@ -140,7 +143,10 @@ const DrawerContent = () => {
 					</ListIcon>
 					<ListItemText primary="NovelUpdates" />
 				</ListItemButton>
-				<ListItemButton>
+				<ListItemButton
+					component={Link}
+					to="https://www.webtoons.com/en/"
+				>
 					<ListIcon>
 						<img
 							width="24px"
@@ -149,6 +155,19 @@ const DrawerContent = () => {
 						/>
 					</ListIcon>
 					<ListItemText primary="WebToons" />
+				</ListItemButton>
+				<ListItemButton
+					component={Link}
+					to="https://www.mangaupdates.com/"
+				>
+					<ListIcon>
+						<img
+							width="24px"
+							height="24px"
+							src="https://www.mangaupdates.com/favicon.ico"
+						/>
+					</ListIcon>
+					<ListItemText primary="BakaUpdatesManga" />
 				</ListItemButton>
 			</List>
 			<Button
