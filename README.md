@@ -9,4 +9,4 @@ In both the client and server folder, run the command in the terminal:
 ```
 npm run dev
 ```
-The default address and port for the client is localhost:5173 and the default for the server is localhost:6001.
+The address and port for the client is localhost:5173 and for the server is localhost:6001.
