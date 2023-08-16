@@ -53,7 +53,7 @@ const DrawerContent = () => {
 				minHeight: "100vh",
 			}}
 		>
-			<Logo sx={{ my: 1 }} />
+			<Logo sx={{ my: 1, ml: 2 }} />
 			<Box
 				sx={{
 					display: "flex",

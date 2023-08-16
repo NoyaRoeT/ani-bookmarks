@@ -23,7 +23,16 @@ const ProtectedRoute = ({ noAuth }) => {
 			<Outlet />;
 		</>
 	) : (
-		<Navigate to="/login" state={{ from: location }} replace />
+		<Navigate
+			to="/login"
+			state={{
+				from:
+					location.pathname === "/"
+						? { pathname: "/home" }
+						: location,
+			}}
+			replace
+		/>
 	);
 };
 

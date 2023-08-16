@@ -11,7 +11,7 @@ const Logo = ({ sx }) => {
 				lineHeight="1.75rem"
 				fontWeight={600}
 			>
-				Storybook
+				Ani-Bookmarks
 			</Typography>
 		</Box>
 	);
