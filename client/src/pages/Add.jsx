@@ -25,7 +25,7 @@ const Add = () => {
 		}
 	}
 	return (
-		<Page>
+		<>
 			<ErrorFlash
 				sx={{ width: { sm: "720px" }, ml: { sm: "120px" } }}
 				open={open}
@@ -38,7 +38,7 @@ const Add = () => {
 				label="Add a Bookmark"
 				onServerError={(err) => setError(err)}
 			/>
-		</Page>
+		</>
 	);
 };
 

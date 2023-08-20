@@ -174,197 +174,186 @@ const Info = () => {
 
 	return (
 		<>
-			<Page>
-				<ErrorFlash
-					sx={{ width: { sm: "720px" }, ml: { sm: "120px" } }}
-					open={open}
-					onClose={() => setError("")}
-					text={error}
-				/>
-				{bookmarkExists && (
-					<Toolbar
-						sx={{
-							display: "flex",
-							justifyContent: "space-between",
-							alignItems: "center",
-						}}
-					>
-						<Box display={{ md: "none" }}>
-							<IconButton
-								color="primary"
-								onClick={favoriteHandler}
-							>
-								{!bookmark.favorite ? (
-									<FavoriteIcon />
-								) : (
-									<FavoriteBorderIcon />
-								)}
-							</IconButton>
-							<IconButton
-								color="primary"
-								onClick={archiveHandler}
-							>
-								{!bookmark.archived ? (
-									<ArchiveIcon />
-								) : (
-									<UnarchiveIcon />
-								)}
-							</IconButton>
-						</Box>
-						<Box display={{ md: "none" }}>
-							<IconButton
-								color="primary"
-								component={Link}
-								state={{ bookmark }}
-								to={`/bookmarks/edit/${bookmark._id}`}
-							>
-								<EditIcon />
-							</IconButton>
-							<IconButton
-								color="warning"
-								onClick={toggleOpenDeleteHandler}
-							>
-								<DeleteIcon />
-							</IconButton>
-						</Box>
-						<Box display={{ xs: "none", md: "block" }}>
-							<Button
-								color="primary"
-								variant="outlined"
-								sx={{ mr: 1 }}
-								onClick={favoriteHandler}
-							>
-								{!bookmark.favorite ? (
-									<FavoriteIcon sx={{ mr: 1 }} />
-								) : (
-									<FavoriteBorderIcon sx={{ mr: 1 }} />
-								)}
-								<Typography>
-									{!bookmark.favorite
-										? "Add to Favorite"
-										: "Remove from Favorite"}
-								</Typography>
-							</Button>
-							<Button variant="outlined" onClick={archiveHandler}>
-								{!bookmark.archived ? (
-									<ArchiveIcon sx={{ mr: 1 }} />
-								) : (
-									<UnarchiveIcon sx={{ mr: 1 }} />
-								)}
-								<Typography>
-									{!bookmark.archived
-										? "Add to Archive"
-										: "Remove from Archive"}
-								</Typography>
-							</Button>
-						</Box>
-						<Box display={{ xs: "none", md: "block" }}>
-							<Button
-								color="primary"
-								variant="outlined"
-								sx={{ mr: 1 }}
-								component={Link}
-								state={{ bookmark }}
-								to={`/bookmarks/edit/${bookmark._id}`}
-							>
-								<EditIcon sx={{ mr: 1 }} />
-								<Typography>Edit</Typography>
-							</Button>
-							<Button
-								color="warning"
-								variant="outlined"
-								onClick={toggleOpenDeleteHandler}
-							>
-								<DeleteIcon sx={{ mr: 1 }} />
-								<Typography>Delete</Typography>
-							</Button>
-						</Box>
-					</Toolbar>
-				)}
-
-				<Container maxWidth="lg" sx={{ mt: 3 }}>
-					{bookmarkExists && !bookmark.requireFetch && (
-						<Card
-							sx={{
-								boxShadow:
-									"rgba(90, 114, 123, 0.11) 0px 7px 30px 0px",
-							}}
+			<ErrorFlash
+				sx={{ width: { sm: "720px" }, ml: { sm: "120px" } }}
+				open={open}
+				onClose={() => setError("")}
+				text={error}
+			/>
+			{bookmarkExists && (
+				<Toolbar
+					sx={{
+						display: "flex",
+						justifyContent: "space-between",
+						alignItems: "center",
+					}}
+				>
+					<Box display={{ md: "none" }}>
+						<IconButton color="primary" onClick={favoriteHandler}>
+							{!bookmark.favorite ? (
+								<FavoriteIcon />
+							) : (
+								<FavoriteBorderIcon />
+							)}
+						</IconButton>
+						<IconButton color="primary" onClick={archiveHandler}>
+							{!bookmark.archived ? (
+								<ArchiveIcon />
+							) : (
+								<UnarchiveIcon />
+							)}
+						</IconButton>
+					</Box>
+					<Box display={{ md: "none" }}>
+						<IconButton
+							color="primary"
+							component={Link}
+							state={{ bookmark }}
+							to={`/bookmarks/edit/${bookmark._id}`}
 						>
-							<CardContent>
-								<Grid container maxWidth="lg">
-									<Grid
-										sx={{ pr: { md: 5 } }}
-										item
-										sm={12}
-										md={5}
-										display="flex"
-										justifyContent="center"
-									>
-										<CardMedia
-											component="img"
-											sx={{
-												objectFit: "fill",
-												borderRadius: 2,
-												maxHeight: 580,
-											}}
-											image={
-												bookmark.imagePath
-													? bookmark.imagePath
-													: "https://deconova.eu/wp-content/uploads/2016/02/default-placeholder.png"
-											}
-										/>
-									</Grid>
-
-									<Grid item sm={12} md={7}>
-										<Typography
-											sx={{ mt: 2 }}
-											variant="h2"
-											fontSize={"2rem"}
-										>
-											{bookmark.title}
-										</Typography>
-										<Box sx={{ mt: 2 }} display="flex">
-											<Rating
-												value={bookmark.rating}
-												precision={0.5}
-												readOnly
-												size="small"
-											/>
-											<Typography
-												sx={{ ml: 1 }}
-												color="primary"
-												fontSize="12px"
-												variant="subtitle2"
-											>
-												{bookmark.type} (
-												{bookmark.rating})
-											</Typography>
-										</Box>
-										<GenreTagStack
-											sx={{ mt: 2 }}
-											genres={bookmark.genres}
-											tags={bookmark.tags}
-										/>
-									</Grid>
-								</Grid>
-							</CardContent>
-						</Card>
-					)}
-					{bookmark.requireFetch && <LoadingSkeleton />}
-					{!bookmarkExists && (
-						<Box
-							display="flex"
-							justifyContent="center"
-							alignItems="center"
-							sx={{ height: 520 }}
+							<EditIcon />
+						</IconButton>
+						<IconButton
+							color="warning"
+							onClick={toggleOpenDeleteHandler}
 						>
-							<Typography variant="h6" textAlign="center">
-								This bookmark does not exist...
+							<DeleteIcon />
+						</IconButton>
+					</Box>
+					<Box display={{ xs: "none", md: "block" }}>
+						<Button
+							color="primary"
+							variant="outlined"
+							sx={{ mr: 1 }}
+							onClick={favoriteHandler}
+						>
+							{!bookmark.favorite ? (
+								<FavoriteIcon sx={{ mr: 1 }} />
+							) : (
+								<FavoriteBorderIcon sx={{ mr: 1 }} />
+							)}
+							<Typography>
+								{!bookmark.favorite
+									? "Add to Favorite"
+									: "Remove from Favorite"}
 							</Typography>
-						</Box>
-					)}
-				</Container>
-			</Page>
+						</Button>
+						<Button variant="outlined" onClick={archiveHandler}>
+							{!bookmark.archived ? (
+								<ArchiveIcon sx={{ mr: 1 }} />
+							) : (
+								<UnarchiveIcon sx={{ mr: 1 }} />
+							)}
+							<Typography>
+								{!bookmark.archived
+									? "Add to Archive"
+									: "Remove from Archive"}
+							</Typography>
+						</Button>
+					</Box>
+					<Box display={{ xs: "none", md: "block" }}>
+						<Button
+							color="primary"
+							variant="outlined"
+							sx={{ mr: 1 }}
+							component={Link}
+							state={{ bookmark }}
+							to={`/bookmarks/edit/${bookmark._id}`}
+						>
+							<EditIcon sx={{ mr: 1 }} />
+							<Typography>Edit</Typography>
+						</Button>
+						<Button
+							color="warning"
+							variant="outlined"
+							onClick={toggleOpenDeleteHandler}
+						>
+							<DeleteIcon sx={{ mr: 1 }} />
+							<Typography>Delete</Typography>
+						</Button>
+					</Box>
+				</Toolbar>
+			)}
+
+			{bookmarkExists && !bookmark.requireFetch && (
+				<Card
+					sx={{
+						boxShadow: "rgba(90, 114, 123, 0.11) 0px 7px 30px 0px",
+					}}
+				>
+					<CardContent sx={{ p: 3 }}>
+						<Grid container maxWidth="lg">
+							<Grid
+								sx={{ pr: { md: 5 } }}
+								item
+								sm={12}
+								md={5}
+								display="flex"
+								justifyContent="center"
+							>
+								<CardMedia
+									component="img"
+									sx={{
+										objectFit: "fill",
+										borderRadius: 2,
+										maxHeight: 580,
+									}}
+									image={
+										bookmark.imagePath
+											? bookmark.imagePath
+											: "https://deconova.eu/wp-content/uploads/2016/02/default-placeholder.png"
+									}
+								/>
+							</Grid>
+
+							<Grid item sm={12} md={7}>
+								<Typography
+									sx={{ mt: 2 }}
+									variant="h2"
+									fontSize={"2rem"}
+								>
+									{bookmark.title}
+								</Typography>
+								<Box sx={{ mt: 2 }} display="flex">
+									<Rating
+										value={bookmark.rating}
+										precision={0.5}
+										readOnly
+										size="small"
+									/>
+									<Typography
+										sx={{ ml: 1 }}
+										color="primary"
+										fontSize="12px"
+										variant="subtitle2"
+									>
+										{bookmark.type} ({bookmark.rating})
+									</Typography>
+								</Box>
+								<GenreTagStack
+									sx={{ mt: 2 }}
+									genres={bookmark.genres}
+									tags={bookmark.tags}
+								/>
+							</Grid>
+						</Grid>
+					</CardContent>
+				</Card>
+			)}
+			{bookmark.requireFetch && <LoadingSkeleton />}
+			{!bookmarkExists && (
+				<Box
+					display="flex"
+					justifyContent="center"
+					alignItems="center"
+					sx={{ height: 520 }}
+				>
+					<Typography variant="h6" textAlign="center">
+						This bookmark does not exist...
+					</Typography>
+				</Box>
+			)}
+
 			<DeleteDialog
 				open={isDeleteOpen}
 				onClose={toggleOpenDeleteHandler}

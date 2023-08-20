@@ -135,7 +135,7 @@ const BookmarkCarousel = ({ items, label, sx }) => {
 	};
 
 	return (
-		<Card sx={{ ...sx }}>
+		<Card sx={{ ...sx }} elevation={0}>
 			<CardContent>
 				<Typography gutterBottom variant="h5" component="div">
 					{label}

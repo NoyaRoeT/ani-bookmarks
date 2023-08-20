@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { AppDrawer } from "../";
+import { NavBar, Page } from "../";
 import { AuthContext } from "../../context/AuthContext";
 
 const ProtectedRoute = ({ noAuth }) => {
@@ -18,10 +18,9 @@ const ProtectedRoute = ({ noAuth }) => {
 	}
 
 	return user ? (
-		<>
-			<AppDrawer />
-			<Outlet />;
-		</>
+		<Page>
+			<Outlet />
+		</Page>
 	) : (
 		<Navigate
 			to="/login"

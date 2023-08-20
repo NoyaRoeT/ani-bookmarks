@@ -8,7 +8,7 @@ import { AuthContextProvider } from "./context/AuthContext.jsx";
 const theme = createTheme({
 	palette: {
 		background: {
-			default: "rgb(248, 249, 249)",
+			default: "rgb(238, 240, 239)",
 		},
 	},
 
@@ -19,7 +19,7 @@ const theme = createTheme({
 	},
 });
 
-theme.shadows[1] = "rgba(90, 114, 123, 0.11) 0px 7px 30px 0px";
+// theme.shadows[1] = "rgba(90, 114, 123, 0.11) 0px 7px 30px 0px";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>

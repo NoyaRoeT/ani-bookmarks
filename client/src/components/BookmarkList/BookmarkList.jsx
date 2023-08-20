@@ -18,7 +18,9 @@ const BookmarkCard = ({ bookmark }) => {
 		<Card
 			sx={{
 				mb: 2,
+				borderBottom: "1px solid #e5e5e5",
 			}}
+			elevation={0}
 		>
 			<CardContent>
 				<Box sx={{ display: "flex" }}>

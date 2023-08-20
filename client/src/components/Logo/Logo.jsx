@@ -4,15 +4,8 @@ import logo from "../../assets/logo.jpg";
 
 const Logo = ({ sx }) => {
 	return (
-		<Box sx={{ display: "flex", alignItems: "center", ...sx }}>
-			<Typography
-				variant="h1"
-				fontSize="1.25rem"
-				lineHeight="1.75rem"
-				fontWeight={600}
-			>
-				Ani-Bookmarks
-			</Typography>
+		<Box sx={{ ...sx }}>
+			<img src="/logo.png" width="140px" />
 		</Box>
 	);
 };

@@ -67,13 +67,7 @@ const errorReducer = (state, action) => {
 	}
 };
 
-const BookmarkForm = ({
-	onSubmit,
-	buttonLabel,
-	bookmark,
-	label,
-	onServerError,
-}) => {
+const BookmarkForm = ({ onSubmit, buttonLabel, bookmark }) => {
 	// Field state
 	const [rating, setRating] = useState(bookmark ? bookmark.rating : 0);
 	function ratingHandler(event) {
@@ -229,13 +223,8 @@ const BookmarkForm = ({
 	}
 
 	return (
-		<Container sx={{ mt: 4 }} maxWidth="lg">
-			<Box sx={{ mb: 4 }}>
-				<Typography fontSize={30} variant="h1">
-					{label}
-				</Typography>
-			</Box>
-			<Card sx={{ mb: 4 }}>
+		<>
+			<Card sx={{ mb: 4 }} elevation={0}>
 				<CardContent sx={{ p: 4, mb: 2 }}>
 					<Box>
 						<Typography variant="h6" fontSize={20}>
@@ -419,7 +408,7 @@ const BookmarkForm = ({
 					</Box>
 				</CardContent>
 			</Card>
-		</Container>
+		</>
 	);
 };
 

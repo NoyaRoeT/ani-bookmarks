@@ -32,22 +32,16 @@ const Favorite = () => {
 	}, []);
 
 	return (
-		<Page>
+		<>
 			<ErrorFlash
 				sx={{ width: { sm: "720px" }, ml: { sm: "120px" } }}
 				open={open}
 				onClose={() => setError("")}
 				text={error}
 			/>
-			<Container maxWidth="lg" sx={{ mt: 4 }}>
-				<Box sx={{ mb: 4 }}>
-					<Typography fontSize={30} variant="h1">
-						Favorite Bookmarks
-					</Typography>
-				</Box>
-			</Container>
+
 			<BookmarkList bookmarks={bookmarks} isFetching={isFetching} />
-		</Page>
+		</>
 	);
 };
 

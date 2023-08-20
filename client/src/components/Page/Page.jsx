@@ -1,11 +1,24 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Container, useTheme } from "@mui/material";
+import NavBar from "../NavBar/NavBar";
 
 const Page = ({ children }) => {
+	const theme = useTheme();
+
 	return (
-		<Box sx={{ ml: { xs: 0, sm: "240px" }, mt: { xs: "64px", sm: 0 } }}>
-			{children}
-		</Box>
+		<Container
+			maxWidth="lg"
+			sx={{
+				backgroundColor: theme.palette.background.paper,
+				boxShadow: theme.shadows[1],
+			}}
+			disableGutters
+		>
+			<NavBar />
+			<Container maxWidth="lg" sx={{ pt: 2 }}>
+				{children}
+			</Container>
+		</Container>
 	);
 };
 

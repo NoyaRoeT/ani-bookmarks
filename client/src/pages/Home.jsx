@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "@mui/material";
-import { BookmarkCarousel, Page, ErrorFlash } from "../components";
+import { BookmarkCarousel, ErrorFlash, Page } from "../components";
 import {
 	getPopularComics,
 	getTopAiringAnime,
@@ -60,37 +59,36 @@ const Home = () => {
 		})();
 	}, []);
 	return (
-		<Page>
+		<>
 			<ErrorFlash
 				sx={{ width: { sm: "720px" }, ml: { sm: "120px" } }}
 				open={open}
 				onClose={() => setError("")}
 				text={error}
 			/>
-			<Container maxWidth="lg" sx={{ mt: 3 }}>
-				<BookmarkCarousel
-					sx={{ mb: 2 }}
-					items={recentlyAdded}
-					label="Recently Added"
-				/>
-				<BookmarkCarousel
-					sx={{ mb: 2 }}
-					items={topAiring}
-					label="Top Airing Anime from MyAnimeList"
-				/>
-				<BookmarkCarousel
-					sx={{ mb: 2 }}
-					items={topSeasonal}
-					label="Seasonal Anime from MyAnimeList"
-				/>
 
-				<BookmarkCarousel
-					sx={{ mb: 2 }}
-					items={malPopularComics}
-					label="Popular Comics from MyAnimeList"
-				/>
-			</Container>
-		</Page>
+			<BookmarkCarousel
+				sx={{ mb: 2 }}
+				items={recentlyAdded}
+				label="Recently Added"
+			/>
+			<BookmarkCarousel
+				sx={{ mb: 2 }}
+				items={topAiring}
+				label="Top Airing Anime from MyAnimeList"
+			/>
+			<BookmarkCarousel
+				sx={{ mb: 2 }}
+				items={topSeasonal}
+				label="Seasonal Anime from MyAnimeList"
+			/>
+
+			<BookmarkCarousel
+				sx={{ mb: 2 }}
+				items={malPopularComics}
+				label="Popular Comics from MyAnimeList"
+			/>
+		</>
 	);
 };
 

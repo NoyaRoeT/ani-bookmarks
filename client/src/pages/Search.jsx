@@ -125,7 +125,7 @@ const Search = () => {
 	}, []);
 
 	return (
-		<Page>
+		<>
 			<ErrorFlash
 				sx={{ width: { sm: "720px" }, ml: { sm: "120px" } }}
 				open={open}
@@ -179,7 +179,7 @@ const Search = () => {
 					showFilteredBookmarks ? filteredBookmarks : bookmarks
 				}
 			/>
-		</Page>
+		</>
 	);
 };
 

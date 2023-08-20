@@ -61,7 +61,7 @@ const Edit = () => {
 	}
 
 	return (
-		<Page>
+		<>
 			<ErrorFlash
 				sx={{ width: { sm: "720px" }, ml: { sm: "120px" } }}
 				open={open}
@@ -92,7 +92,7 @@ const Edit = () => {
 					</Box>
 				</Container>
 			)}
-		</Page>
+		</>
 	);
 };
 
