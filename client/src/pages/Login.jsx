@@ -1,20 +1,16 @@
 import React, { useContext, useState } from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import { Alert } from "@mui/material";
+import { Container, Box, Typography, Alert } from "@mui/material";
 import { ErrorFlash, Logo } from "../components";
 import { login } from "../utils/auth";
 import { AuthContext } from "../context/AuthContext";
+import { useTheme } from "@emotion/react";
 
 export default function Login() {
+	const theme = useTheme();
+
 	const authContext = useContext(AuthContext);
 	const navigate = useNavigate();
 	const { from } = useLocation().state || { from: { pathname: "/home" } };
@@ -60,112 +56,86 @@ export default function Login() {
 				onClose={() => setError("")}
 				text={error}
 			/>
-
-			<Grid container component="main" sx={{ height: "100vh" }}>
-				<Logo
-					sx={{ position: "fixed", backgroundColor: "#fff", pr: 1 }}
-				/>
-				<CssBaseline />
-				<Grid
-					item
-					xs={false}
-					sm={4}
-					md={7}
+			<Container
+				component="main"
+				maxWidth="xs"
+				sx={{
+					backgroundColor: theme.palette.background.paper,
+					boxShadow: theme.shadows[1],
+					mt: 8,
+					pt: 4,
+					pb: 10,
+				}}
+			>
+				<Box
 					sx={{
-						backgroundImage:
-							"url(https://r4.wallpaperflare.com/wallpaper/268/96/863/anime-anime-girls-original-characters-short-hair-wallpaper-9e621b77801cfc9def497dfeb6dafe8e.jpg)",
-						backgroundRepeat: "no-repeat",
-						backgroundColor: (t) =>
-							t.palette.mode === "light"
-								? t.palette.grey[50]
-								: t.palette.grey[900],
-						backgroundSize: "cover",
-						backgroundPosition: "center",
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+						px: 2,
 					}}
-				/>
-				<Grid
-					item
-					xs={12}
-					sm={8}
-					md={5}
-					component={Paper}
-					elevation={6}
-					square
 				>
+					<Logo sx={{ mb: 2 }} />
+
+					<Typography component="h1" variant="h5">
+						Login
+					</Typography>
 					<Box
-						sx={{
-							my: 8,
-							mx: 4,
-							display: "flex",
-							flexDirection: "column",
-							alignItems: "center",
-						}}
+						component="form"
+						onSubmit={handleSubmit}
+						noValidate
+						sx={{ mt: 1 }}
 					>
-						<Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-							<LockOutlinedIcon />
-						</Avatar>
-						<Typography component="h1" variant="h5">
-							Sign in
-						</Typography>
-
-						<Box
-							component="form"
-							noValidate
-							onSubmit={handleSubmit}
-							sx={{ mt: 1 }}
-						>
-							{authError && (
-								<Alert
-									sx={{ width: "100%", mt: 1 }}
-									severity="error"
-								>
-									Invalid credentials.
-								</Alert>
-							)}
-							<TextField
-								margin="normal"
-								required
-								fullWidth
-								id="email"
-								label="Email Address"
-								name="email"
-								autoComplete="email"
-								autoFocus
-								error={authError}
-							/>
-							<TextField
-								margin="normal"
-								required
-								fullWidth
-								name="password"
-								label="Password"
-								type="password"
-								id="password"
-								autoComplete="current-password"
-								error={authError}
-							/>
-
-							<Button
-								type="submit"
-								fullWidth
-								variant="contained"
-								sx={{ mt: 3, mb: 2 }}
-								disabled={disableLogin}
+						{authError && (
+							<Alert
+								sx={{ width: "100%", mt: 1 }}
+								severity="error"
 							>
-								Sign In
-							</Button>
-							<Grid container>
-								<Grid item xs></Grid>
-								<Grid item>
-									<Link to="/signup" variant="body2">
-										{"Don't have an account? Sign Up"}
-									</Link>
-								</Grid>
-							</Grid>
+								Invalid credentials.
+							</Alert>
+						)}
+						<TextField
+							margin="normal"
+							required
+							fullWidth
+							id="email"
+							label="Email Address"
+							name="email"
+							autoComplete="email"
+							autoFocus
+							error={authError}
+						/>
+						<TextField
+							margin="normal"
+							required
+							fullWidth
+							name="password"
+							label="Password"
+							type="password"
+							id="password"
+							autoComplete="current-password"
+							error={authError}
+						/>
+
+						<Button
+							type="submit"
+							fullWidth
+							variant="contained"
+							sx={{ mt: 3, mb: 2 }}
+							disabled={disableLogin}
+						>
+							Sign In
+						</Button>
+						<Box
+							sx={{ display: "flex", justifyContent: "flex-end" }}
+						>
+							<Link to="/signup" variant="body2">
+								{"Don't have an account? Sign Up"}
+							</Link>
 						</Box>
 					</Box>
-				</Grid>
-			</Grid>
+				</Box>
+			</Container>
 		</>
 	);
 }

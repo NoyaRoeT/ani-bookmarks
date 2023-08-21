@@ -1,14 +1,13 @@
 import React, { useState, useReducer } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
+import {
+	Button,
+	TextField,
+	Box,
+	Typography,
+	Container,
+	useTheme,
+} from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
 import { Logo, ErrorFlash } from "../components";
 import { signup } from "../utils/auth";
 import { validateSignUp } from "../utils/helper";
@@ -42,6 +41,8 @@ const errorReducer = (state, action) => {
 };
 
 const SignUp = () => {
+	const theme = useTheme();
+
 	const navigate = useNavigate();
 
 	// Feedback state
@@ -92,7 +93,103 @@ const SignUp = () => {
 				onClose={() => setFlashError("")}
 				text={flashError}
 			/>
-			<Grid container component="main" sx={{ height: "100vh" }}>
+			<Container
+				component="main"
+				maxWidth="xs"
+				sx={{
+					backgroundColor: theme.palette.background.paper,
+					boxShadow: theme.shadows[1],
+					mt: 8,
+					pt: 4,
+					pb: 10,
+				}}
+			>
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+						px: 2,
+					}}
+				>
+					<Logo sx={{ mb: 2 }} />
+
+					<Typography component="h1" variant="h5">
+						Sign Up
+					</Typography>
+					<Box
+						component="form"
+						onSubmit={handleSubmit}
+						noValidate
+						sx={{ mt: 1 }}
+					>
+						<TextField
+							margin="normal"
+							required
+							fullWidth
+							id="email"
+							label="Email Address"
+							name="email"
+							autoComplete="email"
+							autoFocus
+							error={error.email.length > 0}
+							helperText={error.email}
+							inputProps={{
+								maxLength: 200,
+							}}
+						/>
+						<TextField
+							margin="normal"
+							required
+							fullWidth
+							id="username"
+							label="Username"
+							name="username"
+							autoComplete="username"
+							autoFocus
+							error={error.username.length > 0}
+							helperText={error.username}
+							inputProps={{
+								maxLength: 20,
+							}}
+						/>
+						<TextField
+							margin="normal"
+							required
+							fullWidth
+							name="password"
+							label="Password"
+							type="password"
+							id="password"
+							autoComplete="current-password"
+							error={error.password.length > 0}
+							helperText={error.password}
+							inputProps={{
+								maxLength: 200,
+							}}
+						/>
+
+						<Button
+							type="submit"
+							fullWidth
+							variant="contained"
+							sx={{ mt: 3, mb: 2 }}
+							disabled={disableSignUp}
+						>
+							Sign Up
+						</Button>
+
+						<Box
+							sx={{ display: "flex", justifyContent: "flex-end" }}
+						>
+							<Link to="/login" variant="body2">
+								{"Already have an account? Sign in!"}
+							</Link>
+						</Box>
+					</Box>
+				</Box>
+			</Container>
+			{/* <Grid container component="main" sx={{ height: "100vh" }}>
 				<Logo
 					sx={{ position: "fixed", backgroundColor: "#fff", pr: 1 }}
 				/>
@@ -210,7 +307,7 @@ const SignUp = () => {
 						</Box>
 					</Box>
 				</Grid>
-			</Grid>
+			</Grid> */}
 		</>
 	);
 };
